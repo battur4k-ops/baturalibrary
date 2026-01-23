@@ -419,7 +419,7 @@ section {
    2-ELEMENTS / _TEXT.SCSS
    Batura Library | Dynamic Typography v7.5
    ============================================================ */
-.text-subheading, .text-data, .ui-info-tag, .b-catalog-header .index, .b-alphabet-nav__char, .b-static-card__index, .b-accordion .b-static-card__deco, .b-accordion .b-static-card__index, .ui-button, .b-navbar__search input, small, .text-body, .text-info-hint, p, .text-heading, h2, .text-hero, h1 {
+.ui-range__header .value, .text-subheading, .text-data, .ui-info-tag, .ui-range__header, .b-catalog-header .index, .b-alphabet-nav__char, .b-static-card__index, .b-accordion .b-static-card__deco, .b-accordion .b-static-card__index, .ui-button, .b-navbar__search input, small, .text-body, .text-info-hint, p, .text-heading, h2, .text-hero, h1 {
   margin: 0;
   color: rgba(var(--p-white-rgb), var(--_text-op, 1));
   transition: color var(--d-fast) var(--e-out);
@@ -457,7 +457,7 @@ section {
 }
 
 /* DATA: Индексы и технические теги */
-.text-data, .ui-info-tag, .b-catalog-header .index, .b-alphabet-nav__char, .b-static-card__index, .b-accordion .b-static-card__deco, .b-accordion .b-static-card__index, .ui-button, .b-navbar__search input, small {
+.text-data, .ui-info-tag, .ui-range__header, .b-catalog-header .index, .b-alphabet-nav__char, .b-static-card__index, .b-accordion .b-static-card__deco, .b-accordion .b-static-card__index, .ui-button, .b-navbar__search input, small {
   font-family: var(--font-mono);
   font-size: var(--fs-data); /* Привязка к токену 10px */
   font-weight: 300; /* Оставляем легкое начертание */
@@ -501,7 +501,7 @@ section {
 .l-flow > * + * {
   margin-top: var(--space-md);
 }
-.l-flow > .text-data + .text-hero, .l-flow > .ui-info-tag + .text-hero, .b-catalog-header .l-flow > .index + .text-hero, .l-flow > .b-alphabet-nav__char + .text-hero, .l-flow > .b-static-card__index + .text-hero, .b-accordion .l-flow > .b-static-card__deco + .text-hero, .l-flow > .ui-button + .text-hero, .b-navbar__search .l-flow > input + .text-hero, .l-flow > small + .text-hero, .l-flow > .text-data + h1, .l-flow > .ui-info-tag + h1, .b-catalog-header .l-flow > .index + h1, .l-flow > .b-alphabet-nav__char + h1, .l-flow > .b-static-card__index + h1, .b-accordion .l-flow > .b-static-card__deco + h1, .l-flow > .ui-button + h1, .b-navbar__search .l-flow > input + h1, .l-flow > small + h1, .l-flow > .text-data + .text-heading, .l-flow > .ui-info-tag + .text-heading, .b-catalog-header .l-flow > .index + .text-heading, .l-flow > .b-alphabet-nav__char + .text-heading, .l-flow > .b-static-card__index + .text-heading, .b-accordion .l-flow > .b-static-card__deco + .text-heading, .l-flow > .ui-button + .text-heading, .b-navbar__search .l-flow > input + .text-heading, .l-flow > small + .text-heading, .l-flow > .text-data + h2, .l-flow > .ui-info-tag + h2, .b-catalog-header .l-flow > .index + h2, .l-flow > .b-alphabet-nav__char + h2, .l-flow > .b-static-card__index + h2, .b-accordion .l-flow > .b-static-card__deco + h2, .l-flow > .ui-button + h2, .b-navbar__search .l-flow > input + h2, .l-flow > small + h2, .l-flow > .text-hero + .text-body, .l-flow > .text-hero + .text-info-hint, .l-flow > h1 + .text-body, .l-flow > h1 + .text-info-hint, .l-flow > .text-hero + p, .l-flow > h1 + p, .l-flow > .text-heading + .text-body, .l-flow > .text-heading + .text-info-hint, .l-flow > h2 + .text-body, .l-flow > h2 + .text-info-hint, .l-flow > .text-heading + p, .l-flow > h2 + p {
+.l-flow > .text-data + .text-hero, .l-flow > .ui-info-tag + .text-hero, .l-flow > .ui-range__header + .text-hero, .b-catalog-header .l-flow > .index + .text-hero, .l-flow > .b-alphabet-nav__char + .text-hero, .l-flow > .b-static-card__index + .text-hero, .b-accordion .l-flow > .b-static-card__deco + .text-hero, .l-flow > .ui-button + .text-hero, .b-navbar__search .l-flow > input + .text-hero, .l-flow > small + .text-hero, .l-flow > .text-data + h1, .l-flow > .ui-info-tag + h1, .l-flow > .ui-range__header + h1, .b-catalog-header .l-flow > .index + h1, .l-flow > .b-alphabet-nav__char + h1, .l-flow > .b-static-card__index + h1, .b-accordion .l-flow > .b-static-card__deco + h1, .l-flow > .ui-button + h1, .b-navbar__search .l-flow > input + h1, .l-flow > small + h1, .l-flow > .text-data + .text-heading, .l-flow > .ui-info-tag + .text-heading, .l-flow > .ui-range__header + .text-heading, .b-catalog-header .l-flow > .index + .text-heading, .l-flow > .b-alphabet-nav__char + .text-heading, .l-flow > .b-static-card__index + .text-heading, .b-accordion .l-flow > .b-static-card__deco + .text-heading, .l-flow > .ui-button + .text-heading, .b-navbar__search .l-flow > input + .text-heading, .l-flow > small + .text-heading, .l-flow > .text-data + h2, .l-flow > .ui-info-tag + h2, .l-flow > .ui-range__header + h2, .b-catalog-header .l-flow > .index + h2, .l-flow > .b-alphabet-nav__char + h2, .l-flow > .b-static-card__index + h2, .b-accordion .l-flow > .b-static-card__deco + h2, .l-flow > .ui-button + h2, .b-navbar__search .l-flow > input + h2, .l-flow > small + h2, .l-flow > .text-hero + .text-body, .l-flow > .text-hero + .text-info-hint, .l-flow > h1 + .text-body, .l-flow > h1 + .text-info-hint, .l-flow > .text-hero + p, .l-flow > h1 + p, .l-flow > .text-heading + .text-body, .l-flow > .text-heading + .text-info-hint, .l-flow > h2 + .text-body, .l-flow > h2 + .text-info-hint, .l-flow > .text-heading + p, .l-flow > h2 + p {
   margin-top: var(--space-xs);
 }
 .l-flow > .text-body + .l-flex-group, .l-flow > .text-info-hint + .l-flex-group, .l-flow > p + .l-flex-group {
@@ -1102,7 +1102,7 @@ body.is-lab-active .b-navbar__search .close-icon {
 .b-accordion .b-static-card.is-active .b-static-card__body h3, .b-accordion .b-static-card.is-active .b-static-card__body p {
   margin: 0;
 }
-.b-accordion .b-static-card.is-active .b-static-card__body .text-data, .b-accordion .b-static-card.is-active .b-static-card__body .ui-info-tag, .b-accordion .b-static-card.is-active .b-static-card__body .b-catalog-header .index, .b-catalog-header .b-accordion .b-static-card.is-active .b-static-card__body .index, .b-accordion .b-static-card.is-active .b-static-card__body .b-alphabet-nav__char, .b-accordion .b-static-card.is-active .b-static-card__body .b-static-card__index, .b-accordion .b-static-card.is-active .b-static-card__body small, .b-accordion .b-static-card.is-active .b-static-card__body .b-navbar__search input, .b-navbar__search .b-accordion .b-static-card.is-active .b-static-card__body input, .b-accordion .b-static-card.is-active .b-static-card__body .ui-button, .b-accordion .b-static-card.is-active .b-static-card__body .b-static-card__deco {
+.b-accordion .b-static-card.is-active .b-static-card__body .text-data, .b-accordion .b-static-card.is-active .b-static-card__body .ui-info-tag, .b-accordion .b-static-card.is-active .b-static-card__body .ui-range__header, .b-accordion .b-static-card.is-active .b-static-card__body .b-catalog-header .index, .b-catalog-header .b-accordion .b-static-card.is-active .b-static-card__body .index, .b-accordion .b-static-card.is-active .b-static-card__body .b-alphabet-nav__char, .b-accordion .b-static-card.is-active .b-static-card__body .b-static-card__index, .b-accordion .b-static-card.is-active .b-static-card__body small, .b-accordion .b-static-card.is-active .b-static-card__body .b-navbar__search input, .b-navbar__search .b-accordion .b-static-card.is-active .b-static-card__body input, .b-accordion .b-static-card.is-active .b-static-card__body .ui-button, .b-accordion .b-static-card.is-active .b-static-card__body .b-static-card__deco {
   display: block;
   margin-bottom: var(--space-xs);
   opacity: var(--s-text-op-hover);
@@ -1218,7 +1218,7 @@ body.is-lab-active .b-navbar__search .close-icon {
 .b-footer__brand > * + * {
   margin-top: var(--space-md);
 }
-.b-footer__brand > .text-data + .text-hero, .b-footer__brand > .ui-info-tag + .text-hero, .b-catalog-header .b-footer__brand > .index + .text-hero, .b-footer__brand > .b-alphabet-nav__char + .text-hero, .b-footer__brand > .b-static-card__index + .text-hero, .b-footer__brand > small + .text-hero, .b-navbar__search .b-footer__brand > input + .text-hero, .b-footer__brand > .ui-button + .text-hero, .b-accordion .b-footer__brand > .b-static-card__deco + .text-hero, .b-footer__brand > .text-data + h1, .b-footer__brand > .ui-info-tag + h1, .b-catalog-header .b-footer__brand > .index + h1, .b-footer__brand > .b-alphabet-nav__char + h1, .b-footer__brand > .b-static-card__index + h1, .b-footer__brand > small + h1, .b-navbar__search .b-footer__brand > input + h1, .b-footer__brand > .ui-button + h1, .b-accordion .b-footer__brand > .b-static-card__deco + h1, .b-footer__brand > .text-data + .text-heading, .b-footer__brand > .ui-info-tag + .text-heading, .b-catalog-header .b-footer__brand > .index + .text-heading, .b-footer__brand > .b-alphabet-nav__char + .text-heading, .b-footer__brand > .b-static-card__index + .text-heading, .b-footer__brand > small + .text-heading, .b-navbar__search .b-footer__brand > input + .text-heading, .b-footer__brand > .ui-button + .text-heading, .b-accordion .b-footer__brand > .b-static-card__deco + .text-heading, .b-footer__brand > .text-data + h2, .b-footer__brand > .ui-info-tag + h2, .b-catalog-header .b-footer__brand > .index + h2, .b-footer__brand > .b-alphabet-nav__char + h2, .b-footer__brand > .b-static-card__index + h2, .b-footer__brand > small + h2, .b-navbar__search .b-footer__brand > input + h2, .b-footer__brand > .ui-button + h2, .b-accordion .b-footer__brand > .b-static-card__deco + h2, .b-footer__brand > .text-hero + .text-body, .b-footer__brand > .text-hero + .text-info-hint, .b-footer__brand > h1 + .text-body, .b-footer__brand > h1 + .text-info-hint, .b-footer__brand > .text-hero + p, .b-footer__brand > h1 + p, .b-footer__brand > .text-heading + .text-body, .b-footer__brand > .text-heading + .text-info-hint, .b-footer__brand > h2 + .text-body, .b-footer__brand > h2 + .text-info-hint, .b-footer__brand > .text-heading + p, .b-footer__brand > h2 + p {
+.b-footer__brand > .text-data + .text-hero, .b-footer__brand > .ui-info-tag + .text-hero, .b-footer__brand > .ui-range__header + .text-hero, .b-catalog-header .b-footer__brand > .index + .text-hero, .b-footer__brand > .b-alphabet-nav__char + .text-hero, .b-footer__brand > .b-static-card__index + .text-hero, .b-footer__brand > small + .text-hero, .b-navbar__search .b-footer__brand > input + .text-hero, .b-footer__brand > .ui-button + .text-hero, .b-accordion .b-footer__brand > .b-static-card__deco + .text-hero, .b-footer__brand > .text-data + h1, .b-footer__brand > .ui-info-tag + h1, .b-footer__brand > .ui-range__header + h1, .b-catalog-header .b-footer__brand > .index + h1, .b-footer__brand > .b-alphabet-nav__char + h1, .b-footer__brand > .b-static-card__index + h1, .b-footer__brand > small + h1, .b-navbar__search .b-footer__brand > input + h1, .b-footer__brand > .ui-button + h1, .b-accordion .b-footer__brand > .b-static-card__deco + h1, .b-footer__brand > .text-data + .text-heading, .b-footer__brand > .ui-info-tag + .text-heading, .b-footer__brand > .ui-range__header + .text-heading, .b-catalog-header .b-footer__brand > .index + .text-heading, .b-footer__brand > .b-alphabet-nav__char + .text-heading, .b-footer__brand > .b-static-card__index + .text-heading, .b-footer__brand > small + .text-heading, .b-navbar__search .b-footer__brand > input + .text-heading, .b-footer__brand > .ui-button + .text-heading, .b-accordion .b-footer__brand > .b-static-card__deco + .text-heading, .b-footer__brand > .text-data + h2, .b-footer__brand > .ui-info-tag + h2, .b-footer__brand > .ui-range__header + h2, .b-catalog-header .b-footer__brand > .index + h2, .b-footer__brand > .b-alphabet-nav__char + h2, .b-footer__brand > .b-static-card__index + h2, .b-footer__brand > small + h2, .b-navbar__search .b-footer__brand > input + h2, .b-footer__brand > .ui-button + h2, .b-accordion .b-footer__brand > .b-static-card__deco + h2, .b-footer__brand > .text-hero + .text-body, .b-footer__brand > .text-hero + .text-info-hint, .b-footer__brand > h1 + .text-body, .b-footer__brand > h1 + .text-info-hint, .b-footer__brand > .text-hero + p, .b-footer__brand > h1 + p, .b-footer__brand > .text-heading + .text-body, .b-footer__brand > .text-heading + .text-info-hint, .b-footer__brand > h2 + .text-body, .b-footer__brand > h2 + .text-info-hint, .b-footer__brand > .text-heading + p, .b-footer__brand > h2 + p {
   margin-top: var(--space-xs);
 }
 .b-footer__brand > .text-body + .l-flex-group, .b-footer__brand > .text-info-hint + .l-flex-group, .b-footer__brand > p + .l-flex-group {
@@ -1251,7 +1251,7 @@ body.is-lab-active .b-navbar__search .close-icon {
 .b-footer__group > * + * {
   margin-top: var(--space-md);
 }
-.b-footer__group > .text-data + .text-hero, .b-footer__group > .ui-info-tag + .text-hero, .b-catalog-header .b-footer__group > .index + .text-hero, .b-footer__group > .b-alphabet-nav__char + .text-hero, .b-footer__group > .b-static-card__index + .text-hero, .b-footer__group > small + .text-hero, .b-navbar__search .b-footer__group > input + .text-hero, .b-footer__group > .ui-button + .text-hero, .b-accordion .b-footer__group > .b-static-card__deco + .text-hero, .b-footer__group > .text-data + h1, .b-footer__group > .ui-info-tag + h1, .b-catalog-header .b-footer__group > .index + h1, .b-footer__group > .b-alphabet-nav__char + h1, .b-footer__group > .b-static-card__index + h1, .b-footer__group > small + h1, .b-navbar__search .b-footer__group > input + h1, .b-footer__group > .ui-button + h1, .b-accordion .b-footer__group > .b-static-card__deco + h1, .b-footer__group > .text-data + .text-heading, .b-footer__group > .ui-info-tag + .text-heading, .b-catalog-header .b-footer__group > .index + .text-heading, .b-footer__group > .b-alphabet-nav__char + .text-heading, .b-footer__group > .b-static-card__index + .text-heading, .b-footer__group > small + .text-heading, .b-navbar__search .b-footer__group > input + .text-heading, .b-footer__group > .ui-button + .text-heading, .b-accordion .b-footer__group > .b-static-card__deco + .text-heading, .b-footer__group > .text-data + h2, .b-footer__group > .ui-info-tag + h2, .b-catalog-header .b-footer__group > .index + h2, .b-footer__group > .b-alphabet-nav__char + h2, .b-footer__group > .b-static-card__index + h2, .b-footer__group > small + h2, .b-navbar__search .b-footer__group > input + h2, .b-footer__group > .ui-button + h2, .b-accordion .b-footer__group > .b-static-card__deco + h2, .b-footer__group > .text-hero + .text-body, .b-footer__group > .text-hero + .text-info-hint, .b-footer__group > h1 + .text-body, .b-footer__group > h1 + .text-info-hint, .b-footer__group > .text-hero + p, .b-footer__group > h1 + p, .b-footer__group > .text-heading + .text-body, .b-footer__group > .text-heading + .text-info-hint, .b-footer__group > h2 + .text-body, .b-footer__group > h2 + .text-info-hint, .b-footer__group > .text-heading + p, .b-footer__group > h2 + p {
+.b-footer__group > .text-data + .text-hero, .b-footer__group > .ui-info-tag + .text-hero, .b-footer__group > .ui-range__header + .text-hero, .b-catalog-header .b-footer__group > .index + .text-hero, .b-footer__group > .b-alphabet-nav__char + .text-hero, .b-footer__group > .b-static-card__index + .text-hero, .b-footer__group > small + .text-hero, .b-navbar__search .b-footer__group > input + .text-hero, .b-footer__group > .ui-button + .text-hero, .b-accordion .b-footer__group > .b-static-card__deco + .text-hero, .b-footer__group > .text-data + h1, .b-footer__group > .ui-info-tag + h1, .b-footer__group > .ui-range__header + h1, .b-catalog-header .b-footer__group > .index + h1, .b-footer__group > .b-alphabet-nav__char + h1, .b-footer__group > .b-static-card__index + h1, .b-footer__group > small + h1, .b-navbar__search .b-footer__group > input + h1, .b-footer__group > .ui-button + h1, .b-accordion .b-footer__group > .b-static-card__deco + h1, .b-footer__group > .text-data + .text-heading, .b-footer__group > .ui-info-tag + .text-heading, .b-footer__group > .ui-range__header + .text-heading, .b-catalog-header .b-footer__group > .index + .text-heading, .b-footer__group > .b-alphabet-nav__char + .text-heading, .b-footer__group > .b-static-card__index + .text-heading, .b-footer__group > small + .text-heading, .b-navbar__search .b-footer__group > input + .text-heading, .b-footer__group > .ui-button + .text-heading, .b-accordion .b-footer__group > .b-static-card__deco + .text-heading, .b-footer__group > .text-data + h2, .b-footer__group > .ui-info-tag + h2, .b-footer__group > .ui-range__header + h2, .b-catalog-header .b-footer__group > .index + h2, .b-footer__group > .b-alphabet-nav__char + h2, .b-footer__group > .b-static-card__index + h2, .b-footer__group > small + h2, .b-navbar__search .b-footer__group > input + h2, .b-footer__group > .ui-button + h2, .b-accordion .b-footer__group > .b-static-card__deco + h2, .b-footer__group > .text-hero + .text-body, .b-footer__group > .text-hero + .text-info-hint, .b-footer__group > h1 + .text-body, .b-footer__group > h1 + .text-info-hint, .b-footer__group > .text-hero + p, .b-footer__group > h1 + p, .b-footer__group > .text-heading + .text-body, .b-footer__group > .text-heading + .text-info-hint, .b-footer__group > h2 + .text-body, .b-footer__group > h2 + .text-info-hint, .b-footer__group > .text-heading + p, .b-footer__group > h2 + p {
   margin-top: var(--space-xs);
 }
 .b-footer__group > .text-body + .l-flex-group, .b-footer__group > .text-info-hint + .l-flex-group, .b-footer__group > p + .l-flex-group {
@@ -1265,7 +1265,7 @@ body.is-lab-active .b-navbar__search .close-icon {
 .b-footer__group .l-flow > * + * {
   margin-top: var(--space-xs);
 }
-.b-footer__group .l-flow > .text-data + .text-hero, .b-footer__group .l-flow > .ui-info-tag + .text-hero, .b-footer__group .b-catalog-header .l-flow > .index + .text-hero, .b-catalog-header .b-footer__group .l-flow > .index + .text-hero, .b-footer__group .l-flow > .b-alphabet-nav__char + .text-hero, .b-footer__group .l-flow > .b-static-card__index + .text-hero, .b-footer__group .l-flow > small + .text-hero, .b-footer__group .b-navbar__search .l-flow > input + .text-hero, .b-navbar__search .b-footer__group .l-flow > input + .text-hero, .b-footer__group .l-flow > .ui-button + .text-hero, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + .text-hero, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + .text-hero, .b-footer__group .l-flow > .text-data + h1, .b-footer__group .l-flow > .ui-info-tag + h1, .b-footer__group .b-catalog-header .l-flow > .index + h1, .b-catalog-header .b-footer__group .l-flow > .index + h1, .b-footer__group .l-flow > .b-alphabet-nav__char + h1, .b-footer__group .l-flow > .b-static-card__index + h1, .b-footer__group .l-flow > small + h1, .b-footer__group .b-navbar__search .l-flow > input + h1, .b-navbar__search .b-footer__group .l-flow > input + h1, .b-footer__group .l-flow > .ui-button + h1, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + h1, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + h1, .b-footer__group .l-flow > .text-data + .text-heading, .b-footer__group .l-flow > .ui-info-tag + .text-heading, .b-footer__group .b-catalog-header .l-flow > .index + .text-heading, .b-catalog-header .b-footer__group .l-flow > .index + .text-heading, .b-footer__group .l-flow > .b-alphabet-nav__char + .text-heading, .b-footer__group .l-flow > .b-static-card__index + .text-heading, .b-footer__group .l-flow > small + .text-heading, .b-footer__group .b-navbar__search .l-flow > input + .text-heading, .b-navbar__search .b-footer__group .l-flow > input + .text-heading, .b-footer__group .l-flow > .ui-button + .text-heading, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + .text-heading, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + .text-heading, .b-footer__group .l-flow > .text-data + h2, .b-footer__group .l-flow > .ui-info-tag + h2, .b-footer__group .b-catalog-header .l-flow > .index + h2, .b-catalog-header .b-footer__group .l-flow > .index + h2, .b-footer__group .l-flow > .b-alphabet-nav__char + h2, .b-footer__group .l-flow > .b-static-card__index + h2, .b-footer__group .l-flow > small + h2, .b-footer__group .b-navbar__search .l-flow > input + h2, .b-navbar__search .b-footer__group .l-flow > input + h2, .b-footer__group .l-flow > .ui-button + h2, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + h2, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + h2, .b-footer__group .l-flow > .text-hero + .text-body, .b-footer__group .l-flow > .text-hero + .text-info-hint, .b-footer__group .l-flow > h1 + .text-body, .b-footer__group .l-flow > h1 + .text-info-hint, .b-footer__group .l-flow > .text-hero + p, .b-footer__group .l-flow > h1 + p, .b-footer__group .l-flow > .text-heading + .text-body, .b-footer__group .l-flow > .text-heading + .text-info-hint, .b-footer__group .l-flow > h2 + .text-body, .b-footer__group .l-flow > h2 + .text-info-hint, .b-footer__group .l-flow > .text-heading + p, .b-footer__group .l-flow > h2 + p {
+.b-footer__group .l-flow > .text-data + .text-hero, .b-footer__group .l-flow > .ui-info-tag + .text-hero, .b-footer__group .l-flow > .ui-range__header + .text-hero, .b-footer__group .b-catalog-header .l-flow > .index + .text-hero, .b-catalog-header .b-footer__group .l-flow > .index + .text-hero, .b-footer__group .l-flow > .b-alphabet-nav__char + .text-hero, .b-footer__group .l-flow > .b-static-card__index + .text-hero, .b-footer__group .l-flow > small + .text-hero, .b-footer__group .b-navbar__search .l-flow > input + .text-hero, .b-navbar__search .b-footer__group .l-flow > input + .text-hero, .b-footer__group .l-flow > .ui-button + .text-hero, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + .text-hero, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + .text-hero, .b-footer__group .l-flow > .text-data + h1, .b-footer__group .l-flow > .ui-info-tag + h1, .b-footer__group .l-flow > .ui-range__header + h1, .b-footer__group .b-catalog-header .l-flow > .index + h1, .b-catalog-header .b-footer__group .l-flow > .index + h1, .b-footer__group .l-flow > .b-alphabet-nav__char + h1, .b-footer__group .l-flow > .b-static-card__index + h1, .b-footer__group .l-flow > small + h1, .b-footer__group .b-navbar__search .l-flow > input + h1, .b-navbar__search .b-footer__group .l-flow > input + h1, .b-footer__group .l-flow > .ui-button + h1, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + h1, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + h1, .b-footer__group .l-flow > .text-data + .text-heading, .b-footer__group .l-flow > .ui-info-tag + .text-heading, .b-footer__group .l-flow > .ui-range__header + .text-heading, .b-footer__group .b-catalog-header .l-flow > .index + .text-heading, .b-catalog-header .b-footer__group .l-flow > .index + .text-heading, .b-footer__group .l-flow > .b-alphabet-nav__char + .text-heading, .b-footer__group .l-flow > .b-static-card__index + .text-heading, .b-footer__group .l-flow > small + .text-heading, .b-footer__group .b-navbar__search .l-flow > input + .text-heading, .b-navbar__search .b-footer__group .l-flow > input + .text-heading, .b-footer__group .l-flow > .ui-button + .text-heading, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + .text-heading, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + .text-heading, .b-footer__group .l-flow > .text-data + h2, .b-footer__group .l-flow > .ui-info-tag + h2, .b-footer__group .l-flow > .ui-range__header + h2, .b-footer__group .b-catalog-header .l-flow > .index + h2, .b-catalog-header .b-footer__group .l-flow > .index + h2, .b-footer__group .l-flow > .b-alphabet-nav__char + h2, .b-footer__group .l-flow > .b-static-card__index + h2, .b-footer__group .l-flow > small + h2, .b-footer__group .b-navbar__search .l-flow > input + h2, .b-navbar__search .b-footer__group .l-flow > input + h2, .b-footer__group .l-flow > .ui-button + h2, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + h2, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + h2, .b-footer__group .l-flow > .text-hero + .text-body, .b-footer__group .l-flow > .text-hero + .text-info-hint, .b-footer__group .l-flow > h1 + .text-body, .b-footer__group .l-flow > h1 + .text-info-hint, .b-footer__group .l-flow > .text-hero + p, .b-footer__group .l-flow > h1 + p, .b-footer__group .l-flow > .text-heading + .text-body, .b-footer__group .l-flow > .text-heading + .text-info-hint, .b-footer__group .l-flow > h2 + .text-body, .b-footer__group .l-flow > h2 + .text-info-hint, .b-footer__group .l-flow > .text-heading + p, .b-footer__group .l-flow > h2 + p {
   margin-top: var(--space-xs);
 }
 .b-footer__group .l-flow > .text-body + .l-flex-group, .b-footer__group .l-flow > .text-info-hint + .l-flex-group, .b-footer__group .l-flow > p + .l-flex-group {
@@ -1294,7 +1294,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   justify-content: space-between;
   align-items: center;
 }
-.b-footer__bottom .text-data, .b-footer__bottom .ui-info-tag, .b-footer__bottom .b-catalog-header .index, .b-catalog-header .b-footer__bottom .index, .b-footer__bottom .b-alphabet-nav__char, .b-footer__bottom .b-static-card__index, .b-footer__bottom small, .b-footer__bottom .b-navbar__search input, .b-navbar__search .b-footer__bottom input, .b-footer__bottom .ui-button, .b-footer__bottom .b-accordion .b-static-card__deco, .b-accordion .b-footer__bottom .b-static-card__deco {
+.b-footer__bottom .text-data, .b-footer__bottom .ui-info-tag, .b-footer__bottom .ui-range__header, .b-footer__bottom .b-catalog-header .index, .b-catalog-header .b-footer__bottom .index, .b-footer__bottom .b-alphabet-nav__char, .b-footer__bottom .b-static-card__index, .b-footer__bottom small, .b-footer__bottom .b-navbar__search input, .b-navbar__search .b-footer__bottom input, .b-footer__bottom .ui-button, .b-footer__bottom .b-accordion .b-static-card__deco, .b-accordion .b-footer__bottom .b-static-card__deco {
   font-size: 10px;
   opacity: calc(var(--s-text-op-idle) * 0.6);
   letter-spacing: var(--ls-caption);
@@ -1400,7 +1400,7 @@ body.is-lab-active .b-navbar__search .close-icon {
 .b-static-card__viewport > * + * {
   margin-top: var(--space-md);
 }
-.b-static-card__viewport > .text-data + .text-hero, .b-static-card__viewport > .ui-info-tag + .text-hero, .b-catalog-header .b-static-card__viewport > .index + .text-hero, .b-static-card__viewport > .b-alphabet-nav__char + .text-hero, .b-static-card__viewport > .b-static-card__index + .text-hero, .b-static-card__viewport > small + .text-hero, .b-navbar__search .b-static-card__viewport > input + .text-hero, .b-static-card__viewport > .ui-button + .text-hero, .b-accordion .b-static-card__viewport > .b-static-card__deco + .text-hero, .b-static-card__viewport > .text-data + h1, .b-static-card__viewport > .ui-info-tag + h1, .b-catalog-header .b-static-card__viewport > .index + h1, .b-static-card__viewport > .b-alphabet-nav__char + h1, .b-static-card__viewport > .b-static-card__index + h1, .b-static-card__viewport > small + h1, .b-navbar__search .b-static-card__viewport > input + h1, .b-static-card__viewport > .ui-button + h1, .b-accordion .b-static-card__viewport > .b-static-card__deco + h1, .b-static-card__viewport > .text-data + .text-heading, .b-static-card__viewport > .ui-info-tag + .text-heading, .b-catalog-header .b-static-card__viewport > .index + .text-heading, .b-static-card__viewport > .b-alphabet-nav__char + .text-heading, .b-static-card__viewport > .b-static-card__index + .text-heading, .b-static-card__viewport > small + .text-heading, .b-navbar__search .b-static-card__viewport > input + .text-heading, .b-static-card__viewport > .ui-button + .text-heading, .b-accordion .b-static-card__viewport > .b-static-card__deco + .text-heading, .b-static-card__viewport > .text-data + h2, .b-static-card__viewport > .ui-info-tag + h2, .b-catalog-header .b-static-card__viewport > .index + h2, .b-static-card__viewport > .b-alphabet-nav__char + h2, .b-static-card__viewport > .b-static-card__index + h2, .b-static-card__viewport > small + h2, .b-navbar__search .b-static-card__viewport > input + h2, .b-static-card__viewport > .ui-button + h2, .b-accordion .b-static-card__viewport > .b-static-card__deco + h2, .b-static-card__viewport > .text-hero + .text-body, .b-static-card__viewport > .text-hero + .text-info-hint, .b-static-card__viewport > h1 + .text-body, .b-static-card__viewport > h1 + .text-info-hint, .b-static-card__viewport > .text-hero + p, .b-static-card__viewport > h1 + p, .b-static-card__viewport > .text-heading + .text-body, .b-static-card__viewport > .text-heading + .text-info-hint, .b-static-card__viewport > h2 + .text-body, .b-static-card__viewport > h2 + .text-info-hint, .b-static-card__viewport > .text-heading + p, .b-static-card__viewport > h2 + p {
+.b-static-card__viewport > .text-data + .text-hero, .b-static-card__viewport > .ui-info-tag + .text-hero, .b-static-card__viewport > .ui-range__header + .text-hero, .b-catalog-header .b-static-card__viewport > .index + .text-hero, .b-static-card__viewport > .b-alphabet-nav__char + .text-hero, .b-static-card__viewport > .b-static-card__index + .text-hero, .b-static-card__viewport > small + .text-hero, .b-navbar__search .b-static-card__viewport > input + .text-hero, .b-static-card__viewport > .ui-button + .text-hero, .b-accordion .b-static-card__viewport > .b-static-card__deco + .text-hero, .b-static-card__viewport > .text-data + h1, .b-static-card__viewport > .ui-info-tag + h1, .b-static-card__viewport > .ui-range__header + h1, .b-catalog-header .b-static-card__viewport > .index + h1, .b-static-card__viewport > .b-alphabet-nav__char + h1, .b-static-card__viewport > .b-static-card__index + h1, .b-static-card__viewport > small + h1, .b-navbar__search .b-static-card__viewport > input + h1, .b-static-card__viewport > .ui-button + h1, .b-accordion .b-static-card__viewport > .b-static-card__deco + h1, .b-static-card__viewport > .text-data + .text-heading, .b-static-card__viewport > .ui-info-tag + .text-heading, .b-static-card__viewport > .ui-range__header + .text-heading, .b-catalog-header .b-static-card__viewport > .index + .text-heading, .b-static-card__viewport > .b-alphabet-nav__char + .text-heading, .b-static-card__viewport > .b-static-card__index + .text-heading, .b-static-card__viewport > small + .text-heading, .b-navbar__search .b-static-card__viewport > input + .text-heading, .b-static-card__viewport > .ui-button + .text-heading, .b-accordion .b-static-card__viewport > .b-static-card__deco + .text-heading, .b-static-card__viewport > .text-data + h2, .b-static-card__viewport > .ui-info-tag + h2, .b-static-card__viewport > .ui-range__header + h2, .b-catalog-header .b-static-card__viewport > .index + h2, .b-static-card__viewport > .b-alphabet-nav__char + h2, .b-static-card__viewport > .b-static-card__index + h2, .b-static-card__viewport > small + h2, .b-navbar__search .b-static-card__viewport > input + h2, .b-static-card__viewport > .ui-button + h2, .b-accordion .b-static-card__viewport > .b-static-card__deco + h2, .b-static-card__viewport > .text-hero + .text-body, .b-static-card__viewport > .text-hero + .text-info-hint, .b-static-card__viewport > h1 + .text-body, .b-static-card__viewport > h1 + .text-info-hint, .b-static-card__viewport > .text-hero + p, .b-static-card__viewport > h1 + p, .b-static-card__viewport > .text-heading + .text-body, .b-static-card__viewport > .text-heading + .text-info-hint, .b-static-card__viewport > h2 + .text-body, .b-static-card__viewport > h2 + .text-info-hint, .b-static-card__viewport > .text-heading + p, .b-static-card__viewport > h2 + p {
   margin-top: var(--space-xs);
 }
 .b-static-card__viewport > .text-body + .l-flex-group, .b-static-card__viewport > .text-info-hint + .l-flex-group, .b-static-card__viewport > p + .l-flex-group {
@@ -1944,7 +1944,50 @@ body.is-lab-active #app-wrapper {
    Batura Library | Atomic Controls [Surgical Divider Sync]
    ============================================================ */
 /* 1. UI-RANGE: Инженерный ползунок */
-input[type=range] {
+.ui-range {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: var(--space-md);
+  --_local-stroke-op: var(--s-stroke-op-idle);
+  --_local-text-op: var(--s-text-op-idle);
+  transition: opacity var(--d-fast) var(--e-out);
+}
+.ui-range > * + * {
+  margin-top: var(--space-xs);
+}
+.ui-range > .text-data + .text-hero, .ui-range > .ui-info-tag + .text-hero, .ui-range > .ui-range__header + .text-hero, .ui-range > small + .text-hero, .b-navbar__search .ui-range > input + .text-hero, .ui-range > .ui-button + .text-hero, .b-accordion .ui-range > .b-static-card__deco + .text-hero, .ui-range > .b-static-card__index + .text-hero, .ui-range > .b-alphabet-nav__char + .text-hero, .b-catalog-header .ui-range > .index + .text-hero, .ui-range > .text-data + h1, .ui-range > .ui-info-tag + h1, .ui-range > .ui-range__header + h1, .ui-range > small + h1, .b-navbar__search .ui-range > input + h1, .ui-range > .ui-button + h1, .b-accordion .ui-range > .b-static-card__deco + h1, .ui-range > .b-static-card__index + h1, .ui-range > .b-alphabet-nav__char + h1, .b-catalog-header .ui-range > .index + h1, .ui-range > .text-data + .text-heading, .ui-range > .ui-info-tag + .text-heading, .ui-range > .ui-range__header + .text-heading, .ui-range > small + .text-heading, .b-navbar__search .ui-range > input + .text-heading, .ui-range > .ui-button + .text-heading, .b-accordion .ui-range > .b-static-card__deco + .text-heading, .ui-range > .b-static-card__index + .text-heading, .ui-range > .b-alphabet-nav__char + .text-heading, .b-catalog-header .ui-range > .index + .text-heading, .ui-range > .text-data + h2, .ui-range > .ui-info-tag + h2, .ui-range > .ui-range__header + h2, .ui-range > small + h2, .b-navbar__search .ui-range > input + h2, .ui-range > .ui-button + h2, .b-accordion .ui-range > .b-static-card__deco + h2, .ui-range > .b-static-card__index + h2, .ui-range > .b-alphabet-nav__char + h2, .b-catalog-header .ui-range > .index + h2, .ui-range > .text-hero + .text-body, .ui-range > .text-hero + .text-info-hint, .ui-range > h1 + .text-body, .ui-range > h1 + .text-info-hint, .ui-range > .text-hero + p, .ui-range > h1 + p, .ui-range > .text-heading + .text-body, .ui-range > .text-heading + .text-info-hint, .ui-range > h2 + .text-body, .ui-range > h2 + .text-info-hint, .ui-range > .text-heading + p, .ui-range > h2 + p {
+  margin-top: var(--space-xs);
+}
+.ui-range > .text-body + .l-flex-group, .ui-range > .text-info-hint + .l-flex-group, .ui-range > p + .l-flex-group {
+  margin-top: var(--space-lg);
+}
+.ui-range__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
+}
+.ui-range__header .value {
+  color: rgba(var(--p-white-rgb), var(--_local-text-op));
+  font-weight: 500;
+  transition: color var(--d-fast) var(--e-out);
+  cursor: text;
+  min-width: 3ch;
+  text-align: right;
+  outline: none;
+  margin-right: -0.15em;
+}
+.ui-range__header .value:hover {
+  --_local-text-op: 1;
+}
+.ui-range__header .value:focus {
+  --_local-text-op: 1;
+  color: rgba(var(--p-white-rgb), 1);
+}
+.ui-range input[type=range] {
   -webkit-appearance: none;
   -moz-appearance: none;
        appearance: none;
@@ -1954,52 +1997,87 @@ input[type=range] {
   cursor: pointer;
   outline: none;
   display: block;
-  margin: 0;
-  /* 1. ТРЕК (ПОЛОСКА) */
-  /* 2. КРУЖОЧЕК (THUMB) */
-  /* СОСТОЯНИЯ */
 }
-input[type=range]::-webkit-slider-runnable-track {
-  -webkit-appearance: none;
+.ui-range input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
-  /* Используем токен толщины напрямую в высоту */
-  height: var(--s-stroke-width);
-  /* Заливка цветом вместо тени гарантирует видимость на всех смартфонах */
-  background-color: rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
+  /* Ставим фиксированные 2px для стабильности, чтобы линия не исчезала */
+  height: 2px;
+  background: transparent;
   border: none;
-  -webkit-transition: background-color var(--d-fast) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out);
+  /* Возвращаем твой оригинальный метод через тень, он самый точный для ПК */
+  box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
+  -webkit-transition: box-shadow var(--d-fast) var(--e-out);
+  transition: box-shadow var(--d-fast) var(--e-out);
 }
-input[type=range]::-webkit-slider-thumb {
+.ui-range input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  /* Убираем системную рамку (ту самую серую обводку) */
-  border: 0;
   height: 12px;
   width: 12px;
   border-radius: 50%;
-  background-color: rgb(var(--p-white-rgb));
-  /* ВМЕСТО МИКСИНА: Прямые свойства для мобильной стабильности.
-     Мы используем те же токены, что и в glass-surface, но без псевдоэлементов. */
-  box-shadow: 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), 0.3);
-  -webkit-backdrop-filter: blur(var(--s-glass-blur));
-  backdrop-filter: blur(var(--s-glass-blur));
-  /* ЦЕНТРОВКА: (высота_трека / 2) - (радиус_кружка) */
-  margin-top: calc(var(--s-stroke-width) / 2 - 6px);
+  background: rgb(var(--p-white-rgb));
+  position: relative;
+  border-radius: 50%;
+  isolation: isolate;
+  background-clip: padding-box;
+  background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
+  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
+  -webkit-transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  /* ФИКС: Удаляем внешнее свечение (glare) из миксина */
+  --_glare-op: 0 !important;
+  --_bg-op: 1;
+  --_stroke-op: 0.3;
+  margin-top: -5px;
   -webkit-transition: transform var(--d-fast) var(--e-out);
   transition: transform var(--d-fast) var(--e-out);
   will-change: transform;
+  border: none;
 }
-input[type=range]:hover::-webkit-slider-thumb {
+.ui-range input[type=range]::-webkit-slider-thumb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 0%, rgba(var(--m-glass-base-rgb), 0.4), transparent);
+  opacity: var(--_glare-op, 0);
+  -webkit-transition: opacity var(--d-fast) var(--e-out);
+  transition: opacity var(--d-fast) var(--e-out);
+}
+.ui-range input[type=range]:hover::-webkit-slider-thumb {
   transform: scale(1.2);
 }
-input[type=range]:active {
+.ui-range input[type=range]:active {
   --_local-stroke-op: var(--s-stroke-op-active);
 }
-input[type=range]:active::-webkit-slider-thumb {
+.ui-range input[type=range]:active::-webkit-slider-thumb {
   transform: scale(1.1);
 }
 
+/* ФИКС ДЛЯ МОБИЛОК (чтобы кружки и линии не баговались) */
+@media (max-width: 1100px) {
+  .ui-range input[type=range]::-webkit-slider-runnable-track {
+    /* На мобилках заменяем тень на заливку, чтобы линия гарантированно была видна */
+    background-color: rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
+    box-shadow: none;
+    height: var(--s-stroke-width);
+  }
+  .ui-range input[type=range]::-webkit-slider-thumb {
+    /* Убираем внутреннюю тень миксина, которая дает серую обводку */
+    box-shadow: none;
+    /* Оставляем только чистый белый круг с блюром */
+    background: rgb(var(--p-white-rgb));
+    border: 1px solid rgba(var(--m-glass-base-rgb), 0.2);
+    margin-top: calc(var(--s-stroke-width) / 2 - 6px);
+  }
+}
 /* 2. UI-INFO: Группа заголовка и морфинг */
 .l-lab-interface .ui-info-group {
   display: flex;
