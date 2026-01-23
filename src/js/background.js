@@ -136,11 +136,20 @@
         }
     };
 
-    function resize() {
-        const w = window.innerWidth, h = window.innerHeight;
-        renderer.setSize(w, h);
+function resize() {
+    // Добавляем запас в 100 пикселей (по 50 с каждой стороны)
+    const offset = 100;
+    const w = window.innerWidth + offset;
+    const h = window.innerHeight + offset;
+
+    // 1. Устанавливаем размер рендерера БОЛЬШЕ экрана
+    renderer.setSize(w, h);
+    
+    // 2. Передаем в шейдер новое разрешение, чтобы картинка не растянулась
+    if (uniforms.u_res) {
         uniforms.u_res.value.set(w, h);
     }
+}
     window.addEventListener('resize', resize);
     resize();
 

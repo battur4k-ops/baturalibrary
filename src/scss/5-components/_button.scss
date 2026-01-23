@@ -1,19 +1,18 @@
 /* ============================================================
-   5-COMPONENTS / _BUTTON.SCSS
-   Batura Library | Unified Button v24.1 [Vertical Height Sync]
+   5-COMPONENTS / _BUTTON.SCSS (Fixed Centering & Jitter)
+   Batura Library | Unified Button v24.4 [Clean Center]
    ============================================================ */
 
 .ui-button {
   text-decoration: none;
   color: inherit;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
   
-  /* 1. ГЕОМЕТРИЯ (Single Source of Truth для Высоты) */
-  /* Все кнопки в системе теперь имеют строго одну высоту */
+  /* 1. ГЕОМЕТРИЯ */
   --btn-h: var(--ui-h-btn-master); 
-  --btn-radius: calc(var(--radius-master) * 0.4);
+  --btn-radius: calc(var(--radius-master) * 0.4); 
   
-  /* ШИРИНА (W): Автоматическая по тексту, как ты и просил */
   width: auto;
   min-width: 0; 
   padding-inline: var(--ui-p-btn); 
@@ -24,15 +23,31 @@
   --_text-op: var(--s-text-op-idle);
 
   @include glass-surface(var(--btn-radius));
+  
+  /* ПОРЯДОК ВАЖЕН: сначала экстенд, потом переопределение */
   @extend .text-data;
+  line-height: 1; // Сбрасываем line-height от .text-data
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: var(--btn-h); // Принудительная высота для всех
+  height: var(--btn-h);
+  
+  /* ЦЕНТРИРОВАНИЕ И АНТИ-ДЕРГАНИЕ */
+  /* padding-top: 1px мягко опускает текст, если он кажется слишком высоким */
+  padding-top: 1px; 
+  backface-visibility: hidden; // Убирает микро-дрожание при переходах
+  
   cursor: pointer;
   z-index: 10;
   color: rgba(var(--p-white-rgb), var(--_text-op));
+
+  /* ВНУТРЕННИЙ ТЕКСТ */
+  span {
+    display: block;
+    line-height: 1; // Гарантируем чистое межстрочное расстояние
+    pointer-events: none;
+  }
 
   /* Motion DNA */
   transition: 
@@ -65,22 +80,10 @@
   }
 
   /* ============================================================
-     КОНТЕКСТНЫЕ КАРТРИДЖИ
+     3. ТЕГИ И ПЕРЕКЛЮЧАТЕЛИ ЛАБЫ
      ============================================================ */
-
-  /* ============================================================
-     3. ТЕГИ (Синхронизация с системным радиусом)
-     ============================================================ */
-  #tagsContainer & {
-    /* ХИРУРГИЧЕСКОЕ ИСПРАВЛЕНИЕ:
-       Удаляем жесткие 100px. Теперь теги наследуют системный 
-       --btn-radius, который зависит от твоего --radius-master. */
-    
-    // Если ты хочешь, чтобы теги были ЧУТЬ круглее обычных кнопок, 
-    // используй коэффициент от мастера, а не фиксированное число:
-    --btn-radius: var(--radius-master); 
-
-    --btn-h: var(--ui-h-btn-master); // Высота как у всех
+  #tagsContainer &, .lab-mobile-switch & {
+    --btn-h: var(--ui-h-btn-master);
     padding-inline: calc(var(--unit) * 6);
     transition-delay: 0s;
     
@@ -91,30 +94,31 @@
       --_bg-op: var(--s-glass-op-active); 
       --_stroke-op: var(--s-stroke-op-active); 
       --_text-op: 1; 
+      backdrop-filter: blur(15px);
     }
   }
 
-  /* 2. НАВБАР (Исключение: масштабируется под высоту Nav) */
+  /* 2. НАВБАР */
   .b-navbar & {
-    --btn-h: var(--nav-content-h); // Единственное место, где высота другая
+    --btn-h: var(--nav-content-h); 
     --btn-radius: var(--nav-inner-radius);
     padding-inline: var(--space-xs);
     
     &--logo, &--close {
-      width: var(--btn-h); // Квадратность только здесь
+      width: var(--btn-h);
       padding: 0;
       aspect-ratio: 1/1;
     }
   }
 
-  /* 3. КНОПКА ЗАКРЫТИЯ (Если используется вне навбара) */
+  /* 3. КНОПКА ЗАКРЫТИЯ */
   &--close:not(.b-navbar &) {
     width: var(--btn-h);
     padding: 0;
   }
 
   /* Вне контекста */
-  &:not(.b-static-card &):not(.b-card &):not(.b-navbar &):not(#tagsContainer &) {
+  &:not(.b-static-card &):not(.b-card &):not(.b-navbar &):not(#tagsContainer &):not(.lab-mobile-switch &) {
     --_bg-op: var(--s-glass-op-hover);
     --_stroke-op: var(--s-stroke-op-hover);
   }

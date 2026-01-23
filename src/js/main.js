@@ -1,6 +1,6 @@
 /* ============================================================
    JS / MAIN.JS
-   Batura Library | Master Logic v7.8 [Lab & Scroll Sync]
+   Batura Library | Master Logic v7.9 [Lab & Blur Sync Optimized]
    ============================================================ */
 
 /**
@@ -45,24 +45,53 @@ class ViewportPhysics {
 
 /**
  * THEME CONTROLLER
+ * Оптимизирован для предотвращения "белых пятен" и корректной работы блюра на краях.
  */
 class ThemeController {
     constructor() {
         this.root = document.documentElement;
-        this.defaultColor = '0, 102, 255';
+        this.defaultCategory = 'blue';
+        this.defaultAccent = '0, 102, 255';
         this.init();
     }
+
+    /**
+     * Вспомогательный метод для применения темы к CSS-переменным и фону вьюпорта
+     */
+    applyTheme(category) {
+        const style = getComputedStyle(this.root);
+        
+        // 1. Обновляем акцентный цвет (RGB)
+        const accentRGB = style.getPropertyValue(`--p-${category}-rgb`).trim();
+        if (accentRGB) {
+            this.root.style.setProperty('--theme-accent-rgb', accentRGB);
+        }
+
+        // 2. СИНХРОНИЗАЦИЯ ПОДЛОЖКИ (Fix для блюра и мобильного скролла)
+        // Берем глубокий цвет темы и красим сам HTML элемент. 
+        // Это убирает белое пространство, если шейдер не успевает за скроллом.
+        const deepColor = style.getPropertyValue(`--p-${category}-deep`).trim();
+        if (deepColor) {
+            this.root.style.backgroundColor = deepColor;
+        }
+    }
+
     init() {
+        // Устанавливаем начальный фон при загрузке
+        this.applyTheme(this.defaultCategory);
+
         document.addEventListener('mouseover', (e) => {
             const card = e.target.closest('.b-static-card');
             if (!card) return;
-            const category = card.dataset.category || 'blue';
-            const colorValue = getComputedStyle(this.root).getPropertyValue(`--p-${category}-rgb`).trim();
-            if (colorValue) this.root.style.setProperty('--theme-accent-rgb', colorValue);
+            
+            const category = card.dataset.category || this.defaultCategory;
+            this.applyTheme(category);
         });
+
         document.addEventListener('mouseout', (e) => {
             if (e.target.closest('.b-static-card')) {
-                this.root.style.setProperty('--theme-accent-rgb', this.defaultColor);
+                // Возврат к стандартной теме
+                this.applyTheme(this.defaultCategory);
             }
         });
     }
@@ -103,26 +132,26 @@ const startBatura = async () => {
     const LenisModule = await safeImport('https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/+esm');
     if (LenisModule) {
         const Lenis = LenisModule.default;
-        const lenis = new Lenis({ duration: 1.2, smoothWheel: true });
+        const lenis = new Lenis({ 
+            duration: 1.2, 
+            smoothWheel: true,
+            // Для мобилок важно, чтобы Lenis корректно считал размеры
+            syncTouch: true 
+        });
 
-        // Синхронизация высоты при отрисовке LEGO-блоков
         window.addEventListener('batura:contentReady', () => {
             requestAnimationFrame(() => {
                 lenis.resize();
             });
         });
 
-        // [NEW] БЛОКИРОВКА СКРОЛЛА ПРИ ОТКРЫТИИ ЛАБЫ
-        window.addEventListener('batura:labOpened', () => {
-            lenis.stop();
-        });
+        window.addEventListener('batura:labOpened', () => lenis.stop());
+        window.addEventListener('batura:labClosed', () => lenis.start());
 
-        // [NEW] РАЗБЛОКИРОВКА ПРИ ЗАКРЫТИИ
-        window.addEventListener('batura:labClosed', () => {
-            lenis.start();
-        });
-
-        const scrollFn = (time) => { lenis.raf(time); requestAnimationFrame(scrollFn); };
+        const scrollFn = (time) => { 
+            lenis.raf(time); 
+            requestAnimationFrame(scrollFn); 
+        };
         requestAnimationFrame(scrollFn);
     }
 
@@ -131,12 +160,8 @@ const startBatura = async () => {
     await safeImport('./components/footer.js');
 
     // Г) Динамический Контент (LEGO Constructor)
-    
-    // ИНИЦИАЛИЗАЦИЯ ЛАБОРАТОРИИ
     const LabModule = await safeImport('./components/lab-manager.js');
-    if (LabModule) {
-        new LabModule.LabManager(); 
-    }
+    if (LabModule) new LabModule.LabManager(); 
 
     if (document.getElementById('mainAccordion')) {
         const AccModule = await safeImport('./components/accordion-manager.js');
@@ -153,7 +178,7 @@ const startBatura = async () => {
         if (ExManagerModule) new ExManagerModule.ExpressionManager();
     }
 
-    console.log('Batura System V7.8: Lab Engine & Scroll Control Integrated.');
+    console.log('Batura System V7.9: Lab Engine & Blur Sync Integrated.');
 };
 
 startBatura();

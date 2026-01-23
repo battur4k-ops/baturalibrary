@@ -25,6 +25,8 @@ export class LabManager {
         });
     }
 
+   /* === ПОПРАВЛЕННЫЙ JS === */
+
     async open(labID) {
         if (this.cleanupTimeout) { clearTimeout(this.cleanupTimeout); this.cleanupTimeout = null; }
         const data = EXPRESSIONS_DB.find(item => item.labID === labID);
@@ -35,11 +37,9 @@ export class LabManager {
             const config = module.labConfig;
             this.renderLayout(config);
             
-            // Инициализируем скролл (Lenis только для больших экранов)
-            if (window.innerWidth > 1100) {
-                await this.initScroll('left');
-                await this.initScroll('right');
-            }
+            // УБРАЛИ ПРОВЕРКУ > 1100: Теперь скролл плавный везде
+            await this.initScroll('left');
+            await this.initScroll('right');
             
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
@@ -59,18 +59,26 @@ export class LabManager {
         
         const LenisModule = await import('https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/+esm');
         const Lenis = LenisModule.default;
-        const lenisInstance = new Lenis({ wrapper, content, duration: 1.2, smoothWheel: true });
+        
+        // Настройки для мобилки: чуть выше duration для вязкости
+        const lenisInstance = new Lenis({ 
+            wrapper, 
+            content, 
+            duration: 1.4, 
+            smoothWheel: true,
+            touchMultiplier: 2 // Делает свайп пальцем более отзывчивым
+        });
         
         if (side === 'left') this.leftLenis = lenisInstance; else this.rightLenis = lenisInstance;
         
         const scrollFn = (time) => {
+            // УБРАЛИ return для мобилок: RAF теперь работает всегда
             if (this.leftLenis && side === 'left') this.leftLenis.raf(time);
             if (this.rightLenis && side === 'right') this.rightLenis.raf(time);
             requestAnimationFrame(scrollFn);
         };
         requestAnimationFrame(scrollFn);
     }
-
 renderLayout(config) {
         const setupCol = this.interface.querySelector('.l-lab-interface__column--setup');
         const engineCol = this.interface.querySelector('.l-lab-interface__column--engine');

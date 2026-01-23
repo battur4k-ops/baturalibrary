@@ -13,30 +13,19 @@
 }
 
 html {
-  /* 
-     Закон [LAW:FLUID_SCALABILITY]:
-     Используем min-height вместо height, чтобы позволить 
-     документу расти вместе с динамическим контентом.
-  */
   width: 100%;
   min-height: 100%;
   overflow-x: hidden;
   
-  /* Резервируем место под скроллбар без !important */
+  /* ФИКС: Задаем базовый цвет здесь, чтобы блюр не видел "пустоту" браузера */
+  background-color: var(--color-bg); 
+  
   scrollbar-gutter: stable;
-  
-  /* Базовая типографика Apple */
   -webkit-text-size-adjust: 100%;
-  
-  /* Полное скрытие системного мусора без !important */
   scrollbar-width: none;
   -ms-overflow-style: none;
   
-  &::-webkit-scrollbar { 
-    display: none; 
-  }
-
-  /* Поддержка плавности для Lenis: скролл-бихейвиор должен быть auto */
+  &::-webkit-scrollbar { display: none; }
   scroll-behavior: auto;
   height: -webkit-fill-available;
 }
@@ -99,11 +88,19 @@ img, svg {
 /* LAYER: BACKGROUND (Three.js Shader Sync) */
 #liquid-bg-canvas {
   position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  
+  /* Сдвигаем холст на тот самый offset из JS */
+  top: -50px;
+  left: -50px;
+  
+  /* Растягиваем с учетом вылета */
+  width: calc(100vw + 100px);
+  height: calc(100vh + 100px);
+  
   z-index: var(--z-bg); 
   pointer-events: none;
+  
+  /* Оптимизация для плавности скролла */
   transform: translateZ(0); 
   will-change: transform;
 }
