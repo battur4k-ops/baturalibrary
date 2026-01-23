@@ -1,0 +1,40 @@
+/* ============================================================
+   BATURA LIBRARY | MASTER ARCHITECTURE
+   Professional System Build v7.0 [Modular Design]
+   ============================================================ */
+
+// 1. EXTERNAL DEPENDENCIES
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;700&family=JetBrains+Mono:wght@300;400;700&display=swap');
+
+// 2. LAYER 0: SETTINGS (Генетический код)
+@import '0-settings/tokens';
+
+// 3. LAYER 1: GENERIC (Базовый сброс)
+@import '1-generic/reset';
+
+// 4. LAYER 2: ELEMENTS (Чистые теги)
+@import '2-elements/base';
+@import '2-elements/text';
+
+// --- КРИТИЧЕСКИЙ СДВИГ: МАТЕРИАЛЫ ПЕРЕД ОБЪЕКТАМИ ---
+// 5. LAYER 4: MATERIALS (Инструменты отрисовки)
+// Теперь все файлы ниже (layout, компоненты) могут использовать glass-surface
+@import '4-materials/glass';
+
+// 6. LAYER 3: OBJECTS (Скелет и Сетка)
+@import '3-objects/layout';
+
+// 7. LAYER 5: COMPONENTS (Интерактивные модули)
+@import '5-components/navbar';
+@import '5-components/button';
+@import '5-components/accordion';
+@import '5-components/footer';
+@import '5-components/logo';
+@import '5-components/static-card';
+@import '5-components/alphabet-nav';
+@import '5-components/catalog';
+@import '5-components/b-preview-box';
+@import '5-components/lab-interface';
+@import '5-components/ui-controls';
+// 8. LAYER 6: UTILITIES (Финальные штрихи)
+@import '6-utilities/adaptive'; // Если ты переименовал adaptive в scss

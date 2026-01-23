@@ -1,0 +1,26 @@
+:root {
+  /* --- 1. BASE UNIT (4px) --- */
+  --unit: 4px;
+
+  /* --- 2. SCALE (Multiples of 4) --- */
+  --space-xs: calc(var(--unit) * 2);  // 8px
+  --space-sm: calc(var(--unit) * 4);  // 16px
+  --space-md: calc(var(--unit) * 8);  // 32px
+  --space-lg: calc(var(--unit) * 16); // 64px
+  --space-xl: calc(var(--unit) * 30); // 120px
+
+  /* --- 3. LAYOUT GRID --- */
+  --layout-max-width: 1700px;
+  --p-site-side: clamp(24px, 5vw, 60px);
+  --p-page-bottom: clamp(60px, 10vh, 120px);
+  --s-block-gap: clamp(64px, 12vh, 120px);
+  
+  /* Математические константы ширины для центрирования */
+  --stable-content-width: calc(100% - (var(--p-site-side) * 2));
+  --stable-max-content: calc(var(--layout-max-width) - (var(--p-site-side) * 2));
+
+  /* --- 4. OPTICAL RHYTHMS --- */
+  --p-page-v: clamp(80px, 12vh, 160px);
+  --hero-offset: var(--p-page-v); // Расстояние под навигацией
+  --card-content-width: 480px; 
+}

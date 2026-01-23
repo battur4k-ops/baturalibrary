@@ -1,0 +1,27 @@
+/* ============================================================
+   0-SETTINGS / _MOTION.SCSS
+   Batura Library | Global Rhythm DNA
+   ============================================================ */
+
+:root {
+  /* --- 1. DURATIONS (System Beat) --- */
+  --d-fast: 0.6s;      // Мгновенный отклик (кнопки, чекбоксы)
+  --d-base: 0.8s;      // Стандартное появление (Side-Fly, тултипы)
+  --d-slow: 1.0s;      // Сложные переходы (аккордеон, морфинг навбара)
+  --d-morph: var(--d-slow);
+
+  /* --- 2. EASING (Apple Bezier) --- */
+  --e-out: cubic-bezier(0.16, 1, 0.3, 1);    // Породистый "вылет"
+  --e-in-out: cubic-bezier(0.65, 0, 0.35, 1); // Органичное перетекание
+
+  /* --- 3. DYNAMICS --- */
+  --entrance-offset: -20px;
+  --stagger-step: 0.06s;
+  --entrance-delay: 0.2s;
+
+  /* --- 4. MASTER TRANSITIONS (Semantic Shortcuts) --- */
+  --t-material: background-color var(--d-fast) ease, box-shadow var(--d-fast) ease;
+  --t-text: color var(--d-fast) ease;
+  /* Асимметричный вход */
+  --t-entrance: opacity var(--d-base) ease, transform var(--d-base) var(--e-out);
+}

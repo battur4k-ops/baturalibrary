@@ -1,0 +1,66 @@
+/* ============================================================
+   0-SETTINGS / _COLORS.SCSS
+   Batura Library | Shader DNA v10.0 [Chromatophores Full]
+   ============================================================ */
+
+:root {
+  /* --- 1. PRIMITIVES (RGB Triplets for UI) --- */
+  --p-black-rgb: 0, 0, 0;
+  --p-white-rgb: 255, 255, 255;
+
+  --p-blue-rgb:   0, 102, 255;
+  --p-purple-rgb: 157, 0, 255;
+  --p-green-rgb:  0, 255, 170;
+  --p-red-rgb:    255, 34, 68;
+  --p-yellow-rgb: 255, 200, 0;
+  --p-cyan-rgb:   0, 230, 255;
+  --p-pink-rgb:   255, 0, 150;
+  --p-orange-rgb: 255, 100, 0;
+  --p-silver-rgb: 180, 190, 210;
+
+  /* --- СЕМАНТИЧЕСКИЕ ПРИВЯЗКИ (Для категорий) --- */
+  --p-math-rgb:     var(--p-blue-rgb);
+  --p-motion-rgb:   var(--p-purple-rgb);
+  --p-ui-rgb:       var(--p-green-rgb);
+  --p-workflow-rgb: var(--p-cyan-rgb);
+  --p-alert-rgb:    var(--p-red-rgb);
+
+  /* --- 2. SHADER DNA (Solid/Deep pairs for Background) --- */
+  
+/* --- 2. SHADER DNA (Calibrated for Readability) --- */
+  
+  /* 0: Blue - Сделали чуть глубже (0, 10, 50) */
+  --p-blue-solid:   rgb(0, 102, 255);   --p-blue-deep:   rgb(0, 10, 50);
+
+  /* 1: Purple - Усилили плотность */
+  --p-purple-solid: rgb(157, 0, 255); --p-purple-deep: rgb(25, 0, 50);
+
+  /* 2: Green - [FIXED] Теперь воид намного темнее, чтобы не съедал текст */
+    --p-green-solid:  rgb(0, 255, 150);  --p-green-deep:  rgb(0, 15, 10);
+
+  /* 3: Red - Сохранили твой любимый баланс */
+  --p-red-solid:    rgb(255, 34, 68);   --p-red-deep:    rgb(40, 0, 5);
+
+  /* 4: Yellow - Сделали воид более "янтарным", чтобы не было каши */
+  --p-yellow-solid: rgb(255, 200, 0);   --p-yellow-deep: rgb(40, 25, 0);
+
+  /* 5: Cyan - [FIXED] Глубокий океанический воид */
+ --p-cyan-solid:   rgb(0, 230, 255);   --p-cyan-deep:   rgb(0, 15, 25);
+
+  /* 6: Pink - Ядерный неон на темном фоне */
+  --p-pink-solid:   rgb(255, 0, 150);   --p-pink-deep:   rgb(35, 0, 15);
+
+  /* 7: Orange */
+  --p-orange-solid: rgb(255, 100, 0);   --p-orange-deep: rgb(40, 10, 0);
+
+  /* 8: Silver - Стальной воид */
+  --p-silver-solid: rgb(200, 210, 230); --p-silver-deep: rgb(20, 22, 28);
+  /* --- 3. SEMANTICS --- */
+  --theme-accent-rgb: var(--p-blue-rgb);
+  --color-bg: rgb(var(--p-black-rgb));
+  --color-text-main: rgb(var(--p-white-rgb));
+  --color-text-dim: rgba(var(--p-white-rgb), var(--s-text-op-idle));
+  --s-text-op-idle: 0.45;
+  --s-text-op-hover: 1;
+  --m-glass-base-rgb: var(--p-white-rgb);
+}

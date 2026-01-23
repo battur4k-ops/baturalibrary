@@ -1,0 +1,102 @@
+/* ============================================================
+   5-COMPONENTS / _FOOTER.SCSS
+   Batura Library | System Synced v7.7 [Geometric Symmetry]
+   ============================================================ */
+
+.b-footer {
+  /* 1. ПАРАМЕТРЫ ЛИНИЙ (Синхронизация) */
+  --footer-stroke-color: rgba(var(--p-white-rgb), calc(var(--s-stroke-op-idle) * 0.5));
+  --_exit-delay: var(--stagger-step);
+
+  padding-bottom: var(--p-page-bottom);
+  position: relative;
+  z-index: var(--z-app);
+
+  &__grid {
+    border-top: var(--s-stroke-width) solid var(--footer-stroke-color);
+    padding-top: var(--space-xl);
+    
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: var(--space-xl);
+    
+    /* ФИКС: Якорь для выравнивания заголовков всех колонок в одну линию */
+    align-items: start; 
+
+    @media (max-width: 850px) {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+  }
+
+  &__brand {
+    @include flow-engine(var(--space-md));
+  }
+
+  &__logo {
+    height: calc(var(--unit) * 7); 
+    --_logo-op: calc(var(--s-text-op-idle) * 0.5);
+    color: rgba(var(--p-white-rgb), var(--_logo-op));
+    transition: color var(--d-fast) var(--e-out) var(--_exit-delay);
+    
+    margin-left: calc(var(--unit) * -0.5); 
+
+    .b-logo {
+      height: 100%;
+      svg {
+        height: 100%;
+        transform: translate3d(var(--logo-balance-x), 0, 0);
+      }
+    }
+    
+    .b-footer__brand:hover & {
+      --_exit-delay: 0s;
+      --_logo-op: var(--s-text-op-hover);
+    }
+  }
+
+  &__group {
+    /* Синхронизируем вертикальный зазор заголовков с левой колонкой */
+    @include flow-engine(var(--space-md));
+
+    .l-flow {
+      @include flow-engine(var(--space-xs));
+    }
+  }
+
+  &__link {
+    font-family: var(--font-main);
+    font-size: var(--fs-body);
+    font-weight: 300;
+    line-height: var(--lh-body);
+    
+    --_link-op: var(--s-text-op-idle);
+    color: rgba(var(--p-white-rgb), var(--_link-op));
+    
+    /* Только цветовая анимация */
+    transition: color var(--d-fast) var(--e-out) var(--_exit-delay);
+    
+    display: block;
+
+    &:hover {
+      --_exit-delay: 0s;
+      --_link-op: var(--s-text-op-hover);
+    }
+  }
+
+  &__bottom {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: var(--s-stroke-width) solid var(--footer-stroke-color);
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    .text-data {
+      font-size: 10px;
+      opacity: calc(var(--s-text-op-idle) * 0.6);
+      letter-spacing: var(--ls-caption);
+    }
+  }
+}

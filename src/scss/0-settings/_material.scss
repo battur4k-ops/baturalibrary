@@ -1,0 +1,20 @@
+:root {
+  /* --- 1. CORE PHYSICS (Фундамент) --- */
+  --s-glass-blur: 3px;       // Чуть добавила для благородства
+  --s-stroke-width: 0.5px;    // Тот самый hairline, который пропал
+
+  /* --- 2. MATERIAL DENSITY (Прозрачность фона) --- */
+  --s-glass-op-base: 0.005;    
+  --s-glass-op-hover: 0.02;   
+  --s-glass-op-active: 0.02;  
+
+  /* --- 3. STROKE INTENSITY (Прозрачность обводки) --- */
+  --s-stroke-op-idle: 0.15;
+  --s-stroke-op-hover: 0.40;
+  --s-stroke-op-active: 0.98;
+
+  /* --- 4. GLARE (Световой слой) --- */
+  --s-glare-op-hover: 0.03;   
+  --s-glare-op-active: 0.03;  
+  
+}

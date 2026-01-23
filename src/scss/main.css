@@ -1,0 +1,2068 @@
+@charset "UTF-8";
+/* ============================================================
+   BATURA LIBRARY | MASTER ARCHITECTURE
+   Professional System Build v7.0 [Modular Design]
+   ============================================================ */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;700&family=JetBrains+Mono:wght@300;400;700&display=swap");
+/* 
+   ============================================================
+   BATURA DESIGN SYSTEM | MASTER MANIFEST v7.0
+   [LAW:SINGLE_SOURCE_OF_TRUTH] - Dispatcher Core
+   ============================================================ 
+
+   [LAW:SEMANTIC_NAMING]
+   Именуем по функции, а не по значению.
+
+   [LAW:DETERMINISTIC_SPACING]
+   Все зазоры — математическая прогрессия юнита.
+
+   [LAW:GEOMETRIC_COHESION]
+   Единство скруглений (Nested Radii).
+
+   [LAW:FLUID_SCALABILITY]
+   Использование формул и clamp() вместо px.
+
+   [LAW:MOTION_CHOREOGRAPHY]
+   Единая физика и метроном анимаций.
+
+   ============================================================ 
+*/
+/* ============================================================
+   0-SETTINGS / _COLORS.SCSS
+   Batura Library | Shader DNA v10.0 [Chromatophores Full]
+   ============================================================ */
+:root {
+  /* --- 1. PRIMITIVES (RGB Triplets for UI) --- */
+  --p-black-rgb: 0, 0, 0;
+  --p-white-rgb: 255, 255, 255;
+  --p-blue-rgb: 0, 102, 255;
+  --p-purple-rgb: 157, 0, 255;
+  --p-green-rgb: 0, 255, 170;
+  --p-red-rgb: 255, 34, 68;
+  --p-yellow-rgb: 255, 200, 0;
+  --p-cyan-rgb: 0, 230, 255;
+  --p-pink-rgb: 255, 0, 150;
+  --p-orange-rgb: 255, 100, 0;
+  --p-silver-rgb: 180, 190, 210;
+  /* --- СЕМАНТИЧЕСКИЕ ПРИВЯЗКИ (Для категорий) --- */
+  --p-math-rgb: var(--p-blue-rgb);
+  --p-motion-rgb: var(--p-purple-rgb);
+  --p-ui-rgb: var(--p-green-rgb);
+  --p-workflow-rgb: var(--p-cyan-rgb);
+  --p-alert-rgb: var(--p-red-rgb);
+  /* --- 2. SHADER DNA (Solid/Deep pairs for Background) --- */
+  /* --- 2. SHADER DNA (Calibrated for Readability) --- */
+  /* 0: Blue - Сделали чуть глубже (0, 10, 50) */
+  --p-blue-solid: rgb(0, 102, 255);
+  --p-blue-deep: rgb(0, 10, 50);
+  /* 1: Purple - Усилили плотность */
+  --p-purple-solid: rgb(157, 0, 255);
+  --p-purple-deep: rgb(25, 0, 50);
+  /* 2: Green - [FIXED] Теперь воид намного темнее, чтобы не съедал текст */
+  --p-green-solid: rgb(0, 255, 150);
+  --p-green-deep: rgb(0, 15, 10);
+  /* 3: Red - Сохранили твой любимый баланс */
+  --p-red-solid: rgb(255, 34, 68);
+  --p-red-deep: rgb(40, 0, 5);
+  /* 4: Yellow - Сделали воид более "янтарным", чтобы не было каши */
+  --p-yellow-solid: rgb(255, 200, 0);
+  --p-yellow-deep: rgb(40, 25, 0);
+  /* 5: Cyan - [FIXED] Глубокий океанический воид */
+  --p-cyan-solid: rgb(0, 230, 255);
+  --p-cyan-deep: rgb(0, 15, 25);
+  /* 6: Pink - Ядерный неон на темном фоне */
+  --p-pink-solid: rgb(255, 0, 150);
+  --p-pink-deep: rgb(35, 0, 15);
+  /* 7: Orange */
+  --p-orange-solid: rgb(255, 100, 0);
+  --p-orange-deep: rgb(40, 10, 0);
+  /* 8: Silver - Стальной воид */
+  --p-silver-solid: rgb(200, 210, 230);
+  --p-silver-deep: rgb(20, 22, 28);
+  /* --- 3. SEMANTICS --- */
+  --theme-accent-rgb: var(--p-blue-rgb);
+  --color-bg: rgb(var(--p-black-rgb));
+  --color-text-main: rgb(var(--p-white-rgb));
+  --color-text-dim: rgba(var(--p-white-rgb), var(--s-text-op-idle));
+  --s-text-op-idle: 0.45;
+  --s-text-op-hover: 1;
+  --m-glass-base-rgb: var(--p-white-rgb);
+}
+
+:root {
+  /* --- 1. BASE UNIT (4px) --- */
+  --unit: 4px;
+  /* --- 2. SCALE (Multiples of 4) --- */
+  --space-xs: calc(var(--unit) * 2);
+  --space-sm: calc(var(--unit) * 4);
+  --space-md: calc(var(--unit) * 8);
+  --space-lg: calc(var(--unit) * 16);
+  --space-xl: calc(var(--unit) * 30);
+  /* --- 3. LAYOUT GRID --- */
+  --layout-max-width: 1700px;
+  --p-site-side: clamp(24px, 5vw, 60px);
+  --p-page-bottom: clamp(60px, 10vh, 120px);
+  --s-block-gap: clamp(64px, 12vh, 120px);
+  /* Математические константы ширины для центрирования */
+  --stable-content-width: calc(100% - (var(--p-site-side) * 2));
+  --stable-max-content: calc(var(--layout-max-width) - (var(--p-site-side) * 2));
+  /* --- 4. OPTICAL RHYTHMS --- */
+  --p-page-v: clamp(80px, 12vh, 160px);
+  --hero-offset: var(--p-page-v);
+  --card-content-width: 480px;
+}
+
+:root {
+  --z-bg: -1;
+  --z-app: 1;
+  --z-overlay: 90;
+  --z-nav: 100;
+}
+
+/* ============================================================
+   0-SETTINGS / _MOTION.SCSS
+   Batura Library | Global Rhythm DNA
+   ============================================================ */
+:root {
+  /* --- 1. DURATIONS (System Beat) --- */
+  --d-fast: 0.6s;
+  --d-base: 0.8s;
+  --d-slow: 1.0s;
+  --d-morph: var(--d-slow);
+  /* --- 2. EASING (Apple Bezier) --- */
+  --e-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --e-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  /* --- 3. DYNAMICS --- */
+  --entrance-offset: -20px;
+  --stagger-step: 0.06s;
+  --entrance-delay: 0.2s;
+  /* --- 4. MASTER TRANSITIONS (Semantic Shortcuts) --- */
+  --t-material: background-color var(--d-fast) ease, box-shadow var(--d-fast) ease;
+  --t-text: color var(--d-fast) ease;
+  /* Асимметричный вход */
+  --t-entrance: opacity var(--d-base) ease, transform var(--d-base) var(--e-out);
+}
+
+:root {
+  /* --- 1. FONT FAMILIES --- */
+  --font-main: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  /* --- 2. FLUID SIZES (clamp engine) --- */
+  --fs-h1: clamp(40px, 8vw, 92px);
+  --fs-h2: clamp(28px, 4vw, 54px);
+  --fs-h3: clamp(18px, 1.5vw, 22px); /* Тот самый промежуточный шаг */
+  --fs-body: clamp(14px, 1.1vw, 16px);
+  --fs-caption: 11px;
+  --fs-data: 10px;
+  /* --- 3. OPTICAL SPACING --- */
+  --lh-body: 1.6;
+  --ls-caption: 0.15em;
+  --ls-data: 0.2em;
+}
+
+:root {
+  /* --- 1. CORE PHYSICS (Фундамент) --- */
+  --s-glass-blur: 3px;
+  --s-stroke-width: 0.5px;
+  /* --- 2. MATERIAL DENSITY (Прозрачность фона) --- */
+  --s-glass-op-base: 0.005;
+  --s-glass-op-hover: 0.02;
+  --s-glass-op-active: 0.02;
+  /* --- 3. STROKE INTENSITY (Прозрачность обводки) --- */
+  --s-stroke-op-idle: 0.15;
+  --s-stroke-op-hover: 0.40;
+  --s-stroke-op-active: 0.98;
+  /* --- 4. GLARE (Световой слой) --- */
+  --s-glare-op-hover: 0.03;
+  --s-glare-op-active: 0.03;
+}
+
+:root {
+  /* --- 1. MASTER RADII --- */
+  --radius-master: 45px;
+  --p-card: var(--space-md);
+  /* Закон [LAW:GEOMETRIC_COHESION]: Вложенные радиусы */
+  --radius-inner: calc(var(--radius-master) - var(--p-card));
+  /* --- 2. DYNAMICS --- */
+  --card-grow-base: 1;
+  --card-grow-active: 9;
+  --card-grow-active-hover: 11.4;
+  /* --- 3. OPTICAL COMPENSATION --- */
+  --logo-balance-x: -10%;
+  --text-offset-hero: -0.075em;
+  --text-offset-heading: -0.065em;
+}
+
+/* Обновленные переменные в :root для управления навбаром */
+:root {
+  --nav-h-start: 56px;
+  --nav-h-morph: 56px;
+  --nav-radius: var(--radius-master);
+  --nav-content-scale: 0.7;
+  --nav-h: var(--nav-h-start);
+  --nav-content-h: calc(var(--nav-h) * var(--nav-content-scale));
+  --nav-pad: calc((var(--nav-h) - var(--nav-content-h)) / 2);
+  --nav-w-start: 1;
+  --nav-w-morph: 0.98;
+  --nav-w-factor: var(--nav-w-start);
+  --nav-blur-start: var(--s-glass-blur);
+  --nav-blur-morph: 3px;
+  --nav-top: var(--space-sm);
+  --z-nav: 1000;
+  --d-morph: var(--d-base);
+}
+
+:root {
+  /* --- 1. UI MASTER DIMENSIONS (Source of Truth) --- */
+  /* Это главная ручка управления всеми кнопками в системе */
+  --ui-h-btn-master: clamp(36px, 4.5vh, 48px);
+  /* --- 2. BUTTON DERIVATIVES --- */
+  /* Ссылаемся на мастер-высоту, чтобы не дублировать clamp */
+  --ui-h-btn: var(--ui-h-btn-master);
+  /* [WARNING: LILITH] Нижний порог 9px — это грань читаемости. 
+     Для JetBrains Mono это терпимо, но следи за контрастом. */
+  --ui-fs-btn: clamp(9px, 0.7vw, 11px);
+  /* Твои горизонтальные "уши" */
+  --ui-p-btn: clamp(20px, 2.5vw, 32px);
+  /* Автоматический расчет радиуса таблетки (Pill-shape) */
+  --ui-radius-btn: calc(var(--ui-h-btn) / 2);
+  /* --- 3. INPUTS & NAVIGATION --- */
+  --ui-fs-search: calc(var(--nav-h-start) * 0.28);
+}
+
+/* 
+   ПРИМЕЧАНИЕ: 
+   Все переменные объявлены внутри соответствующих файлов в блоках :root.
+   Порядок импорта критичен для работы зависимостей (например, UI зависит от Spacing).
+*/
+/* ============================================================
+   1-GENERIC / _RESET.SCSS
+   Batura Library | Master System v7.1 [Foundation Reset Fix]
+   ============================================================ */
+/* [RULE:BOX_MODEL] */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  /* 
+     Закон [LAW:FLUID_SCALABILITY]:
+     Используем min-height вместо height, чтобы позволить 
+     документу расти вместе с динамическим контентом.
+  */
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  /* Резервируем место под скроллбар без !important */
+  scrollbar-gutter: stable;
+  /* Базовая типографика Apple */
+  -webkit-text-size-adjust: 100%;
+  /* Полное скрытие системного мусора без !important */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  /* Поддержка плавности для Lenis: скролл-бихейвиор должен быть auto */
+  scroll-behavior: auto;
+  height: -webkit-fill-available;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  width: 100%;
+  /* min-height: 100vh гарантирует заполнение экрана, но не блокирует рост */
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  font-family: var(--font-main);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  /* Цифровая косметология Apple */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Контроль скролла для корректной работы Lenis */
+  overflow-y: visible;
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
+}
+
+/* СБРОС ИНТЕРАКТИВНЫХ ЭЛЕМЕНТОВ */
+a {
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+  cursor: pointer;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  outline: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+/* IMAGE RESET */
+img, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* LAYER: BACKGROUND (Three.js Shader Sync) */
+#liquid-bg-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--z-bg);
+  pointer-events: none;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* ============================================================
+   2-ELEMENTS / _BASE.SCSS
+   Batura Library | Master System v7.1 [Clean Foundation]
+   ============================================================ */
+body {
+  background-color: transparent;
+  color: var(--color-text-main);
+  font-family: var(--font-main);
+  min-height: 100vh;
+  width: 100%;
+}
+
+main {
+  position: relative;
+  z-index: var(--z-app);
+  width: 100%;
+}
+
+canvas {
+  display: block;
+}
+
+section {
+  position: relative;
+  width: 100%;
+}
+
+/* ============================================================
+   2-ELEMENTS / _TEXT.SCSS
+   Batura Library | Dynamic Typography v7.5
+   ============================================================ */
+.ui-range__header .value, .text-subheading, .text-data, .ui-info-tag, .ui-range__header, .b-catalog-header .index, .b-alphabet-nav__char, .b-static-card__index, .b-accordion .b-static-card__deco, .b-accordion .b-static-card__index, .ui-button, .b-navbar__search input, small, .text-body, .text-info-hint, p, .text-heading, h2, .text-hero, h1 {
+  margin: 0;
+  color: rgba(var(--p-white-rgb), var(--_text-op, 1));
+  transition: color var(--d-fast) var(--e-out);
+  transition-delay: inherit;
+}
+
+.text-hero, h1 {
+  font-family: var(--font-main);
+  font-size: var(--fs-h1);
+  font-weight: 200;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  margin-left: var(--text-offset-hero);
+}
+
+.text-heading, h2 {
+  font-family: var(--font-main);
+  font-size: var(--fs-h2);
+  font-weight: 200;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  margin-left: var(--text-offset-heading);
+}
+
+.text-body, .text-info-hint, p {
+  --_text-op: var(--s-text-op-idle);
+  font-family: var(--font-main);
+  font-size: var(--fs-body);
+  font-weight: 300;
+  line-height: var(--lh-body);
+  max-width: 55ch;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* DATA: Индексы и технические теги */
+.text-data, .ui-info-tag, .ui-range__header, .b-catalog-header .index, .b-alphabet-nav__char, .b-static-card__index, .b-accordion .b-static-card__deco, .b-accordion .b-static-card__index, .ui-button, .b-navbar__search input, small {
+  font-family: var(--font-mono);
+  font-size: var(--fs-data); /* Привязка к токену 10px */
+  font-weight: 300; /* Оставляем легкое начертание */
+  line-height: 1;
+  letter-spacing: var(--ls-data); /* Привязка к токену 0.2em */
+  text-transform: uppercase;
+  /* Рендеринг для мелкого Mono текста */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* По умолчанию индекс чуть тусклее основного контента */
+  --_text-op: var(--s-text-op-idle);
+}
+
+.text-subheading {
+  font-family: var(--font-main);
+  font-size: var(--fs-h3); /* Используем новый токен */
+  font-weight: 200; /* Чуть легче, чем основной заголовок */
+  line-height: 0.95;
+  letter-spacing: -0.04em; /* Меньше отрицания, чем в больших заголовках */
+  text-transform: uppercase;
+  margin-left: var(--text-offset-hero); /* Сохраняем вертикальную ось */ /* Приглушаем по кодексу (Hierarchy) */
+}
+
+.text-accent {
+  color: rgb(var(--theme-accent-rgb));
+  --_text-op: 1;
+}
+
+/* ============================================================
+   3-OBJECTS / _LAYOUT.SCSS
+   Batura Library | System v20.1 [Variable Height Grid]
+   ============================================================ */
+/**
+ * 1. FLOW ENGINE (Системный ритм)
+ */
+.l-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.l-flow > * + * {
+  margin-top: var(--space-md);
+}
+.l-flow > .text-data + .text-hero, .l-flow > .ui-info-tag + .text-hero, .l-flow > .ui-range__header + .text-hero, .b-catalog-header .l-flow > .index + .text-hero, .l-flow > .b-alphabet-nav__char + .text-hero, .l-flow > .b-static-card__index + .text-hero, .b-accordion .l-flow > .b-static-card__deco + .text-hero, .l-flow > .ui-button + .text-hero, .b-navbar__search .l-flow > input + .text-hero, .l-flow > small + .text-hero, .l-flow > .text-data + h1, .l-flow > .ui-info-tag + h1, .l-flow > .ui-range__header + h1, .b-catalog-header .l-flow > .index + h1, .l-flow > .b-alphabet-nav__char + h1, .l-flow > .b-static-card__index + h1, .b-accordion .l-flow > .b-static-card__deco + h1, .l-flow > .ui-button + h1, .b-navbar__search .l-flow > input + h1, .l-flow > small + h1, .l-flow > .text-data + .text-heading, .l-flow > .ui-info-tag + .text-heading, .l-flow > .ui-range__header + .text-heading, .b-catalog-header .l-flow > .index + .text-heading, .l-flow > .b-alphabet-nav__char + .text-heading, .l-flow > .b-static-card__index + .text-heading, .b-accordion .l-flow > .b-static-card__deco + .text-heading, .l-flow > .ui-button + .text-heading, .b-navbar__search .l-flow > input + .text-heading, .l-flow > small + .text-heading, .l-flow > .text-data + h2, .l-flow > .ui-info-tag + h2, .l-flow > .ui-range__header + h2, .b-catalog-header .l-flow > .index + h2, .l-flow > .b-alphabet-nav__char + h2, .l-flow > .b-static-card__index + h2, .b-accordion .l-flow > .b-static-card__deco + h2, .l-flow > .ui-button + h2, .b-navbar__search .l-flow > input + h2, .l-flow > small + h2, .l-flow > .text-hero + .text-body, .l-flow > .text-hero + .text-info-hint, .l-flow > h1 + .text-body, .l-flow > h1 + .text-info-hint, .l-flow > .text-hero + p, .l-flow > h1 + p, .l-flow > .text-heading + .text-body, .l-flow > .text-heading + .text-info-hint, .l-flow > h2 + .text-body, .l-flow > h2 + .text-info-hint, .l-flow > .text-heading + p, .l-flow > h2 + p {
+  margin-top: var(--space-xs);
+}
+.l-flow > .text-body + .l-flex-group, .l-flow > .text-info-hint + .l-flex-group, .l-flow > p + .l-flex-group {
+  margin-top: var(--space-lg);
+}
+
+/**
+ * 2. UNIVERSAL FLEX OBJECTS
+ */
+.l-flex-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: flex-start;
+  width: 100%;
+}
+
+/**
+ * 3. APP STRUCTURE & LAB TRANSITIONS
+ */
+#app-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  /* Структурный переход при скрытии сайта */
+  transition: opacity var(--d-slow) var(--e-out), filter var(--d-slow) var(--e-out), transform var(--d-slow) var(--e-out), visibility var(--d-slow) var(--e-out);
+}
+
+#app-root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  padding-top: calc(var(--nav-h) + var(--nav-top) + var(--hero-offset));
+  padding-bottom: var(--p-page-bottom);
+  gap: var(--s-block-gap);
+  box-sizing: border-box;
+}
+
+/**
+ * 4. LAB SYSTEM INTERFACE (SKELETON)
+ * Только геометрия и позиционирование.
+ * Визуал и транзишны отклика перенесены в 5-components/_lab-interface.scss.
+ */
+body .l-lab-interface {
+  /* 1. ПОЗИЦИОНИРОВАНИЕ */
+  position: fixed;
+  top: -1px;
+  left: 50%;
+  z-index: var(--z-overlay);
+  /* 2. ГЕОМЕТРИЯ */
+  width: min(var(--stable-content-width), var(--stable-max-content));
+  height: calc(100vh - var(--nav-top));
+  margin: 0;
+  padding: 0;
+  /* 3. СТРУКТУРА */
+  display: grid;
+  grid-template-columns: 380px 1fr 420px;
+  overflow: hidden;
+}
+
+/**
+ * 6. CONTAINERS (Без изменений)
+ */
+.l-container {
+  width: 100%;
+  max-width: var(--layout-max-width);
+  margin-inline: auto;
+  padding-inline: var(--p-site-side);
+  box-sizing: border-box;
+  position: relative;
+}
+
+/**
+ * 7. EXPRESSIONS CATALOG SYSTEM (Grid Physics)
+ */
+.l-grid-expressions {
+  display: grid;
+  align-items: start;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: var(--space-md);
+  width: 100%;
+}
+@media (max-width: 500px) {
+  .l-grid-expressions {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+}
+
+#expressionsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  width: 100%;
+}
+
+/* ============================================================
+   5-COMPONENTS / _NAVBAR.SCSS
+   Batura Library | System Synced v14.6 [Lab-Resonance Fix]
+   ============================================================ */
+.b-navbar {
+  /* 1. LOCAL TOKENS & GEOMETRY */
+  --nav-radius: var(--radius-master);
+  --nav-h: var(--nav-h-start);
+  --nav-w-factor: var(--nav-w-start);
+  --nav-content-h: calc(var(--nav-h) * var(--nav-content-scale));
+  --nav-pad: calc((var(--nav-h) - var(--nav-content-h)) / 2);
+  --nav-inner-radius: calc(var(--nav-radius) - var(--nav-pad));
+  /* 2. INTERACTION DNA */
+  --_bg-op: var(--s-glass-op-base);
+  --_stroke-op: var(--s-stroke-op-idle);
+  position: relative;
+  border-radius: var(--nav-radius);
+  isolation: isolate;
+  background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
+  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  position: fixed;
+  top: var(--nav-top);
+  z-index: var(--z-nav);
+  inset-inline: 0;
+  margin-inline: auto;
+  height: var(--nav-h);
+  width: calc(var(--nav-w-factor) * min(var(--stable-content-width), var(--stable-max-content)));
+  padding-inline: var(--nav-pad);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transform: translate3d(0, 0, 0.1px);
+  backface-visibility: hidden;
+  transition: height var(--d-morph) var(--e-out), width var(--d-morph) var(--e-out), padding var(--d-morph) var(--e-out), background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: height var(--d-morph) var(--e-out), width var(--d-morph) var(--e-out), padding var(--d-morph) var(--e-out), background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out);
+  transition: height var(--d-morph) var(--e-out), width var(--d-morph) var(--e-out), padding var(--d-morph) var(--e-out), background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  /* 3. HOVER OVER NAVBAR (General Active) */
+  /* 4. MORPH STATE: SCROLL & LAB */
+  /* 5. LAB INTERFACE RESONANCE (Desktop Only) */
+  /* 6. ВНУТРЕННИЕ МОДУЛИ */
+  /* ============================================================
+     7. ПОИСКОВЫЙ МОДУЛЬ (Search Module) | Contextual Physics
+     ============================================================ */
+}
+.b-navbar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 0%, rgba(var(--m-glass-base-rgb), 0.4), transparent);
+  opacity: var(--_glare-op, 0);
+  transition: opacity var(--d-fast) var(--e-out);
+}
+.b-navbar:hover {
+  --_bg-op: var(--s-glass-op-active);
+  --_stroke-op: var(--s-stroke-op-active);
+}
+body.is-scrolled .b-navbar, body.is-lab-active .b-navbar {
+  --nav-h: var(--nav-h-morph);
+  --nav-w-factor: var(--nav-w-morph);
+  --_bg-op: var(--s-glass-op-hover);
+  --_stroke-op: var(--s-stroke-op-hover);
+  /* ADAPTATION: Постоянный Active для мобилки */
+}
+@media (max-width: 1100px) {
+  body.is-scrolled .b-navbar, body.is-lab-active .b-navbar {
+    --_bg-op: var(--s-glass-op-active);
+    --_stroke-op: var(--s-stroke-op-active);
+  }
+}
+body.is-scrolled .b-navbar .ui-button:not(:hover):not(:focus), body.is-scrolled .b-navbar__search input:not(:hover):not(:focus), body.is-lab-active .b-navbar .ui-button:not(:hover):not(:focus), body.is-lab-active .b-navbar__search input:not(:hover):not(:focus) {
+  --_bg-op: var(--s-glass-op-hover);
+  --_stroke-op: var(--s-stroke-op-hover);
+  --_text-op: var(--s-text-op-hover);
+  /* Подсветка кнопок на мобилке тоже в Active */
+}
+@media (max-width: 1100px) {
+  body.is-scrolled .b-navbar .ui-button:not(:hover):not(:focus), body.is-scrolled .b-navbar__search input:not(:hover):not(:focus), body.is-lab-active .b-navbar .ui-button:not(:hover):not(:focus), body.is-lab-active .b-navbar__search input:not(:hover):not(:focus) {
+    --_bg-op: var(--s-glass-op-active);
+    --_stroke-op: var(--s-stroke-op-active);
+    --_text-op: 1;
+  }
+}
+@media (min-width: 1101px) {
+  body.is-lab-active:has(.l-lab-interface:hover) .b-navbar {
+    --_bg-op: var(--s-glass-op-active);
+    --_stroke-op: var(--s-stroke-op-active);
+  }
+}
+.b-navbar__brand {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  height: var(--nav-content-h);
+  width: var(--nav-content-h);
+}
+.b-navbar__search {
+  --_search-w-idle: clamp(160px, 18vw, 240px);
+  --_search-w-focus: clamp(220px, 25vw, 360px);
+  --_icon-size: calc(var(--nav-content-h) * 0.45);
+  --_icon-stroke: var(--s-stroke-width);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--nav-content-h);
+  margin-left: auto;
+  position: relative;
+  transition: transform var(--d-fast) var(--e-out);
+  /* MORPH: Кнопка Лаборатории (Состояние Поиска в Лабе) */
+}
+.b-navbar__search.is-hidden {
+  display: none;
+}
+.b-navbar__search input {
+  border: none;
+  position: relative;
+  border-radius: var(--nav-inner-radius);
+  isolation: isolate;
+  background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
+  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  height: var(--nav-content-h);
+  width: var(--_search-w-idle);
+  padding-inline: var(--space-sm);
+  outline: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  --_bg-op: var(--s-glass-op-base);
+  --_stroke-op: var(--s-stroke-op-idle);
+  --_text-op: var(--s-text-op-idle);
+  color: rgba(var(--p-white-rgb), var(--_text-op));
+  transition: width var(--d-slow) var(--e-out), background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), color var(--d-fast) var(--e-out);
+}
+.b-navbar__search input::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 0%, rgba(var(--m-glass-base-rgb), 0.4), transparent);
+  opacity: var(--_glare-op, 0);
+  transition: opacity var(--d-fast) var(--e-out);
+}
+.b-navbar__search input::-moz-placeholder {
+  color: rgba(var(--p-white-rgb), var(--s-text-op-idle));
+  opacity: 0.5;
+}
+.b-navbar__search input::placeholder {
+  color: rgba(var(--p-white-rgb), var(--s-text-op-idle));
+  opacity: 0.5;
+}
+.b-navbar__search input:hover, .b-navbar__search input:focus {
+  --_bg-op: var(--s-glass-op-active);
+  --_stroke-op: var(--s-stroke-op-active);
+  --_text-op: 1;
+}
+.b-navbar__search input:focus {
+  width: var(--_search-w-focus);
+}
+.b-navbar__search .close-icon {
+  position: absolute;
+  right: calc((var(--nav-content-h) - var(--_icon-size)) / 2);
+  width: var(--_icon-size);
+  height: var(--_icon-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.5) rotate(-45deg);
+  color: rgba(var(--p-white-rgb), var(--_text-op));
+  z-index: 5;
+  transition: transform var(--d-fast) var(--e-out), opacity var(--d-fast) var(--e-out), color var(--d-fast) var(--e-out);
+}
+.b-navbar__search .close-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  fill: none;
+}
+.b-navbar__search .close-icon svg path, .b-navbar__search .close-icon svg line, .b-navbar__search .close-icon svg circle {
+  stroke: currentColor;
+  stroke-width: var(--_icon-stroke);
+  vector-effect: non-scaling-stroke;
+}
+body.is-lab-active .b-navbar__search {
+  cursor: pointer;
+}
+body.is-lab-active .b-navbar__search:active {
+  transform: scale(0.96);
+  transition-duration: 0.1s;
+}
+body.is-lab-active .b-navbar__search input {
+  width: var(--nav-content-h);
+  padding: 0;
+  cursor: pointer;
+  color: transparent;
+  --_stroke-op: var(--s-stroke-op-active);
+}
+body.is-lab-active .b-navbar__search input::-moz-placeholder {
+  opacity: 0;
+}
+body.is-lab-active .b-navbar__search input::placeholder {
+  opacity: 0;
+}
+body.is-lab-active .b-navbar__search .close-icon {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  --_text-op: 1;
+}
+
+/* ============================================================
+   5-COMPONENTS / _BUTTON.SCSS
+   Batura Library | Unified Button v24.1 [Vertical Height Sync]
+   ============================================================ */
+.ui-button {
+  text-decoration: none;
+  color: inherit;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  /* 1. ГЕОМЕТРИЯ (Single Source of Truth для Высоты) */
+  /* Все кнопки в системе теперь имеют строго одну высоту */
+  --btn-h: var(--ui-h-btn-master);
+  --btn-radius: calc(var(--radius-master) * 0.4);
+  /* ШИРИНА (W): Автоматическая по тексту, как ты и просил */
+  width: auto;
+  min-width: 0;
+  padding-inline: var(--ui-p-btn);
+  /* Interaction Proxies */
+  --_bg-op: var(--s-glass-op-base);
+  --_stroke-op: var(--s-stroke-op-idle);
+  --_text-op: var(--s-text-op-idle);
+  position: relative;
+  border-radius: var(--btn-radius);
+  isolation: isolate;
+  background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
+  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--btn-h);
+  cursor: pointer;
+  z-index: 10;
+  color: rgba(var(--p-white-rgb), var(--_text-op));
+  /* Motion DNA */
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), color var(--d-fast) var(--e-out), transform var(--d-fast) var(--e-out), -webkit-backdrop-filter var(--d-fast) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), color var(--d-fast) var(--e-out), backdrop-filter var(--d-fast) var(--e-out), transform var(--d-fast) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), color var(--d-fast) var(--e-out), backdrop-filter var(--d-fast) var(--e-out), transform var(--d-fast) var(--e-out), -webkit-backdrop-filter var(--d-fast) var(--e-out);
+  transition-delay: var(--stagger-step);
+  /* [ЛОГИКА ХОВЕРА] */
+  /* ============================================================
+     КОНТЕКСТНЫЕ КАРТРИДЖИ
+     ============================================================ */
+  /* ============================================================
+     3. ТЕГИ (Синхронизация с системным радиусом)
+     ============================================================ */
+  /* 2. НАВБАР (Исключение: масштабируется под высоту Nav) */
+  /* 3. КНОПКА ЗАКРЫТИЯ (Если используется вне навбара) */
+  /* Вне контекста */
+}
+.ui-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 0%, rgba(var(--m-glass-base-rgb), 0.4), transparent);
+  opacity: var(--_glare-op, 0);
+  transition: opacity var(--d-fast) var(--e-out);
+}
+.b-static-card:hover .ui-button, .b-card:hover .ui-button {
+  transition-delay: 0s;
+  --_bg-op: var(--s-glass-op-hover);
+  --_stroke-op: var(--s-stroke-op-hover);
+  --_text-op: var(--s-text-op-hover);
+}
+.ui-button.ui-button:hover {
+  transition-delay: 0s;
+  --_bg-op: var(--s-glass-op-active);
+  --_stroke-op: var(--s-stroke-op-active);
+  --_text-op: 1;
+}
+.ui-button:active {
+  transform: scale(0.96);
+  transition-duration: 0.1s;
+}
+#tagsContainer .ui-button {
+  /* ХИРУРГИЧЕСКОЕ ИСПРАВЛЕНИЕ:
+     Удаляем жесткие 100px. Теперь теги наследуют системный 
+     --btn-radius, который зависит от твоего --radius-master. */
+  --btn-radius: var(--radius-master);
+  --btn-h: var(--ui-h-btn-master);
+  padding-inline: calc(var(--unit) * 6);
+  transition-delay: 0s;
+  --_bg-op: var(--s-glass-op-hover);
+  --_stroke-op: var(--s-stroke-op-hover);
+}
+#tagsContainer .ui-button:hover, #tagsContainer .ui-button.is-active {
+  --_bg-op: var(--s-glass-op-active);
+  --_stroke-op: var(--s-stroke-op-active);
+  --_text-op: 1;
+}
+.b-navbar .ui-button {
+  --btn-h: var(--nav-content-h);
+  --btn-radius: var(--nav-inner-radius);
+  padding-inline: var(--space-xs);
+}
+.b-navbar .ui-button--logo, .b-navbar .ui-button--close {
+  width: var(--btn-h);
+  padding: 0;
+  aspect-ratio: 1/1;
+}
+.ui-button--close:not(.b-navbar .ui-button) {
+  width: var(--btn-h);
+  padding: 0;
+}
+.ui-button:not(.b-static-card .ui-button):not(.b-card .ui-button):not(.b-navbar .ui-button):not(#tagsContainer .ui-button) {
+  --_bg-op: var(--s-glass-op-hover);
+  --_stroke-op: var(--s-stroke-op-hover);
+}
+
+/* ============================================================
+   5-COMPONENTS / _ACCORDION.SCSS
+   Batura Library | System Synced v16.1 [Geometric Sync]
+   ============================================================ */
+@keyframes cardItemEntrance {
+  0% {
+    opacity: 0;
+    transform: translate3d(var(--entrance-offset), 0, 0.1px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0.1px);
+  }
+}
+.b-accordion {
+  display: flex;
+  width: 100%;
+  gap: var(--space-sm);
+  height: clamp(500px, 70vh, 750px);
+  flex-direction: row;
+  /* ============================================================
+       MOBILE ADAPTIVE (Vertical Stack)
+       ============================================================ */
+}
+.b-accordion .b-static-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  flex: var(--card-grow-base) 0 10%;
+  min-width: 60px;
+  --s-card-radius: var(--radius-master);
+  position: relative;
+  border-radius: var(--s-card-radius);
+  isolation: isolate;
+  background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
+  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: flex var(--d-slow) var(--e-out), background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out);
+  /* Логика декора и индекса при наведении на карту */
+}
+.b-accordion .b-static-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 0%, rgba(var(--m-glass-base-rgb), 0.4), transparent);
+  opacity: var(--_glare-op, 0);
+  transition: opacity var(--d-fast) var(--e-out);
+}
+.b-accordion .b-static-card__index {
+  position: absolute;
+  top: var(--p-card);
+  left: var(--p-card);
+  z-index: 10;
+  color: rgba(var(--p-white-rgb), var(--s-text-op-idle));
+  transition: color var(--d-fast) var(--e-out);
+}
+.b-accordion .b-static-card__deco {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-180deg);
+  writing-mode: vertical-rl;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 5;
+  color: rgba(var(--p-white-rgb), var(--s-text-op-idle));
+  transition: opacity var(--d-fast) var(--e-out), visibility var(--d-fast) var(--e-out);
+}
+.b-accordion .b-static-card:hover .b-static-card__index, .b-accordion .b-static-card.is-active .b-static-card__index {
+  color: rgba(var(--p-white-rgb), var(--s-text-op-hover));
+}
+.b-accordion .b-static-card:hover .b-static-card__deco, .b-accordion .b-static-card.is-active .b-static-card__deco {
+  opacity: 0;
+  visibility: hidden;
+  transition-property: none;
+  transition-duration: 0s;
+}
+.b-accordion .b-static-card__viewport {
+  height: 100%;
+  padding: var(--p-card);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 7;
+  flex: none;
+}
+.b-accordion .b-static-card.is-active {
+  flex: var(--card-grow-active) 0 10%;
+  cursor: default;
+  --_stroke-op: var(--s-stroke-op-hover);
+}
+.b-accordion .b-static-card.is-active .b-static-card__viewport {
+  opacity: 1;
+  visibility: visible;
+}
+.b-accordion .b-static-card.is-active .b-static-card__viewport > * {
+  animation: cardItemEntrance var(--d-base) var(--e-out) both;
+}
+.b-accordion .b-static-card.is-active .b-static-card__viewport > *:nth-child(1) {
+  animation-delay: calc(var(--entrance-delay) + 0.1s);
+}
+.b-accordion .b-static-card.is-active .b-static-card__viewport > *:nth-child(2) {
+  animation-delay: calc(var(--entrance-delay) + 0.2s);
+}
+.b-accordion .b-static-card.is-active .b-static-card__body {
+  flex: none;
+  margin-bottom: 0;
+}
+.b-accordion .b-static-card.is-active .b-static-card__body h3, .b-accordion .b-static-card.is-active .b-static-card__body p {
+  margin: 0;
+}
+.b-accordion .b-static-card.is-active .b-static-card__body .text-data, .b-accordion .b-static-card.is-active .b-static-card__body .ui-info-tag, .b-accordion .b-static-card.is-active .b-static-card__body .ui-range__header, .b-accordion .b-static-card.is-active .b-static-card__body .b-catalog-header .index, .b-catalog-header .b-accordion .b-static-card.is-active .b-static-card__body .index, .b-accordion .b-static-card.is-active .b-static-card__body .b-alphabet-nav__char, .b-accordion .b-static-card.is-active .b-static-card__body .b-static-card__index, .b-accordion .b-static-card.is-active .b-static-card__body small, .b-accordion .b-static-card.is-active .b-static-card__body .b-navbar__search input, .b-navbar__search .b-accordion .b-static-card.is-active .b-static-card__body input, .b-accordion .b-static-card.is-active .b-static-card__body .ui-button, .b-accordion .b-static-card.is-active .b-static-card__body .b-static-card__deco {
+  display: block;
+  margin-bottom: var(--space-xs);
+  opacity: var(--s-text-op-hover);
+}
+.b-accordion .b-static-card.is-active .b-static-card__body .text-heading, .b-accordion .b-static-card.is-active .b-static-card__body h2 {
+  margin-left: var(--text-offset-heading);
+}
+.b-accordion .b-static-card.is-active .b-static-card__body .text-heading + .text-body, .b-accordion .b-static-card.is-active .b-static-card__body .text-heading + .text-info-hint, .b-accordion .b-static-card.is-active .b-static-card__body h2 + .text-body, .b-accordion .b-static-card.is-active .b-static-card__body h2 + .text-info-hint, .b-accordion .b-static-card.is-active .b-static-card__body .text-heading + p, .b-accordion .b-static-card.is-active .b-static-card__body h2 + p {
+  margin-top: var(--space-xs);
+}
+.b-accordion .b-static-card.is-active .b-static-card__actions {
+  margin-top: var(--space-sm);
+  display: flex;
+}
+.b-accordion .b-static-card.is-active:hover {
+  flex: var(--card-grow-active-hover) 0 10%;
+  --_bg-op: var(--s-glass-op-hover);
+  --_stroke-op: var(--s-stroke-op-active);
+}
+.b-accordion .b-static-card:not(.is-active):hover {
+  flex: calc(var(--card-grow-base) * 1.4) 0 10%;
+  --_bg-op: var(--s-glass-op-hover);
+}
+@media (max-width: 768px) {
+  .b-accordion {
+    flex-direction: column;
+    height: clamp(600px, 80vh, 850px);
+  }
+  .b-accordion .b-static-card {
+    min-width: 100%;
+    min-height: 55px;
+    flex: var(--card-grow-base) 0 55px;
+    border-radius: 100px;
+    /* Убираем расширение при случайном скролле по закрытым папкам */
+  }
+  .b-accordion .b-static-card:not(.is-active):hover {
+    flex: var(--card-grow-base) 0 55px;
+  }
+  .b-accordion .b-static-card__index {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .b-accordion .b-static-card__deco {
+    writing-mode: horizontal-tb;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+  .b-accordion .b-static-card.is-active {
+    /* 1. ФИКС: Убираем вторую степень растяжения (фиксируем на 7.5) */
+    flex: 7.5 0 10%;
+    border-radius: var(--s-card-radius);
+    /* 2. ФИКС: Состояние ACTIVE (Максимальная яркость) сразу при открытии */
+    --_stroke-op: var(--s-stroke-op-active);
+    --_text-op: 1;
+    /* Убираем прыжок размера при повторном тапе */
+  }
+  .b-accordion .b-static-card.is-active .b-static-card__index {
+    top: var(--p-card);
+    transform: translateY(0);
+  }
+  .b-accordion .b-static-card.is-active .b-static-card__viewport > * {
+    /* 3. ФИКС: Анимация появления СНИЗУ ВВЕРХ */
+    animation-name: cardItemEntranceMobile;
+  }
+  .b-accordion .b-static-card.is-active .ui-button {
+    --_bg-op: var(--s-glass-op-active);
+    --_stroke-op: var(--s-stroke-op-active);
+    --_text-op: 1;
+    transition-delay: 0s;
+  }
+  .b-accordion .b-static-card.is-active .ui-button:active {
+    transform: scale(0.94);
+  }
+  .b-accordion .b-static-card.is-active:hover {
+    flex: 7.5 0 10%;
+  }
+}
+
+/* ============================================================
+   5-COMPONENTS / _FOOTER.SCSS
+   Batura Library | System Synced v7.7 [Geometric Symmetry]
+   ============================================================ */
+.b-footer {
+  /* 1. ПАРАМЕТРЫ ЛИНИЙ (Синхронизация) */
+  --footer-stroke-color: rgba(var(--p-white-rgb), calc(var(--s-stroke-op-idle) * 0.5));
+  --_exit-delay: var(--stagger-step);
+  padding-bottom: var(--p-page-bottom);
+  position: relative;
+  z-index: var(--z-app);
+}
+.b-footer__grid {
+  border-top: var(--s-stroke-width) solid var(--footer-stroke-color);
+  padding-top: var(--space-xl);
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: var(--space-xl);
+  /* ФИКС: Якорь для выравнивания заголовков всех колонок в одну линию */
+  align-items: start;
+}
+@media (max-width: 850px) {
+  .b-footer__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+}
+.b-footer__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.b-footer__brand > * + * {
+  margin-top: var(--space-md);
+}
+.b-footer__brand > .text-data + .text-hero, .b-footer__brand > .ui-info-tag + .text-hero, .b-footer__brand > .ui-range__header + .text-hero, .b-catalog-header .b-footer__brand > .index + .text-hero, .b-footer__brand > .b-alphabet-nav__char + .text-hero, .b-footer__brand > .b-static-card__index + .text-hero, .b-footer__brand > small + .text-hero, .b-navbar__search .b-footer__brand > input + .text-hero, .b-footer__brand > .ui-button + .text-hero, .b-accordion .b-footer__brand > .b-static-card__deco + .text-hero, .b-footer__brand > .text-data + h1, .b-footer__brand > .ui-info-tag + h1, .b-footer__brand > .ui-range__header + h1, .b-catalog-header .b-footer__brand > .index + h1, .b-footer__brand > .b-alphabet-nav__char + h1, .b-footer__brand > .b-static-card__index + h1, .b-footer__brand > small + h1, .b-navbar__search .b-footer__brand > input + h1, .b-footer__brand > .ui-button + h1, .b-accordion .b-footer__brand > .b-static-card__deco + h1, .b-footer__brand > .text-data + .text-heading, .b-footer__brand > .ui-info-tag + .text-heading, .b-footer__brand > .ui-range__header + .text-heading, .b-catalog-header .b-footer__brand > .index + .text-heading, .b-footer__brand > .b-alphabet-nav__char + .text-heading, .b-footer__brand > .b-static-card__index + .text-heading, .b-footer__brand > small + .text-heading, .b-navbar__search .b-footer__brand > input + .text-heading, .b-footer__brand > .ui-button + .text-heading, .b-accordion .b-footer__brand > .b-static-card__deco + .text-heading, .b-footer__brand > .text-data + h2, .b-footer__brand > .ui-info-tag + h2, .b-footer__brand > .ui-range__header + h2, .b-catalog-header .b-footer__brand > .index + h2, .b-footer__brand > .b-alphabet-nav__char + h2, .b-footer__brand > .b-static-card__index + h2, .b-footer__brand > small + h2, .b-navbar__search .b-footer__brand > input + h2, .b-footer__brand > .ui-button + h2, .b-accordion .b-footer__brand > .b-static-card__deco + h2, .b-footer__brand > .text-hero + .text-body, .b-footer__brand > .text-hero + .text-info-hint, .b-footer__brand > h1 + .text-body, .b-footer__brand > h1 + .text-info-hint, .b-footer__brand > .text-hero + p, .b-footer__brand > h1 + p, .b-footer__brand > .text-heading + .text-body, .b-footer__brand > .text-heading + .text-info-hint, .b-footer__brand > h2 + .text-body, .b-footer__brand > h2 + .text-info-hint, .b-footer__brand > .text-heading + p, .b-footer__brand > h2 + p {
+  margin-top: var(--space-xs);
+}
+.b-footer__brand > .text-body + .l-flex-group, .b-footer__brand > .text-info-hint + .l-flex-group, .b-footer__brand > p + .l-flex-group {
+  margin-top: var(--space-lg);
+}
+.b-footer__logo {
+  height: calc(var(--unit) * 7);
+  --_logo-op: calc(var(--s-text-op-idle) * 0.5);
+  color: rgba(var(--p-white-rgb), var(--_logo-op));
+  transition: color var(--d-fast) var(--e-out) var(--_exit-delay);
+  margin-left: calc(var(--unit) * -0.5);
+}
+.b-footer__logo .b-logo {
+  height: 100%;
+}
+.b-footer__logo .b-logo svg {
+  height: 100%;
+  transform: translate3d(var(--logo-balance-x), 0, 0);
+}
+.b-footer__brand:hover .b-footer__logo {
+  --_exit-delay: 0s;
+  --_logo-op: var(--s-text-op-hover);
+}
+.b-footer__group {
+  /* Синхронизируем вертикальный зазор заголовков с левой колонкой */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.b-footer__group > * + * {
+  margin-top: var(--space-md);
+}
+.b-footer__group > .text-data + .text-hero, .b-footer__group > .ui-info-tag + .text-hero, .b-footer__group > .ui-range__header + .text-hero, .b-catalog-header .b-footer__group > .index + .text-hero, .b-footer__group > .b-alphabet-nav__char + .text-hero, .b-footer__group > .b-static-card__index + .text-hero, .b-footer__group > small + .text-hero, .b-navbar__search .b-footer__group > input + .text-hero, .b-footer__group > .ui-button + .text-hero, .b-accordion .b-footer__group > .b-static-card__deco + .text-hero, .b-footer__group > .text-data + h1, .b-footer__group > .ui-info-tag + h1, .b-footer__group > .ui-range__header + h1, .b-catalog-header .b-footer__group > .index + h1, .b-footer__group > .b-alphabet-nav__char + h1, .b-footer__group > .b-static-card__index + h1, .b-footer__group > small + h1, .b-navbar__search .b-footer__group > input + h1, .b-footer__group > .ui-button + h1, .b-accordion .b-footer__group > .b-static-card__deco + h1, .b-footer__group > .text-data + .text-heading, .b-footer__group > .ui-info-tag + .text-heading, .b-footer__group > .ui-range__header + .text-heading, .b-catalog-header .b-footer__group > .index + .text-heading, .b-footer__group > .b-alphabet-nav__char + .text-heading, .b-footer__group > .b-static-card__index + .text-heading, .b-footer__group > small + .text-heading, .b-navbar__search .b-footer__group > input + .text-heading, .b-footer__group > .ui-button + .text-heading, .b-accordion .b-footer__group > .b-static-card__deco + .text-heading, .b-footer__group > .text-data + h2, .b-footer__group > .ui-info-tag + h2, .b-footer__group > .ui-range__header + h2, .b-catalog-header .b-footer__group > .index + h2, .b-footer__group > .b-alphabet-nav__char + h2, .b-footer__group > .b-static-card__index + h2, .b-footer__group > small + h2, .b-navbar__search .b-footer__group > input + h2, .b-footer__group > .ui-button + h2, .b-accordion .b-footer__group > .b-static-card__deco + h2, .b-footer__group > .text-hero + .text-body, .b-footer__group > .text-hero + .text-info-hint, .b-footer__group > h1 + .text-body, .b-footer__group > h1 + .text-info-hint, .b-footer__group > .text-hero + p, .b-footer__group > h1 + p, .b-footer__group > .text-heading + .text-body, .b-footer__group > .text-heading + .text-info-hint, .b-footer__group > h2 + .text-body, .b-footer__group > h2 + .text-info-hint, .b-footer__group > .text-heading + p, .b-footer__group > h2 + p {
+  margin-top: var(--space-xs);
+}
+.b-footer__group > .text-body + .l-flex-group, .b-footer__group > .text-info-hint + .l-flex-group, .b-footer__group > p + .l-flex-group {
+  margin-top: var(--space-lg);
+}
+.b-footer__group .l-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.b-footer__group .l-flow > * + * {
+  margin-top: var(--space-xs);
+}
+.b-footer__group .l-flow > .text-data + .text-hero, .b-footer__group .l-flow > .ui-info-tag + .text-hero, .b-footer__group .l-flow > .ui-range__header + .text-hero, .b-footer__group .b-catalog-header .l-flow > .index + .text-hero, .b-catalog-header .b-footer__group .l-flow > .index + .text-hero, .b-footer__group .l-flow > .b-alphabet-nav__char + .text-hero, .b-footer__group .l-flow > .b-static-card__index + .text-hero, .b-footer__group .l-flow > small + .text-hero, .b-footer__group .b-navbar__search .l-flow > input + .text-hero, .b-navbar__search .b-footer__group .l-flow > input + .text-hero, .b-footer__group .l-flow > .ui-button + .text-hero, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + .text-hero, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + .text-hero, .b-footer__group .l-flow > .text-data + h1, .b-footer__group .l-flow > .ui-info-tag + h1, .b-footer__group .l-flow > .ui-range__header + h1, .b-footer__group .b-catalog-header .l-flow > .index + h1, .b-catalog-header .b-footer__group .l-flow > .index + h1, .b-footer__group .l-flow > .b-alphabet-nav__char + h1, .b-footer__group .l-flow > .b-static-card__index + h1, .b-footer__group .l-flow > small + h1, .b-footer__group .b-navbar__search .l-flow > input + h1, .b-navbar__search .b-footer__group .l-flow > input + h1, .b-footer__group .l-flow > .ui-button + h1, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + h1, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + h1, .b-footer__group .l-flow > .text-data + .text-heading, .b-footer__group .l-flow > .ui-info-tag + .text-heading, .b-footer__group .l-flow > .ui-range__header + .text-heading, .b-footer__group .b-catalog-header .l-flow > .index + .text-heading, .b-catalog-header .b-footer__group .l-flow > .index + .text-heading, .b-footer__group .l-flow > .b-alphabet-nav__char + .text-heading, .b-footer__group .l-flow > .b-static-card__index + .text-heading, .b-footer__group .l-flow > small + .text-heading, .b-footer__group .b-navbar__search .l-flow > input + .text-heading, .b-navbar__search .b-footer__group .l-flow > input + .text-heading, .b-footer__group .l-flow > .ui-button + .text-heading, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + .text-heading, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + .text-heading, .b-footer__group .l-flow > .text-data + h2, .b-footer__group .l-flow > .ui-info-tag + h2, .b-footer__group .l-flow > .ui-range__header + h2, .b-footer__group .b-catalog-header .l-flow > .index + h2, .b-catalog-header .b-footer__group .l-flow > .index + h2, .b-footer__group .l-flow > .b-alphabet-nav__char + h2, .b-footer__group .l-flow > .b-static-card__index + h2, .b-footer__group .l-flow > small + h2, .b-footer__group .b-navbar__search .l-flow > input + h2, .b-navbar__search .b-footer__group .l-flow > input + h2, .b-footer__group .l-flow > .ui-button + h2, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + h2, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + h2, .b-footer__group .l-flow > .text-hero + .text-body, .b-footer__group .l-flow > .text-hero + .text-info-hint, .b-footer__group .l-flow > h1 + .text-body, .b-footer__group .l-flow > h1 + .text-info-hint, .b-footer__group .l-flow > .text-hero + p, .b-footer__group .l-flow > h1 + p, .b-footer__group .l-flow > .text-heading + .text-body, .b-footer__group .l-flow > .text-heading + .text-info-hint, .b-footer__group .l-flow > h2 + .text-body, .b-footer__group .l-flow > h2 + .text-info-hint, .b-footer__group .l-flow > .text-heading + p, .b-footer__group .l-flow > h2 + p {
+  margin-top: var(--space-xs);
+}
+.b-footer__group .l-flow > .text-body + .l-flex-group, .b-footer__group .l-flow > .text-info-hint + .l-flex-group, .b-footer__group .l-flow > p + .l-flex-group {
+  margin-top: var(--space-lg);
+}
+.b-footer__link {
+  font-family: var(--font-main);
+  font-size: var(--fs-body);
+  font-weight: 300;
+  line-height: var(--lh-body);
+  --_link-op: var(--s-text-op-idle);
+  color: rgba(var(--p-white-rgb), var(--_link-op));
+  /* Только цветовая анимация */
+  transition: color var(--d-fast) var(--e-out) var(--_exit-delay);
+  display: block;
+}
+.b-footer__link:hover {
+  --_exit-delay: 0s;
+  --_link-op: var(--s-text-op-hover);
+}
+.b-footer__bottom {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-md);
+  border-top: var(--s-stroke-width) solid var(--footer-stroke-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.b-footer__bottom .text-data, .b-footer__bottom .ui-info-tag, .b-footer__bottom .ui-range__header, .b-footer__bottom .b-catalog-header .index, .b-catalog-header .b-footer__bottom .index, .b-footer__bottom .b-alphabet-nav__char, .b-footer__bottom .b-static-card__index, .b-footer__bottom small, .b-footer__bottom .b-navbar__search input, .b-navbar__search .b-footer__bottom input, .b-footer__bottom .ui-button, .b-footer__bottom .b-accordion .b-static-card__deco, .b-accordion .b-footer__bottom .b-static-card__deco {
+  font-size: 10px;
+  opacity: calc(var(--s-text-op-idle) * 0.6);
+  letter-spacing: var(--ls-caption);
+}
+
+.ui-button--logo {
+  width: var(--btn-h);
+  padding: 0;
+  aspect-ratio: 1/1;
+}
+.ui-button--logo .b-logo {
+  height: 35%;
+  width: 35%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ui-button--logo .b-logo svg {
+  transform: translate3d(var(--logo-balance-x), 0, 0);
+}
+.b-navbar .ui-button--logo {
+  --btn-h: var(--nav-content-h);
+  --btn-radius: var(--nav-inner-radius);
+  --_blur: var(--nav-blur);
+}
+
+/* ============================================================
+   5-COMPONENTS / _STATIC-CARD.SCSS
+   Batura Library | Bottom Anchor v32.1 [Gravity Sync]
+   ============================================================ */
+.b-static-card {
+  /* 1. ГЕОМЕТРИЯ И МАТЕРИАЛ */
+  --s-card-radius: var(--radius-master);
+  --_preview-radius: calc(var(--s-card-radius) - (var(--p-card) * 0.5));
+  position: relative;
+  border-radius: var(--s-card-radius);
+  isolation: isolate;
+  background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
+  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  /* ИЗМЕНЕНИЕ: height: 100% позволяет карточке растягиваться 
+     под высоту самой длинной карточки в ряду. */
+  height: 100%;
+  /* 2. СОСТОЯНИЯ (БЕЗ ИЗМЕНЕНИЙ) */
+  --_bg-op: var(--s-glass-op-base);
+  --_stroke-op: var(--s-stroke-op-idle);
+  --_text-op: var(--s-text-op-idle);
+  /* 3. ВЬЮПОРТ (Внутренняя гравитация) */
+  /* 4. ТЕКСТОВЫЙ БЛОК (БЕЗ ИЗМЕНЕНИЙ) */
+  /* 5. КНОПКА (Гравитация вкл.) */
+  /* 6. ПРЕВЬЮ И АДАПТИВ (БЕЗ ИЗМЕНЕНИЙ) */
+}
+.b-static-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 0%, rgba(var(--m-glass-base-rgb), 0.4), transparent);
+  opacity: var(--_glare-op, 0);
+  transition: opacity var(--d-fast) var(--e-out);
+}
+.b-static-card.is-focused, .b-static-card:hover {
+  transition-delay: 0s;
+}
+.b-static-card.is-focused {
+  --_stroke-op: var(--s-stroke-op-hover);
+  --_text-op: var(--_text-op-hover, var(--s-text-op-hover));
+  --_bg-op: var(--s-glass-op-hover);
+}
+.b-static-card:hover {
+  --_bg-op: var(--s-glass-op-hover);
+  --_stroke-op: var(--s-stroke-op-active);
+  --_glare-op: var(--s-glare-op-hover);
+  --_text-op: 1;
+}
+.b-static-card__viewport {
+  padding: var(--p-card);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  /* ИЗМЕНЕНИЕ: flex: 1 заставляет вьюпорт заполнять 
+     всё пространство карточки. */
+  flex: 1;
+  border-radius: inherit;
+  position: relative;
+  overflow: hidden;
+}
+.b-static-card__viewport > * + * {
+  margin-top: var(--space-md);
+}
+.b-static-card__viewport > .text-data + .text-hero, .b-static-card__viewport > .ui-info-tag + .text-hero, .b-static-card__viewport > .ui-range__header + .text-hero, .b-catalog-header .b-static-card__viewport > .index + .text-hero, .b-static-card__viewport > .b-alphabet-nav__char + .text-hero, .b-static-card__viewport > .b-static-card__index + .text-hero, .b-static-card__viewport > small + .text-hero, .b-navbar__search .b-static-card__viewport > input + .text-hero, .b-static-card__viewport > .ui-button + .text-hero, .b-accordion .b-static-card__viewport > .b-static-card__deco + .text-hero, .b-static-card__viewport > .text-data + h1, .b-static-card__viewport > .ui-info-tag + h1, .b-static-card__viewport > .ui-range__header + h1, .b-catalog-header .b-static-card__viewport > .index + h1, .b-static-card__viewport > .b-alphabet-nav__char + h1, .b-static-card__viewport > .b-static-card__index + h1, .b-static-card__viewport > small + h1, .b-navbar__search .b-static-card__viewport > input + h1, .b-static-card__viewport > .ui-button + h1, .b-accordion .b-static-card__viewport > .b-static-card__deco + h1, .b-static-card__viewport > .text-data + .text-heading, .b-static-card__viewport > .ui-info-tag + .text-heading, .b-static-card__viewport > .ui-range__header + .text-heading, .b-catalog-header .b-static-card__viewport > .index + .text-heading, .b-static-card__viewport > .b-alphabet-nav__char + .text-heading, .b-static-card__viewport > .b-static-card__index + .text-heading, .b-static-card__viewport > small + .text-heading, .b-navbar__search .b-static-card__viewport > input + .text-heading, .b-static-card__viewport > .ui-button + .text-heading, .b-accordion .b-static-card__viewport > .b-static-card__deco + .text-heading, .b-static-card__viewport > .text-data + h2, .b-static-card__viewport > .ui-info-tag + h2, .b-static-card__viewport > .ui-range__header + h2, .b-catalog-header .b-static-card__viewport > .index + h2, .b-static-card__viewport > .b-alphabet-nav__char + h2, .b-static-card__viewport > .b-static-card__index + h2, .b-static-card__viewport > small + h2, .b-navbar__search .b-static-card__viewport > input + h2, .b-static-card__viewport > .ui-button + h2, .b-accordion .b-static-card__viewport > .b-static-card__deco + h2, .b-static-card__viewport > .text-hero + .text-body, .b-static-card__viewport > .text-hero + .text-info-hint, .b-static-card__viewport > h1 + .text-body, .b-static-card__viewport > h1 + .text-info-hint, .b-static-card__viewport > .text-hero + p, .b-static-card__viewport > h1 + p, .b-static-card__viewport > .text-heading + .text-body, .b-static-card__viewport > .text-heading + .text-info-hint, .b-static-card__viewport > h2 + .text-body, .b-static-card__viewport > h2 + .text-info-hint, .b-static-card__viewport > .text-heading + p, .b-static-card__viewport > h2 + p {
+  margin-top: var(--space-xs);
+}
+.b-static-card__viewport > .text-body + .l-flex-group, .b-static-card__viewport > .text-info-hint + .l-flex-group, .b-static-card__viewport > p + .l-flex-group {
+  margin-top: var(--space-lg);
+}
+.b-static-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
+}
+.b-static-card__index {
+  font-weight: 400;
+}
+.b-static-card__body {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.b-static-card__body > .text-heading + .text-body, .b-static-card__body > .text-heading + .text-info-hint, .b-static-card__body > h2 + .text-body, .b-static-card__body > h2 + .text-info-hint, .b-static-card__body > .text-heading + p, .b-static-card__body > h2 + p {
+  margin-top: var(--space-xs);
+}
+.b-static-card__body > .text-body + .b-static-card__tags, .b-static-card__body > .text-info-hint + .b-static-card__tags, .b-static-card__body > p + .b-static-card__tags {
+  margin-top: var(--space-xs);
+}
+.b-static-card__actions {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  /* ИЗМЕНЕНИЕ: margin-top: auto выталкивает блок вниз.
+     var(--space-sm) остается как минимальный отступ, если текста много. */
+  margin-top: auto;
+  padding-top: var(--space-sm);
+}
+.b-static-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+.b-static-card .b-preview-box {
+  --local-preview-radius: var(--_preview-radius);
+  width: 100%;
+  aspect-ratio: 16/9;
+  position: relative;
+  border-radius: var(--local-preview-radius);
+  isolation: isolate;
+  background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
+  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  overflow: hidden;
+}
+.b-static-card .b-preview-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 0%, rgba(var(--m-glass-base-rgb), 0.4), transparent);
+  opacity: var(--_glare-op, 0);
+  transition: opacity var(--d-fast) var(--e-out);
+}
+@media (max-width: 768px) {
+  .b-static-card.is-focused {
+    --_bg-op: var(--s-glass-op-hover);
+    --_stroke-op: var(--s-stroke-op-active);
+    --_text-op: 1;
+  }
+  .b-static-card.is-focused .ui-button {
+    --_bg-op: var(--s-glass-op-active);
+    --_stroke-op: var(--s-stroke-op-active);
+    --_text-op: 1;
+    transition-delay: 0s;
+  }
+}
+
+/* ============================================================
+   5-COMPONENTS / _ALPHABET-NAV.SCSS
+   Batura Library | System v16.0 [Alphabetical Rail]
+   ============================================================ */
+.b-alphabet-nav {
+  position: sticky;
+  top: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  min-width: 40px;
+  z-index: 10;
+}
+.b-alphabet-nav__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  opacity: 0.3;
+  transition: opacity var(--d-fast) var(--e-out);
+}
+.b-alphabet-nav__item:hover {
+  opacity: 1;
+}
+.b-alphabet-nav__item:hover .b-alphabet-nav__line {
+  width: 24px;
+}
+.b-alphabet-nav__char {
+  font-size: 11px;
+}
+.b-alphabet-nav__line {
+  height: 1px;
+  width: 12px;
+  background: var(--color-text-main);
+  transition: width var(--d-fast) var(--e-out);
+}
+
+/* ============================================================
+   3-OBJECTS / _CATALOG.SCSS
+   Batura Library | Variable Height Sync [v31.2]
+   ============================================================ */
+.b-catalog-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  --_stroke-op: var(--s-stroke-op-idle);
+  --_text-op: var(--s-text-op-idle);
+  --_exit-delay: var(--stagger-step);
+}
+.b-catalog-section.is-focused {
+  --_exit-delay: 0s;
+  --_stroke-op: var(--s-stroke-op-hover);
+  --_text-op: var(--s-text-op-hover);
+}
+.b-catalog-section:hover {
+  --_exit-delay: 0s;
+  --_stroke-op: var(--s-stroke-op-active);
+  --_text-op: var(--s-text-op-hover);
+}
+@media (max-width: 768px) {
+  .b-catalog-section.is-focused {
+    --_stroke-op: var(--s-stroke-op-active);
+    --_text-op: 1;
+  }
+}
+
+.b-catalog-header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  padding-bottom: var(--space-xs);
+  border-bottom: none;
+  box-shadow: 0 var(--s-stroke-width) 0 0 rgba(var(--p-white-rgb), var(--_stroke-op));
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  transition: box-shadow var(--d-fast) var(--e-out) var(--_exit-delay);
+}
+.b-catalog-header .letter {
+  font-family: var(--font-main);
+  font-size: var(--fs-h2);
+  font-weight: 200;
+  line-height: 1;
+  color: rgba(var(--p-white-rgb), var(--_text-op));
+  transition: color var(--d-fast) var(--e-out) var(--_exit-delay);
+  margin-left: var(--text-offset-heading);
+}
+.b-catalog-header .index {
+  color: rgba(var(--p-white-rgb), calc(var(--_text-op) * 0.7));
+  transition: color var(--d-fast) var(--e-out) var(--_exit-delay);
+}
+
+.l-grid-expressions {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: var(--space-md);
+  width: 100%;
+  /* ВОЗВРАТ К ИСТОКАМ: 
+     Карточки в одном ряду снова растягиваются под одну высоту. */
+  align-items: stretch;
+}
+
+/* ============================================================
+   4-COMPONENTS / _B-PREVIEW-BOX.SCSS
+   Batura Library | Preview Engine [Lab Sync Update]
+   ============================================================ */
+.b-preview-box {
+  width: 100%;
+  aspect-ratio: 16/9;
+  position: relative;
+  border-radius: var(--local-preview-radius, var(--radius-inner));
+  position: relative;
+  border-radius: inherit;
+  isolation: isolate;
+  background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
+  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  --_bg-op: var(--s-glare-op-hover);
+  overflow: hidden;
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-base) var(--e-out);
+}
+.b-preview-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 0%, rgba(var(--m-glass-base-rgb), 0.4), transparent);
+  opacity: var(--_glare-op, 0);
+  transition: opacity var(--d-fast) var(--e-out);
+}
+.b-preview-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(var(--theme-accent-rgb), var(--s-glare-op-hover)), transparent 75%);
+  pointer-events: none;
+  z-index: 1;
+}
+.b-preview-box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(var(--p-white-rgb), 0.02) 1px, transparent 1px);
+  background-size: var(--space-sm) var(--space-sm);
+  opacity: 0.15;
+  mix-blend-mode: overlay;
+  z-index: 2;
+}
+
+/* ============================================================
+   5-COMPONENTS / _LAB-INTERFACE.SCSS
+   Batura Library | Monolithic Scroll-Split v10.16 [Clean Fade]
+   ============================================================ */
+.l-lab-interface {
+  /* 1. МАТЕРИАЛ ОКНА (ДНК) */
+  position: relative;
+  border-radius: 0 0 var(--radius-master) var(--radius-master);
+  isolation: isolate;
+  background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
+  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  /* 2. PROXY VARIABLES */
+  --_bg-op: var(--s-glass-op-hover);
+  --_stroke-op: var(--s-stroke-op-hover);
+  --_blur: 25px;
+  --_glare-op: 0;
+  /* 3. NAVBAR SYNC */
+  --_nav-bottom: calc(var(--nav-h) + var(--nav-top));
+  --_content-top: var(--_nav-bottom);
+  /* 4. INITIAL STATE */
+  opacity: 1;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate3d(-50%, -100%, 0);
+  /* 5. ВНУТРЕННИЕ КОЛОНКИ (Контр-сдвиг) */
+  /* ------------------------------------------------------------
+     DIVIDER CARTRIDGE (Optical Twin Sync)
+     ------------------------------------------------------------ */
+  /* ------------------------------------------------------------
+     [MONOLITH] LAB PREVIEW DISPLAY
+     ------------------------------------------------------------ */
+  /* 7. INTERACTION */
+  /* 8. MASTER MOTION DNA */
+  will-change: transform, background-color, backdrop-filter;
+  transition: transform var(--d-morph) var(--e-out), visibility var(--d-morph) var(--e-out), background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), -webkit-backdrop-filter var(--d-fast) var(--e-out);
+  transition: transform var(--d-morph) var(--e-out), visibility var(--d-morph) var(--e-out), background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-fast) var(--e-out);
+  transition: transform var(--d-morph) var(--e-out), visibility var(--d-morph) var(--e-out), background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-fast) var(--e-out), -webkit-backdrop-filter var(--d-fast) var(--e-out);
+}
+.l-lab-interface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 0%, rgba(var(--m-glass-base-rgb), 0.4), transparent);
+  opacity: var(--_glare-op, 0);
+  transition: opacity var(--d-fast) var(--e-out);
+}
+.l-lab-interface__column {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transform: translateY(100%);
+  transition: transform var(--d-morph) var(--e-out);
+  /* [SCROLL-SPLIT SYMMETRY] */
+}
+.l-lab-interface__column--setup, .l-lab-interface__column--engine {
+  padding: 0;
+}
+.l-lab-interface__column--setup .b-lab-column-header, .l-lab-interface__column--engine .b-lab-column-header {
+  flex: 0 0 auto;
+  padding: var(--_content-top) var(--space-md) 0;
+  z-index: 10;
+  position: relative;
+}
+.l-lab-interface__column--setup .b-lab-column-body, .l-lab-interface__column--engine .b-lab-column-body {
+  flex: 1 1 auto;
+  overflow: hidden;
+  padding: var(--space-md) var(--space-md) var(--space-xl);
+  position: relative;
+  z-index: 1;
+  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+}
+.l-lab-interface .b-lab-divider {
+  width: 100%;
+  height: var(--space-xs);
+  margin-top: calc(var(--space-xs) * -1);
+  position: relative;
+  background: transparent;
+  border: none;
+  box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  transition: box-shadow var(--d-fast) var(--e-out);
+  pointer-events: none;
+  transform: translateZ(0);
+  will-change: box-shadow;
+}
+.l-lab-interface .text-heading, .l-lab-interface h2 {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding-bottom: var(--space-xs);
+}
+.l-lab-interface .text-subheading {
+  position: relative;
+  display: block;
+  padding-bottom: 0;
+}
+.l-lab-interface .lab-preview-display {
+  width: 100%;
+  height: calc(100% - var(--_content-top));
+  margin-top: var(--_content-top);
+  position: relative;
+  border-radius: var(--radius-inner) var(--radius-inner) 0 0;
+  overflow: hidden;
+  position: relative;
+  border-radius: inherit;
+  isolation: isolate;
+  background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
+  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  --_bg-op: var(--s-glare-op-hover);
+  box-shadow: inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))), inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), -webkit-backdrop-filter var(--d-fast) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-fast) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-fast) var(--e-out), -webkit-backdrop-filter var(--d-fast) var(--e-out);
+}
+.l-lab-interface .lab-preview-display::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 0%, rgba(var(--m-glass-base-rgb), 0.4), transparent);
+  opacity: var(--_glare-op, 0);
+  transition: opacity var(--d-fast) var(--e-out);
+}
+.l-lab-interface:hover .l-lab-interface .lab-preview-display {
+  --_bg-op: var(--s-glass-op-hover);
+  --_stroke-op: var(--s-stroke-op-active);
+}
+.l-lab-interface .lab-preview-display::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(var(--theme-accent-rgb), 0.15), transparent 80%);
+  pointer-events: none;
+  z-index: 1;
+}
+.l-lab-interface .lab-preview-display::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(var(--p-white-rgb), 0.02) 1px, transparent 1px);
+  background-size: var(--space-sm) var(--space-sm);
+  opacity: 0.15;
+  z-index: 2;
+}
+.l-lab-interface:hover {
+  transition-delay: 0s;
+  --_bg-op: var(--s-glass-op-hover);
+  --_stroke-op: var(--s-stroke-op-active);
+  --_blur: 45px;
+  --_glare-op: var(--s-glare-op-hover);
+}
+.l-lab-interface:hover .lab-preview-display {
+  --_bg-op: var(--s-glass-op-active);
+}
+
+/* 9. GLOBAL STATE: ACTIVATION */
+body.is-lab-active .l-lab-interface {
+  visibility: visible;
+  pointer-events: all;
+}
+@media (min-width: 1101px) {
+  body.is-lab-active .l-lab-interface {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+@media (max-width: 1100px) {
+  body.is-lab-active .l-lab-interface {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@media (min-width: 1101px) {
+  body.is-lab-active .l-lab-interface .l-lab-interface__column {
+    transform: translateY(0);
+  }
+}
+body.is-lab-active #app-wrapper {
+  filter: blur(15px);
+  transform: scale(0.98);
+  opacity: 0;
+  transition: all var(--d-morph) var(--e-out);
+}
+
+/* ------------------------------------------------------------
+   10. ADAPTATION (Liquid Frame Sync - Surgical Strokes Version)
+   ------------------------------------------------------------ */
+@media (max-width: 1100px) {
+  body .l-lab-interface {
+    left: 50%;
+    width: min(var(--stable-content-width), var(--stable-max-content));
+    height: calc(100vh - var(--nav-top));
+    border-radius: 0 0 var(--radius-master) var(--radius-master);
+    transform: translate3d(-50%, -100%, 0);
+    /* АКТИВНЫЙ МАТЕРИАЛ ОБЛОЧКИ (Внешняя рамка остается активной) */
+    --_stroke-op: var(--s-stroke-op-active);
+    --_blur: 45px;
+    --_glare-op: var(--s-glare-op-hover);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1.2fr;
+    grid-template-areas: "viewport viewport" "setup engine";
+  }
+  body .l-lab-interface__column {
+    transform: none;
+  }
+  body .l-lab-interface__column--viewport {
+    grid-area: viewport;
+    padding: 0;
+  }
+  body .l-lab-interface__column--viewport .lab-preview-display {
+    margin-top: 0;
+    height: 100%;
+    border-radius: 0;
+    border: none;
+    /* Полоска под превью */
+    box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active));
+    --_bg-op: var(--s-glass-op-active);
+    background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op));
+  }
+  body .l-lab-interface__column--setup, body .l-lab-interface__column--engine {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+  body .l-lab-interface__column--setup .b-lab-column-header, body .l-lab-interface__column--engine .b-lab-column-header {
+    padding: var(--space-sm) var(--space-sm) 0;
+  }
+  body .l-lab-interface__column--setup .b-lab-column-header .b-spacer, body .l-lab-interface__column--engine .b-lab-column-header .b-spacer {
+    display: none;
+  }
+  body .l-lab-interface__column--setup .b-lab-column-header .text-data, body .l-lab-interface__column--setup .b-lab-column-header .ui-info-tag, body .l-lab-interface__column--setup .b-lab-column-header .ui-range__header, body .l-lab-interface__column--setup .b-lab-column-header small, body .l-lab-interface__column--setup .b-lab-column-header .b-navbar__search input, .b-navbar__search body .l-lab-interface__column--setup .b-lab-column-header input, body .l-lab-interface__column--setup .b-lab-column-header .ui-button, body .l-lab-interface__column--setup .b-lab-column-header .b-accordion .b-static-card__deco, .b-accordion body .l-lab-interface__column--setup .b-lab-column-header .b-static-card__deco, body .l-lab-interface__column--setup .b-lab-column-header .b-static-card__index, body .l-lab-interface__column--setup .b-lab-column-header .b-alphabet-nav__char, body .l-lab-interface__column--setup .b-lab-column-header .b-catalog-header .index, .b-catalog-header body .l-lab-interface__column--setup .b-lab-column-header .index, body .l-lab-interface__column--engine .b-lab-column-header .text-data, body .l-lab-interface__column--engine .b-lab-column-header .ui-info-tag, body .l-lab-interface__column--engine .b-lab-column-header .ui-range__header, body .l-lab-interface__column--engine .b-lab-column-header small, body .l-lab-interface__column--engine .b-lab-column-header .b-navbar__search input, .b-navbar__search body .l-lab-interface__column--engine .b-lab-column-header input, body .l-lab-interface__column--engine .b-lab-column-header .ui-button, body .l-lab-interface__column--engine .b-lab-column-header .b-accordion .b-static-card__deco, .b-accordion body .l-lab-interface__column--engine .b-lab-column-header .b-static-card__deco, body .l-lab-interface__column--engine .b-lab-column-header .b-static-card__index, body .l-lab-interface__column--engine .b-lab-column-header .b-alphabet-nav__char, body .l-lab-interface__column--engine .b-lab-column-header .b-catalog-header .index, .b-catalog-header body .l-lab-interface__column--engine .b-lab-column-header .index {
+    margin-top: 0;
+    margin-bottom: 0;
+    display: block;
+  }
+  body .l-lab-interface__column--setup .b-lab-column-header .text-heading, body .l-lab-interface__column--setup .b-lab-column-header h2, body .l-lab-interface__column--setup .b-lab-column-header .text-subheading, body .l-lab-interface__column--engine .b-lab-column-header .text-heading, body .l-lab-interface__column--engine .b-lab-column-header h2, body .l-lab-interface__column--engine .b-lab-column-header .text-subheading {
+    margin-top: -6px;
+    padding-bottom: var(--space-xs);
+    line-height: 1;
+  }
+  body .l-lab-interface__column--setup .b-lab-column-header .b-lab-divider, body .l-lab-interface__column--engine .b-lab-column-header .b-lab-divider {
+    --_stroke-op: var(--s-stroke-op-active);
+  }
+  body .l-lab-interface__column--setup .b-lab-column-body, body .l-lab-interface__column--engine .b-lab-column-body {
+    padding: var(--space-sm) var(--space-sm) var(--space-md);
+    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+    /* 
+       УДАЛЕНО: Принудительная активация .ui-range и .ui-info-tag.
+       Теперь они подчиняются своим базовым стилям и состоянию :active
+    */
+  }
+  body .l-lab-interface__column--setup {
+    grid-area: setup;
+    border-right: none;
+    /* Вертикальная полоска */
+    box-shadow: inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active));
+  }
+  body .l-lab-interface__column--engine {
+    grid-area: engine;
+  }
+  body.is-lab-active .l-lab-interface {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+/* ============================================================
+   5-COMPONENTS / _UI-CONTROLS.SCSS
+   Batura Library | Atomic Controls [Surgical Divider Sync]
+   ============================================================ */
+/* 1. UI-RANGE: Инженерный ползунок */
+.ui-range {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: var(--space-md);
+  --_local-stroke-op: var(--s-stroke-op-idle);
+  --_local-text-op: var(--s-text-op-idle);
+  transition: opacity var(--d-fast) var(--e-out);
+}
+.ui-range > * + * {
+  margin-top: var(--space-xs);
+}
+.ui-range > .text-data + .text-hero, .ui-range > .ui-info-tag + .text-hero, .ui-range > .ui-range__header + .text-hero, .ui-range > small + .text-hero, .b-navbar__search .ui-range > input + .text-hero, .ui-range > .ui-button + .text-hero, .b-accordion .ui-range > .b-static-card__deco + .text-hero, .ui-range > .b-static-card__index + .text-hero, .ui-range > .b-alphabet-nav__char + .text-hero, .b-catalog-header .ui-range > .index + .text-hero, .ui-range > .text-data + h1, .ui-range > .ui-info-tag + h1, .ui-range > .ui-range__header + h1, .ui-range > small + h1, .b-navbar__search .ui-range > input + h1, .ui-range > .ui-button + h1, .b-accordion .ui-range > .b-static-card__deco + h1, .ui-range > .b-static-card__index + h1, .ui-range > .b-alphabet-nav__char + h1, .b-catalog-header .ui-range > .index + h1, .ui-range > .text-data + .text-heading, .ui-range > .ui-info-tag + .text-heading, .ui-range > .ui-range__header + .text-heading, .ui-range > small + .text-heading, .b-navbar__search .ui-range > input + .text-heading, .ui-range > .ui-button + .text-heading, .b-accordion .ui-range > .b-static-card__deco + .text-heading, .ui-range > .b-static-card__index + .text-heading, .ui-range > .b-alphabet-nav__char + .text-heading, .b-catalog-header .ui-range > .index + .text-heading, .ui-range > .text-data + h2, .ui-range > .ui-info-tag + h2, .ui-range > .ui-range__header + h2, .ui-range > small + h2, .b-navbar__search .ui-range > input + h2, .ui-range > .ui-button + h2, .b-accordion .ui-range > .b-static-card__deco + h2, .ui-range > .b-static-card__index + h2, .ui-range > .b-alphabet-nav__char + h2, .b-catalog-header .ui-range > .index + h2, .ui-range > .text-hero + .text-body, .ui-range > .text-hero + .text-info-hint, .ui-range > h1 + .text-body, .ui-range > h1 + .text-info-hint, .ui-range > .text-hero + p, .ui-range > h1 + p, .ui-range > .text-heading + .text-body, .ui-range > .text-heading + .text-info-hint, .ui-range > h2 + .text-body, .ui-range > h2 + .text-info-hint, .ui-range > .text-heading + p, .ui-range > h2 + p {
+  margin-top: var(--space-xs);
+}
+.ui-range > .text-body + .l-flex-group, .ui-range > .text-info-hint + .l-flex-group, .ui-range > p + .l-flex-group {
+  margin-top: var(--space-lg);
+}
+.ui-range__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
+}
+.ui-range__header .value {
+  color: rgba(var(--p-white-rgb), var(--_local-text-op));
+  font-weight: 500;
+  transition: color var(--d-fast) var(--e-out);
+  cursor: text;
+  min-width: 3ch;
+  text-align: right;
+  outline: none;
+  /* ФИКС: Убираем влияние letter-spacing для выравнивания по правому краю */
+  margin-right: -0.15em;
+}
+.ui-range__header .value:hover {
+  --_local-text-op: 1;
+}
+.ui-range__header .value:focus {
+  --_local-text-op: 1;
+  color: rgba(var(--p-white-rgb), 1);
+}
+@media (min-width: 1101px) {
+  .ui-range:hover {
+    --_local-stroke-op: var(--s-stroke-op-hover);
+    --_local-text-op: var(--s-text-op-hover);
+  }
+}
+.ui-range input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 20px;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  display: block;
+}
+.ui-range input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 2px;
+  background: transparent;
+  border: none;
+  box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
+  -webkit-transition: box-shadow var(--d-fast) var(--e-out);
+  transition: box-shadow var(--d-fast) var(--e-out);
+  transform: translateZ(0);
+}
+.ui-range input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background: rgb(var(--p-white-rgb));
+  position: relative;
+  border-radius: 50%;
+  isolation: isolate;
+  background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
+  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
+  -webkit-transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  --_bg-op: 1;
+  --_stroke-op: 0.3;
+  margin-top: -5px;
+  -webkit-transition: transform var(--d-fast) var(--e-out);
+  transition: transform var(--d-fast) var(--e-out);
+  will-change: transform;
+}
+.ui-range input[type=range]::-webkit-slider-thumb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 0%, rgba(var(--m-glass-base-rgb), 0.4), transparent);
+  opacity: var(--_glare-op, 0);
+  -webkit-transition: opacity var(--d-fast) var(--e-out);
+  transition: opacity var(--d-fast) var(--e-out);
+}
+.ui-range input[type=range]:hover::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+.ui-range input[type=range]:active {
+  --_local-stroke-op: var(--s-stroke-op-active);
+  --_local-text-op: 1;
+}
+.ui-range input[type=range]:active::-webkit-slider-thumb {
+  transform: scale(1.1);
+}
+
+/* 2. UI-INFO: Группа заголовка и морфинг */
+.l-lab-interface .ui-info-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  position: relative;
+  margin-bottom: 0;
+}
+.l-lab-interface .ui-info-group__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
+}
+.l-lab-interface .ui-info-group__description {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--d-morph) var(--e-out), margin-top var(--d-morph) var(--e-out);
+  overflow: hidden;
+  width: 100%;
+}
+.l-lab-interface .ui-info-group__description .description-inner {
+  min-height: 0;
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: opacity var(--d-fast) var(--e-out), transform var(--d-base) var(--e-out);
+}
+.l-lab-interface .ui-info-group.is-info-active .ui-info-group__description {
+  grid-template-rows: 1fr;
+  margin-top: var(--space-sm);
+}
+.l-lab-interface .ui-info-group.is-info-active .ui-info-group__description .description-inner {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.15s;
+}
+
+.ui-info-tag {
+  cursor: help;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  margin-left: var(--space-xs);
+  display: inline-block;
+  --_local-tag-op: var(--s-text-op-idle);
+  color: rgba(var(--p-white-rgb), var(--_local-tag-op));
+  transition: color var(--d-fast) var(--e-out);
+  /* ФИКС: Убираем влияние letter-spacing для выравнивания по правому краю на ПК */
+  margin-right: -0.15em;
+}
+.ui-info-tag:hover {
+  --_local-tag-op: 1;
+}
+
+.text-info-hint {
+  font-size: 11px;
+  line-height: 1.5;
+  color: rgba(var(--p-white-rgb), 0.5);
+  max-width: 45ch;
+  text-transform: none;
+  margin: 0;
+}
+
+/* ============================================================
+   [UI ADAPTATION BLOCK]
+   ============================================================ */
+@media (max-width: 1100px) {
+  .ui-range {
+    --_local-stroke-op: var(--s-stroke-op-idle);
+    --_local-text-op: var(--s-text-op-idle);
+  }
+  .ui-range input[type=range] {
+    height: 30px;
+  }
+  .ui-range input[type=range]::-webkit-slider-runnable-track {
+    height: 2px;
+    box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
+  }
+  .ui-range input[type=range]::-webkit-slider-thumb {
+    height: 12px;
+    width: 12px;
+    margin-top: -5px;
+  }
+  .ui-range input[type=range]:active {
+    --_local-stroke-op: var(--s-stroke-op-active);
+    --_local-text-op: 1;
+  }
+  .ui-range input[type=range]:active .value {
+    --_local-text-op: 1;
+  }
+  .ui-range:active {
+    --_local-stroke-op: var(--s-stroke-op-active);
+    --_local-text-op: 1;
+  }
+  .ui-info-tag {
+    --_local-tag-op: var(--s-text-op-idle);
+    padding: 10px;
+    /* 
+       ФИНАЛЬНЫЙ ФИКС:
+       1. margin-right: -10.15em (10px паддинга + 0.15em letter-spacing).
+       Это гарантирует прилипание скобки ']' ровно к краю контейнера.
+    */
+    margin: -10px calc(-10px - 0.15em) -10px 0;
+    position: relative;
+    z-index: 10;
+  }
+  .ui-info-tag:active {
+    --_local-tag-op: 1;
+  }
+}/*# sourceMappingURL=main.css.map */

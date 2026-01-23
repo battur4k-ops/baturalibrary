@@ -1,0 +1,129 @@
+/* ============================================================
+   3-OBJECTS / _LAYOUT.SCSS
+   Batura Library | System v20.1 [Variable Height Grid]
+   ============================================================ */
+
+/**
+ * 1. FLOW ENGINE (Системный ритм)
+ */
+@mixin flow-engine($gap: var(--space-md)) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  
+  & > * + * { 
+    margin-top: $gap; 
+  }
+
+  & > .text-data + .text-hero,
+  & > .text-data + .text-heading,
+  & > .text-hero + .text-body,
+  & > .text-heading + .text-body {
+    margin-top: var(--space-xs);
+  }
+
+  & > .text-body + .l-flex-group {
+    margin-top: var(--space-lg);
+  }
+}
+
+.l-flow { @include flow-engine; }
+
+/**
+ * 2. UNIVERSAL FLEX OBJECTS
+ */
+.l-flex-group {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: var(--space-sm); 
+  align-items: flex-start;
+  width: 100%;
+}
+
+/**
+ * 3. APP STRUCTURE & LAB TRANSITIONS
+ */
+#app-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center; 
+  
+  /* Структурный переход при скрытии сайта */
+  transition: 
+    opacity var(--d-slow) var(--e-out), 
+    filter var(--d-slow) var(--e-out),
+    transform var(--d-slow) var(--e-out),
+    visibility var(--d-slow) var(--e-out);
+}
+
+#app-root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  padding-top: calc(var(--nav-h) + var(--nav-top) + var(--hero-offset));
+  padding-bottom: var(--p-page-bottom);
+  gap: var(--s-block-gap);
+  box-sizing: border-box;
+}
+
+/**
+ * 4. LAB SYSTEM INTERFACE (SKELETON)
+ * Только геометрия и позиционирование.
+ * Визуал и транзишны отклика перенесены в 5-components/_lab-interface.scss.
+ */
+body .l-lab-interface {
+  /* 1. ПОЗИЦИОНИРОВАНИЕ */
+  position: fixed;
+  top: -1px; // Скрываем верхнюю грань hairline
+  left: 50%;
+  z-index: var(--z-overlay);
+  
+  /* 2. ГЕОМЕТРИЯ */
+  width: min(var(--stable-content-width), var(--stable-max-content));
+  height: calc(100vh - var(--nav-top)); // Оставляем зазор снизу для видимости обводки
+  margin: 0;
+  padding: 0;
+
+  /* 3. СТРУКТУРА */
+  display: grid;
+  grid-template-columns: 380px 1fr 420px; 
+  overflow: hidden;
+}
+
+/**
+ * 6. CONTAINERS (Без изменений)
+ */
+.l-container {
+  width: 100%;
+  max-width: var(--layout-max-width);
+  margin-inline: auto;
+  padding-inline: var(--p-site-side);
+  box-sizing: border-box;
+  position: relative;
+}
+
+/**
+ * 7. EXPRESSIONS CATALOG SYSTEM (Grid Physics)
+ */
+.l-grid-expressions {
+  display: grid;
+  align-items: start; 
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: var(--space-md);
+  width: 100%;
+
+  @media (max-width: 500px) {
+    grid-template-columns: 1fr; 
+    gap: var(--space-sm);
+  }
+}
+
+#expressionsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl); 
+  width: 100%;
+}

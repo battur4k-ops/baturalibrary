@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batura Library // Source of Truth</title>
+    
+    <!-- SYSTEM FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;700&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- CORE CSS -->
+    <link rel="stylesheet" href="src/scss/main.css">
+</head>
+<body class="is-loading" data-page="lab">
+
+    <!-- LAYER 0: BACKGROUND -->
+    <canvas id="liquid-bg-canvas"></canvas>
+
+    <!-- LAYER 100: NAVIGATION -->
+    <batura-navbar></batura-navbar>
+
+    <div id="app-wrapper">
+        <main id="app-root">
+            
+            <!-- SECTION 1: MANIFESTO -->
+            <section class="l-container" style="padding-top: calc(var(--nav-h-start) * 2);">
+                <div class="l-flow">
+                    <span class="text-data">// SYSTEM_SPECIFICATION // V7.6</span>
+                    <h1 class="text-hero">Batura <br> Design System</h1>
+                    <p class="text-body" style="max-width: 600px; opacity: 0.6;">
+                        Единый источник правды. Все элементы построены на правилах цифровой физики и математической вложенности.
+                    </p>
+                </div>
+            </section>
+
+            <!-- SECTION 2: BUTTON STATES -->
+            <section class="l-container">
+                <div class="l-flow" style="margin-bottom: var(--space-lg);">
+                    <span class="text-data">01 // Interaction Matrix</span>
+                    <h2 class="text-heading">Button States</h2>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-md);">
+                    <div class="b-card b-card--static" style="height: auto; padding: var(--space-md);">
+                        <div class="l-flow">
+                            <span class="text-data">// STATE: IDLE</span>
+                            <button class="ui-button">System Ready</button>
+                        </div>
+                    </div>
+                    <div class="b-card b-card--static" style="height: auto; padding: var(--space-md);">
+                        <div class="l-flow">
+                            <span class="text-data">// STATE: HOVER</span>
+                            <button class="ui-button" style="--btn-bg-op: var(--s-glass-op-hover); --btn-stroke-op: var(--s-stroke-op-hover); --btn-glare-op: 1;">Hover Action</button>
+                        </div>
+                    </div>
+                    <div class="b-card b-card--static" style="height: auto; padding: var(--space-md);">
+                        <div class="l-flow">
+                            <span class="text-data">// STATE: ACTIVE</span>
+                            <button class="ui-button" style="--btn-bg-op: var(--s-glass-op-active); --btn-stroke-op: var(--s-stroke-op-active); --btn-glare-op: 0.4;">Active Core</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3: THE FIXED GEOMETRY BLOCK -->
+            <section class="l-container">
+                <div class="l-flow" style="margin-bottom: var(--space-lg);">
+                    <span class="text-data">02 // Geometric Law</span>
+                    <h2 class="text-heading">Recursive Geometry</h2>
+                </div>
+
+                <!-- LEVEL 0: MASTER (R=45px) -->
+                <div class="b-card b-card--static" style="height: auto; padding: var(--space-lg);">
+                    <div class="l-flow">
+                        <span class="text-data">Level 0: Master Card (45px)</span>
+                        
+                        <!-- LEVEL 1: NESTED (R=13px) -->
+                        <!-- Теперь это полноценная b-card с правильной обводкой и радиусом -->
+                        <div class="b-card b-card--static" style="height: auto; padding: var(--space-md); border-radius: var(--radius-inner); --card-bg-op: 0.03;">
+                            <div class="l-flow">
+                                <span class="text-data">Level 1: Nested Layer (13px)</span>
+                                
+                                <div style="display: flex; gap: var(--space-md); align-items: center;">
+                                    <!-- LEVEL 2: ATOM -->
+                                    <button class="ui-button">Level 2: Button</button>
+                                    <p class="text-body" style="font-size: 14px; opacity: 0.4;">
+                                        R_inner (13px) = R_master (45px) - Padding (32px).
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: HOVER CASCADE -->
+            <section class="l-container">
+                <div class="l-flow" style="margin-bottom: var(--space-lg);">
+                    <span class="text-data">03 // Interaction Protocol</span>
+                    <h2 class="text-heading">Hover Cascade</h2>
+                </div>
+
+                <div class="b-card" style="height: auto; padding: var(--space-lg);">
+                    <div class="l-flow">
+                        <span class="text-data">// PROTOCOL: TRIGGER_CHILDREN</span>
+                        <h3 class="text-heading">Cascade Response</h3>
+                        <p class="text-body">Наведение на карту активирует все кнопки внутри. Это Hover Cascade Protocol.</p>
+                        <div style="display: flex; gap: var(--space-md);">
+                            <button class="ui-button">Action A</button>
+                            <button class="ui-button ui-button--logo">
+                                <div class="b-logo">
+                                    <svg viewBox="0 0 796 1027" xmlns="http://www.w3.org/2000/svg"><path d="M327.5 0H795.5L749 1027H409L425.5 893.5H384.5L357 1027H0L327.5 0Z" fill="currentColor"/></svg>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 5: ACCORDION -->
+            <section class="l-container">
+                <div class="l-flow" style="margin-bottom: var(--space-lg);">
+                    <span class="text-data">04 // Dynamic Components</span>
+                    <h2 class="text-heading">Accordion Engine</h2>
+                </div>
+
+                <div class="b-accordion">
+                    <div class="b-card is-active" data-index="0">
+                        <div class="b-card__viewport">
+                            <div class="b-card__content l-flow">
+                                <span class="text-data">// 0x1_CORE</span>
+                                <h3 class="text-heading">Digital Physics</h3>
+                                <p class="text-body">Кнопка появляется с плотностью 0.01 и подсвечивается до 0.05 при наведении на карту.</p>
+                                <button class="ui-button">Initialize</button>
+                            </div>
+                        </div>
+                        <div class="b-card__index text-data">01</div>
+                        <div class="b-card__label text-data">System_Core</div>
+                    </div>
+                    <div class="b-card" data-index="1">
+                        <div class="b-card__viewport">
+                            <div class="b-card__content l-flow">
+                                <span class="text-data">// 0x2_DATA</span>
+                                <h3 class="text-heading">Layered DNA</h3>
+                                <p class="text-body">Суммирование прозрачности и блюра при наложении нескольких стекол.</p>
+                                <button class="ui-button">Check Layers</button>
+                            </div>
+                        </div>
+                        <div class="b-card__index text-data">02</div>
+                        <div class="b-card__label text-data">Material_DNA</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 6: TYPOGRAPHY -->
+            <section class="l-container" style="padding-bottom: var(--p-page-bottom);">
+                <div class="l-flow" style="margin-bottom: var(--space-lg);">
+                    <span class="text-data">05 // Typography</span>
+                    <h2 class="text-heading">Font Hierarchy</h2>
+                </div>
+
+                <div class="b-card b-card--static" style="height: auto; padding: var(--space-lg);">
+                    <div class="l-flow">
+                        <h1 class="text-hero">Hero Style</h1>
+                        <h2 class="text-heading">Heading Style</h2>
+                        <p class="text-body">Body Text 16px // Inter Regular // Line-height 1.6</p>
+                        <span class="text-data">Data Mono 11px // 0xFB249_READY</span>
+                    </div>
+                </div>
+            </section>
+
+            <batura-footer></batura-footer>
+
+        </main>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="src/js/background.js"></script>
+    <script src="src/js/main.js" type="module"></script>
+    
+    <script>
+        // Универсальный контроллер аккордеона
+        document.querySelectorAll('.b-card').forEach(card => {
+            card.addEventListener('click', () => {
+                if(card.classList.contains('b-card--static')) return;
+                const accordion = card.closest('.b-accordion');
+                if(!accordion) return;
+                accordion.querySelectorAll('.b-card').forEach(c => c.classList.remove('is-active'));
+                card.classList.add('is-active');
+            });
+        });
+        window.addEventListener('load', () => document.body.classList.remove('is-loading'));
+    </script>
+</body>
+</html>

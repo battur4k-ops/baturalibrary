@@ -1,0 +1,40 @@
+/* ============================================================
+   5-COMPONENTS / _ALPHABET-NAV.SCSS
+   Batura Library | System v16.0 [Alphabetical Rail]
+   ============================================================ */
+
+.b-alphabet-nav {
+  position: sticky;
+  top: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  min-width: 40px;
+  z-index: 10;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity var(--d-fast) var(--e-out);
+
+    &:hover {
+      opacity: 1;
+      .b-alphabet-nav__line { width: 24px; }
+    }
+  }
+
+  &__char {
+    @extend .text-data;
+    font-size: 11px;
+  }
+
+  &__line {
+    height: 1px;
+    width: 12px;
+    background: var(--color-text-main);
+    transition: width var(--d-fast) var(--e-out);
+  }
+}

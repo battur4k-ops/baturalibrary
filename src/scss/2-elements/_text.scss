@@ -1,0 +1,83 @@
+/* ============================================================
+   2-ELEMENTS / _TEXT.SCSS
+   Batura Library | Dynamic Typography v7.5
+   ============================================================ */
+
+%text-base {
+  margin: 0;
+  color: rgba(var(--p-white-rgb), var(--_text-op, 1));
+  transition: color var(--d-fast) var(--e-out);
+  transition-delay: inherit; // Синхронно с материалом
+}
+
+h1 { @extend .text-hero; }
+h2 { @extend .text-heading; }
+p  { @extend .text-body; }
+small { @extend .text-data; }
+
+.text-hero {
+  @extend %text-base;
+  font-family: var(--font-main);
+  font-size: var(--fs-h1);
+  font-weight: 200;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  margin-left: var(--text-offset-hero);
+}
+
+.text-heading {
+  @extend %text-base;
+  font-family: var(--font-main);
+  font-size: var(--fs-h2);
+  font-weight: 200;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  margin-left: var(--text-offset-heading);
+}
+
+.text-body {
+  @extend %text-base;
+  --_text-op: var(--s-text-op-idle);
+  font-family: var(--font-main);
+  font-size: var(--fs-body);
+  font-weight: 300;
+  line-height: var(--lh-body);
+  max-width: 55ch;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* DATA: Индексы и технические теги */
+.text-data {
+  @extend %text-base; // Твой базовый плейсхолдер
+  
+  font-family: var(--font-mono);
+  font-size: var(--fs-data);      /* Привязка к токену 10px */
+  font-weight: 300;               /* Оставляем легкое начертание */
+  line-height: 1;
+  letter-spacing: var(--ls-data); /* Привязка к токену 0.2em */
+  text-transform: uppercase;
+  
+  /* Рендеринг для мелкого Mono текста */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* По умолчанию индекс чуть тусклее основного контента */
+  --_text-op: var(--s-text-op-idle);
+}
+
+.text-subheading {
+  @extend %text-base;
+  font-family: var(--font-main);
+  font-size: var(--fs-h3);        /* Используем новый токен */
+  font-weight: 200;               /* Чуть легче, чем основной заголовок */
+  line-height: 0.95;
+  letter-spacing: -0.04em;        /* Меньше отрицания, чем в больших заголовках */
+  text-transform: uppercase;
+  margin-left: var(--text-offset-hero); /* Сохраняем вертикальную ось */               /* Приглушаем по кодексу (Hierarchy) */
+}
+.text-accent {
+  color: rgb(var(--theme-accent-rgb));
+  --_text-op: 1;
+}

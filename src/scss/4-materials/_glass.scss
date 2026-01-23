@@ -1,0 +1,29 @@
+@mixin glass-surface($radius: var(--radius-master)) {
+  position: relative;
+  border-radius: $radius;
+  isolation: isolate; 
+
+  background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
+  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  
+  backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  
+  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
+  transition: 
+    background-color var(--d-fast) var(--e-out),
+    box-shadow var(--d-fast) var(--e-out),
+    backdrop-filter var(--d-morph) var(--e-out),
+    border-radius var(--d-morph) var(--e-out);
+
+  &::before {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: -1;
+    background: radial-gradient(circle at 50% 0%, rgba(var(--m-glass-base-rgb), 0.4), transparent);
+    opacity: var(--_glare-op, 0);
+    transition: opacity var(--d-fast) var(--e-out);
+  }
+}

@@ -1,0 +1,19 @@
+:root {
+  /* --- 1. MASTER RADII --- */
+  --radius-master: 45px;
+  --p-card: var(--space-md); 
+  
+  /* Закон [LAW:GEOMETRIC_COHESION]: Вложенные радиусы */
+  --radius-inner: calc(var(--radius-master) - var(--p-card));
+
+  /* --- 2. DYNAMICS --- */
+  --card-grow-base: 1;
+  --card-grow-active: 9;
+  --card-grow-active-hover: 11.4;
+  
+  /* --- 3. OPTICAL COMPENSATION --- */
+  --logo-balance-x: -10%;
+  --text-offset-hero: -0.075em;
+  --text-offset-heading: -0.065em;
+
+}

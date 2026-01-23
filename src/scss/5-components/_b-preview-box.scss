@@ -1,0 +1,42 @@
+/* ============================================================
+   4-COMPONENTS / _B-PREVIEW-BOX.SCSS
+   Batura Library | Preview Engine [Lab Sync Update]
+   ============================================================ */
+
+.b-preview-box {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  
+  border-radius: var(--local-preview-radius, var(--radius-inner));
+  
+  // Обводка карточки (box-shadow из миксина)
+  @include glass-surface(inherit); 
+  --_bg-op: var(--s-glare-op-hover);
+
+  overflow: hidden; 
+  transition: 
+    background-color var(--d-fast) var(--e-out), 
+    box-shadow var(--d-fast) var(--e-out),
+    border-radius var(--d-base) var(--e-out);
+
+  &::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(var(--theme-accent-rgb), var(--s-glare-op-hover)), transparent 75%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(var(--p-white-rgb), 0.02) 1px, transparent 1px);
+    background-size: var(--space-sm) var(--space-sm);
+    opacity: 0.15;
+    mix-blend-mode: overlay;
+    z-index: 2;
+  }
+
+
+  }

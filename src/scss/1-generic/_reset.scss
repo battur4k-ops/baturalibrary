@@ -1,0 +1,109 @@
+/* ============================================================
+   1-GENERIC / _RESET.SCSS
+   Batura Library | Master System v7.1 [Foundation Reset Fix]
+   ============================================================ */
+
+/* [RULE:BOX_MODEL] */
+*,
+*::before,
+*::after {
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box;
+}
+
+html {
+  /* 
+     Закон [LAW:FLUID_SCALABILITY]:
+     Используем min-height вместо height, чтобы позволить 
+     документу расти вместе с динамическим контентом.
+  */
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  
+  /* Резервируем место под скроллбар без !important */
+  scrollbar-gutter: stable;
+  
+  /* Базовая типографика Apple */
+  -webkit-text-size-adjust: 100%;
+  
+  /* Полное скрытие системного мусора без !important */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  
+  &::-webkit-scrollbar { 
+    display: none; 
+  }
+
+  /* Поддержка плавности для Lenis: скролл-бихейвиор должен быть auto */
+  scroll-behavior: auto;
+  height: -webkit-fill-available;
+}
+
+body {
+  width: 100%;
+  /* min-height: 100vh гарантирует заполнение экрана, но не блокирует рост */
+  min-height: 100vh;
+  
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  font-family: var(--font-main);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  
+  /* Цифровая косметология Apple */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* Контроль скролла для корректной работы Lenis */
+  overflow-y: visible;
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
+}
+
+/* СБРОС ИНТЕРАКТИВНЫХ ЭЛЕМЕНТОВ */
+a {
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+  cursor: pointer;
+}
+
+button, 
+input, 
+textarea, 
+select {
+  font-family: inherit;
+  font-size: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  outline: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* IMAGE RESET */
+img, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* LAYER: BACKGROUND (Three.js Shader Sync) */
+#liquid-bg-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--z-bg); 
+  pointer-events: none;
+  transform: translateZ(0); 
+  will-change: transform;
+}

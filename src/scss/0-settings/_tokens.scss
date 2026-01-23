@@ -1,0 +1,46 @@
+/* 
+   ============================================================
+   BATURA DESIGN SYSTEM | MASTER MANIFEST v7.0
+   [LAW:SINGLE_SOURCE_OF_TRUTH] - Dispatcher Core
+   ============================================================ 
+
+   [LAW:SEMANTIC_NAMING]
+   Именуем по функции, а не по значению.
+
+   [LAW:DETERMINISTIC_SPACING]
+   Все зазоры — математическая прогрессия юнита.
+
+   [LAW:GEOMETRIC_COHESION]
+   Единство скруглений (Nested Radii).
+
+   [LAW:FLUID_SCALABILITY]
+   Использование формул и clamp() вместо px.
+
+   [LAW:MOTION_CHOREOGRAPHY]
+   Единая физика и метроном анимаций.
+
+   ============================================================ 
+*/
+
+// 1. PRIMITIVES (Базовое сырье)
+@import 'colors';     // Палитра и цветовые триплеты
+@import 'spacing';    // Сетка, юниты и отступы
+@import 'layers';     // Z-index иерархия
+
+// 2. GLOBAL LOGIC (Ритм и голос системы)
+@import 'motion';     // Тайминги и кривые Безье
+@import 'typography'; // Шрифты и fluid-размеры
+
+// 3. PHYSICAL PROPERTIES (Материаловедение)
+@import 'material';   // Физика стекла (Blur, Stroke, Glare)
+@import 'geometry';   // Математика форм и скруглений
+
+// 4. COMPONENT DNA (Специфика модулей)
+@import 'nav';        // Параметры навигации
+@import 'ui';         // Параметры атомарных компонентов (кнопки, инпуты)
+
+/* 
+   ПРИМЕЧАНИЕ: 
+   Все переменные объявлены внутри соответствующих файлов в блоках :root.
+   Порядок импорта критичен для работы зависимостей (например, UI зависит от Spacing).
+*/

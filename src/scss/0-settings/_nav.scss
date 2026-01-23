@@ -1,0 +1,23 @@
+/* Обновленные переменные в :root для управления навбаром */
+:root {
+  --nav-h-start: 56px; 
+  --nav-h-morph: 56px; 
+  --nav-radius: var(--radius-master);
+
+  --nav-content-scale: 0.7; 
+  --nav-h: var(--nav-h-start); 
+  --nav-content-h: calc(var(--nav-h) * var(--nav-content-scale));
+  --nav-pad: calc((var(--nav-h) - var(--nav-content-h)) / 2);
+
+  --nav-w-start: 1;
+  --nav-w-morph: 0.98;
+  --nav-w-factor: var(--nav-w-start);
+
+  --nav-blur-start: var(--s-glass-blur);
+  --nav-blur-morph: 3px; // Усиливаем глубину при скролле
+
+  --nav-top: var(--space-sm);
+  --z-nav: 1000;
+  
+  --d-morph: var(--d-base); // Убедись, что --d-base есть в _motion.scss
+}

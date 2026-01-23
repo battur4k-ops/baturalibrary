@@ -1,0 +1,121 @@
+/* ============================================================
+   5-COMPONENTS / _BUTTON.SCSS
+   Batura Library | Unified Button v24.1 [Vertical Height Sync]
+   ============================================================ */
+
+.ui-button {
+  text-decoration: none;
+  color: inherit;
+  user-select: none;
+  
+  /* 1. ГЕОМЕТРИЯ (Single Source of Truth для Высоты) */
+  /* Все кнопки в системе теперь имеют строго одну высоту */
+  --btn-h: var(--ui-h-btn-master); 
+  --btn-radius: calc(var(--radius-master) * 0.4);
+  
+  /* ШИРИНА (W): Автоматическая по тексту, как ты и просил */
+  width: auto;
+  min-width: 0; 
+  padding-inline: var(--ui-p-btn); 
+
+  /* Interaction Proxies */
+  --_bg-op: var(--s-glass-op-base);
+  --_stroke-op: var(--s-stroke-op-idle);
+  --_text-op: var(--s-text-op-idle);
+
+  @include glass-surface(var(--btn-radius));
+  @extend .text-data;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--btn-h); // Принудительная высота для всех
+  cursor: pointer;
+  z-index: 10;
+  color: rgba(var(--p-white-rgb), var(--_text-op));
+
+  /* Motion DNA */
+  transition: 
+    background-color var(--d-fast) var(--e-out),
+    box-shadow var(--d-fast) var(--e-out),
+    color var(--d-fast) var(--e-out),
+    backdrop-filter var(--d-fast) var(--e-out),
+    transform var(--d-fast) var(--e-out);
+  
+  transition-delay: var(--stagger-step);
+
+  /* [ЛОГИКА ХОВЕРА] */
+  .b-static-card:hover &, .b-card:hover & {
+    transition-delay: 0s; 
+    --_bg-op: var(--s-glass-op-hover);
+    --_stroke-op: var(--s-stroke-op-hover);
+    --_text-op: var(--s-text-op-hover);
+  }
+
+  &.ui-button:hover {
+    transition-delay: 0s;
+    --_bg-op: var(--s-glass-op-active);
+    --_stroke-op: var(--s-stroke-op-active);
+    --_text-op: 1;
+  }
+
+  &:active {
+    transform: scale(0.96);
+    transition-duration: 0.1s;
+  }
+
+  /* ============================================================
+     КОНТЕКСТНЫЕ КАРТРИДЖИ
+     ============================================================ */
+
+  /* ============================================================
+     3. ТЕГИ (Синхронизация с системным радиусом)
+     ============================================================ */
+  #tagsContainer & {
+    /* ХИРУРГИЧЕСКОЕ ИСПРАВЛЕНИЕ:
+       Удаляем жесткие 100px. Теперь теги наследуют системный 
+       --btn-radius, который зависит от твоего --radius-master. */
+    
+    // Если ты хочешь, чтобы теги были ЧУТЬ круглее обычных кнопок, 
+    // используй коэффициент от мастера, а не фиксированное число:
+    --btn-radius: var(--radius-master); 
+
+    --btn-h: var(--ui-h-btn-master); // Высота как у всех
+    padding-inline: calc(var(--unit) * 6);
+    transition-delay: 0s;
+    
+    --_bg-op: var(--s-glass-op-hover);
+    --_stroke-op: var(--s-stroke-op-hover);
+
+    &:hover, &.is-active { 
+      --_bg-op: var(--s-glass-op-active); 
+      --_stroke-op: var(--s-stroke-op-active); 
+      --_text-op: 1; 
+    }
+  }
+
+  /* 2. НАВБАР (Исключение: масштабируется под высоту Nav) */
+  .b-navbar & {
+    --btn-h: var(--nav-content-h); // Единственное место, где высота другая
+    --btn-radius: var(--nav-inner-radius);
+    padding-inline: var(--space-xs);
+    
+    &--logo, &--close {
+      width: var(--btn-h); // Квадратность только здесь
+      padding: 0;
+      aspect-ratio: 1/1;
+    }
+  }
+
+  /* 3. КНОПКА ЗАКРЫТИЯ (Если используется вне навбара) */
+  &--close:not(.b-navbar &) {
+    width: var(--btn-h);
+    padding: 0;
+  }
+
+  /* Вне контекста */
+  &:not(.b-static-card &):not(.b-card &):not(.b-navbar &):not(#tagsContainer &) {
+    --_bg-op: var(--s-glass-op-hover);
+    --_stroke-op: var(--s-stroke-op-hover);
+  }
+}

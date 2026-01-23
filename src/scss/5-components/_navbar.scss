@@ -1,0 +1,208 @@
+/* ============================================================
+   5-COMPONENTS / _NAVBAR.SCSS
+   Batura Library | System Synced v14.6 [Lab-Resonance Fix]
+   ============================================================ */
+
+.b-navbar {
+    /* 1. LOCAL TOKENS & GEOMETRY */
+    --nav-radius: var(--radius-master);
+    --nav-h: var(--nav-h-start);
+    --nav-w-factor: var(--nav-w-start);
+    --nav-content-h: calc(var(--nav-h) * var(--nav-content-scale));
+    --nav-pad: calc((var(--nav-h) - var(--nav-content-h)) / 2);
+    --nav-inner-radius: calc(var(--nav-radius) - var(--nav-pad));
+
+    /* 2. INTERACTION DNA */
+    --_bg-op: var(--s-glass-op-base);
+    --_stroke-op: var(--s-stroke-op-idle);
+
+    @include glass-surface(var(--nav-radius));
+    
+    position: fixed;
+    top: var(--nav-top);
+    z-index: var(--z-nav);
+    inset-inline: 0;
+    margin-inline: auto;
+    height: var(--nav-h);
+    width: calc(var(--nav-w-factor) * min(var(--stable-content-width), var(--stable-max-content)));
+    padding-inline: var(--nav-pad); 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    transform: translate3d(0, 0, 0.1px); 
+    backface-visibility: hidden;
+
+    transition: 
+        height var(--d-morph) var(--e-out),
+        width var(--d-morph) var(--e-out),
+        padding var(--d-morph) var(--e-out),
+        background-color var(--d-fast) var(--e-out),
+        box-shadow var(--d-fast) var(--e-out),
+        backdrop-filter var(--d-morph) var(--e-out);
+
+    /* 3. HOVER OVER NAVBAR (General Active) */
+    &:hover {
+        --_bg-op: var(--s-glass-op-active);
+        --_stroke-op: var(--s-stroke-op-active);
+    }
+
+/* 4. MORPH STATE: SCROLL & LAB */
+    body.is-scrolled &,
+    body.is-lab-active & {
+        --nav-h: var(--nav-h-morph);
+        --nav-w-factor: var(--nav-w-morph);
+        
+        // По умолчанию для ПК (Hover - 0.40)
+        --_bg-op: var(--s-glass-op-hover); 
+        --_stroke-op: var(--s-stroke-op-hover);
+
+        /* ADAPTATION: Постоянный Active для мобилки */
+        @media (max-width: 1100px) {
+            --_bg-op: var(--s-glass-op-active); 
+            --_stroke-op: var(--s-stroke-op-active);
+        }
+
+        // Изоляция кнопок
+        .ui-button, &__search input {
+            &:not(:hover):not(:focus) {
+                --_bg-op: var(--s-glass-op-hover);
+                --_stroke-op: var(--s-stroke-op-hover);
+                --_text-op: var(--s-text-op-hover);
+
+                /* Подсветка кнопок на мобилке тоже в Active */
+                @media (max-width: 1100px) {
+                    --_bg-op: var(--s-glass-op-active);
+                    --_stroke-op: var(--s-stroke-op-active);
+                    --_text-op: 1;
+                }
+            }
+        }
+    }
+
+    /* 5. LAB INTERFACE RESONANCE (Desktop Only) */
+    @media (min-width: 1101px) {
+        body.is-lab-active:has(.l-lab-interface:hover) & {
+            --_bg-op: var(--s-glass-op-active); 
+            --_stroke-op: var(--s-stroke-op-active);
+        }
+    }
+    /* 6. ВНУТРЕННИЕ МОДУЛИ */
+    &__brand {
+        display: flex; align-items: center; flex-shrink: 0;
+        height: var(--nav-content-h); width: var(--nav-content-h);
+    }
+
+    /* ============================================================
+       7. ПОИСКОВЫЙ МОДУЛЬ (Search Module) | Contextual Physics
+       ============================================================ */
+    &__search {
+        --_search-w-idle: clamp(160px, 18vw, 240px);
+        --_search-w-focus: clamp(220px, 25vw, 360px);
+        --_icon-size: calc(var(--nav-content-h) * 0.45);
+        --_icon-stroke: var(--s-stroke-width);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: var(--nav-content-h);
+        margin-left: auto;
+        position: relative;
+        
+        transition: transform var(--d-fast) var(--e-out);
+
+        &.is-hidden { display: none; }
+
+        input {
+            @extend .text-data;
+            border: none; 
+            @include glass-surface(var(--nav-inner-radius));
+            
+            height: var(--nav-content-h);
+            width: var(--_search-w-idle);
+            padding-inline: var(--space-sm);
+            outline: none;           
+            appearance: none;        
+            
+            --_bg-op: var(--s-glass-op-base);
+            --_stroke-op: var(--s-stroke-op-idle);
+            --_text-op: var(--s-text-op-idle);
+            
+            color: rgba(var(--p-white-rgb), var(--_text-op));
+
+            transition: 
+                width var(--d-slow) var(--e-out),
+                background-color var(--d-fast) var(--e-out),
+                box-shadow var(--d-fast) var(--e-out),
+                color var(--d-fast) var(--e-out);
+
+            &::placeholder { 
+                color: rgba(var(--p-white-rgb), var(--s-text-op-idle)); 
+                opacity: 0.5;
+            }
+
+            &:hover, &:focus {
+                --_bg-op: var(--s-glass-op-active);
+                --_stroke-op: var(--s-stroke-op-active);
+                --_text-op: 1;
+            }
+
+            &:focus {
+                width: var(--_search-w-focus); 
+            }
+        }
+
+        .close-icon {
+            position: absolute;
+            right: calc((var(--nav-content-h) - var(--_icon-size)) / 2);
+            width: var(--_icon-size);
+            height: var(--_icon-size);
+            display: flex; align-items: center; justify-content: center;
+            
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(0.5) rotate(-45deg);
+            color: rgba(var(--p-white-rgb), var(--_text-op));
+            z-index: 5;
+            
+            transition: 
+                transform var(--d-fast) var(--e-out),
+                opacity var(--d-fast) var(--e-out),
+                color var(--d-fast) var(--e-out);
+            
+            svg { 
+                width: 100%; height: 100%; display: block; fill: none;
+                path, line, circle {
+                    stroke: currentColor;
+                    stroke-width: var(--_icon-stroke);
+                    vector-effect: non-scaling-stroke;
+                }
+            }
+        }
+
+        /* MORPH: Кнопка Лаборатории (Состояние Поиска в Лабе) */
+        body.is-lab-active & {
+            cursor: pointer;
+
+            &:active {
+                transform: scale(0.96);
+                transition-duration: 0.1s;
+            }
+
+            input {
+                width: var(--nav-content-h);
+                padding: 0;
+                cursor: pointer;
+                color: transparent;
+                --_stroke-op: var(--s-stroke-op-active);
+                &::placeholder { opacity: 0; }
+            }
+            
+            .close-icon {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+                --_text-op: 1;
+            }
+        }
+    }
+}

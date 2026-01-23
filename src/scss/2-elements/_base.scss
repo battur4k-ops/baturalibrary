@@ -1,0 +1,27 @@
+/* ============================================================
+   2-ELEMENTS / _BASE.SCSS
+   Batura Library | Master System v7.1 [Clean Foundation]
+   ============================================================ */
+
+body {
+    background-color: transparent;
+    color: var(--color-text-main);
+    font-family: var(--font-main);
+    min-height: 100vh;
+    width: 100%;
+}
+
+main {
+    position: relative;
+    z-index: var(--z-app);
+    width: 100%;
+}
+
+canvas {
+    display: block; // Этого достаточно, чтобы убрать лишние отступы снизу
+}
+
+section {
+    position: relative;
+    width: 100%;
+}
