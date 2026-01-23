@@ -199,27 +199,48 @@ renderLayout(config) {
         }
     }
 
-    createSlider(p) {
-        this.currentParams[p.id] = p.default;
-        const wrap = document.createElement('div');
-        wrap.className = 'ui-range';
-        wrap.innerHTML = `
-            <div class="ui-range__header">
-                <span class="text-data">${p.label}</span>
-                <span class="text-data value" contenteditable="true" inputmode="decimal">${p.default.toString().replace('.', ',')}</span>
-            </div>
-            <input type="range" min="${p.min}" max="${p.max}" step="${p.step}" value="${p.default}" style="width:100%">
-        `;
-        const input = wrap.querySelector('input');
-        const display = wrap.querySelector('.value');
-        input.addEventListener('input', (e) => {
-            const val = e.target.value;
-            this.currentParams[p.id] = parseFloat(val);
-            display.textContent = val.replace('.', ',');
-        });
-        return wrap;
-    }
+createSlider(p) {
+    this.currentParams[p.id] = p.default;
+    const wrap = document.createElement('div');
+    wrap.className = 'ui-range';
+    wrap.innerHTML = `
+        <div class="ui-range__header">
+            <span class="text-data">${p.label}</span>
+            <span class="text-data value" contenteditable="true" inputmode="decimal">${p.default.toString().replace('.', ',')}</span>
+        </div>
+        <input type="range" 
+               min="${p.min}" 
+               max="${p.max}" 
+               step="${p.step}" 
+               value="${p.default}" 
+               data-lenis-prevent="true" 
+               style="width:100%; touch-action: none;">
+    `;
 
+    const input = wrap.querySelector('input');
+    const display = wrap.querySelector('.value');
+
+    // ПРИНУДИТЕЛЬНЫЙ АКТИВ (для мобилок)
+    // Пойнтер-события работают стабильнее, чем :active в CSS при движении
+    input.addEventListener('pointerdown', () => wrap.classList.add('is-active'));
+    
+    const removeActive = () => wrap.classList.remove('is-active');
+    // Удаляем класс, когда отпустили палец или если палец ушел за пределы экрана
+    input.addEventListener('pointerup', removeActive);
+    input.addEventListener('pointercancel', removeActive);
+    input.addEventListener('pointerleave', (e) => {
+        // На мобилках leave может сработать случайно, проверяем нажата ли кнопка
+        if (e.pointerType === 'mouse') removeActive();
+    });
+
+    input.addEventListener('input', (e) => {
+        const val = e.target.value;
+        this.currentParams[p.id] = parseFloat(val);
+        display.textContent = val.replace('.', ',');
+    });
+
+    return wrap;
+}
     close() {
         this.body.classList.remove('is-lab-active');
         if (this.leftLenis) { this.leftLenis.destroy(); this.leftLenis = null; }
