@@ -1987,12 +1987,6 @@ body.is-lab-active #app-wrapper {
   --_local-text-op: 1;
   color: rgba(var(--p-white-rgb), 1);
 }
-@media (min-width: 1101px) {
-  .ui-range:hover {
-    --_local-stroke-op: var(--s-stroke-op-hover);
-    --_local-text-op: var(--s-text-op-hover);
-  }
-}
 .ui-range input[type=range] {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -2003,23 +1997,27 @@ body.is-lab-active #app-wrapper {
   cursor: pointer;
   outline: none;
   display: block;
-  /* ТРЕК (ПК) */
-  /* КРУЖОЧЕК (ПК) */
+  /* ТРЕК */
+  /* КРУЖОЧЕК (THUMB) */
 }
 .ui-range input[type=range]::-webkit-slider-runnable-track {
-  -webkit-appearance: none;
   width: 100%;
-  height: 2px;
-  background: transparent;
+  /* ФИКС: Вместо 2px ставим высоту самого токена. 
+     Это сделает линию физически видимой без теней. */
+  height: var(--s-stroke-width);
+  /* ФИКС: Используем background-color вместо box-shadow. 
+     Это гарантирует видимость на телефонах. */
+  background-color: rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
   border: none;
-  /* Твой оригинальный стиль через тень */
-  box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
-  -webkit-transition: box-shadow var(--d-fast) var(--e-out);
-  transition: box-shadow var(--d-fast) var(--e-out);
+  -webkit-transition: background-color var(--d-fast) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out);
+  transform: translateZ(0);
 }
 .ui-range input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  border: none;
+  appearance: none;
+  /* ФИКС: Явно убираем границу, чтобы убить серый ободок Safari */
+  border: 0 !important;
   height: 12px;
   width: 12px;
   border-radius: 50%;
@@ -2037,9 +2035,13 @@ body.is-lab-active #app-wrapper {
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
-  --_bg-op: 1;
+  /* ФИКС: Чтобы не было серого ободка из миксина на мобиле, 
+     принудительно ставим прозрачность обводки миксина в 0.3 (как у тебя было) */
   --_stroke-op: 0.3;
-  margin-top: -5px;
+  --_bg-op: 1;
+  /* ФИКС ЦЕНТРОВКИ: (track_height / 2) - (thumb_height / 2) */
+  /* Так как track теперь высотой var(--s-stroke-width), центруем через calc */
+  margin-top: calc(var(--s-stroke-width) / 2 - 6px);
   -webkit-transition: transform var(--d-fast) var(--e-out);
   transition: transform var(--d-fast) var(--e-out);
   will-change: transform;
@@ -2056,9 +2058,15 @@ body.is-lab-active #app-wrapper {
   -webkit-transition: opacity var(--d-fast) var(--e-out);
   transition: opacity var(--d-fast) var(--e-out);
 }
+.ui-range input[type=range]:hover::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
 .ui-range input[type=range]:active {
   --_local-stroke-op: var(--s-stroke-op-active);
   --_local-text-op: 1;
+}
+.ui-range input[type=range]:active::-webkit-slider-thumb {
+  transform: scale(1.1);
 }
 
 /* 2. UI-INFO: Группа заголовка и морфинг */
