@@ -1,30 +1,21 @@
 /* ============================================================
    3-OBJECTS / _LAYOUT.SCSS
-   Batura Library | System v20.1 [Variable Height Grid]
+   Batura Library | System v20.3 [Stable Geometry Fix]
    ============================================================ */
 
 /**
- * 1. FLOW ENGINE (Системный ритм)
+ * 1. FLOW ENGINE
  */
 @mixin flow-engine($gap: var(--space-md)) {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  
-  & > * + * { 
-    margin-top: $gap; 
-  }
-
+  & > * + * { margin-top: $gap; }
   & > .text-data + .text-hero,
   & > .text-data + .text-heading,
   & > .text-hero + .text-body,
-  & > .text-heading + .text-body {
-    margin-top: var(--space-xs);
-  }
-
-  & > .text-body + .l-flex-group {
-    margin-top: var(--space-lg);
-  }
+  & > .text-heading + .text-body { margin-top: var(--space-xs); }
+  & > .text-body + .l-flex-group { margin-top: var(--space-lg); }
 }
 
 .l-flow { @include flow-engine; }
@@ -41,7 +32,7 @@
 }
 
 /**
- * 3. APP STRUCTURE & LAB TRANSITIONS
+ * 3. APP STRUCTURE
  */
 #app-wrapper {
   width: 100%;
@@ -50,12 +41,9 @@
   position: relative;
   align-items: center; 
   
-  /* Структурный переход при скрытии сайта */
-  transition: 
-    opacity var(--d-slow) var(--e-out), 
-    filter var(--d-slow) var(--e-out),
-    transform var(--d-slow) var(--e-out),
-    visibility var(--d-slow) var(--e-out);
+  /* Оставляем изоляцию - она помогла блюру */
+  isolation: isolate; 
+  transition: opacity var(--d-slow) var(--e-out);
 }
 
 #app-root {
@@ -63,6 +51,15 @@
   flex-direction: column;
   width: 100%;
   min-height: 100vh;
+  
+  /* 
+     ЭТО ПОФИКСИЛО БЛЮР:
+     Микро-зазор в 1px и обрезка 0.5px. 
+     Это разрывает контакт блюра с "серым краем" браузера.
+  */
+  margin-top: 1px;
+  clip-path: inset(0.5px 0px 0px 0px);
+
   padding-top: calc(var(--nav-h) + var(--nav-top) + var(--hero-offset));
   padding-bottom: var(--p-page-bottom);
   gap: var(--s-block-gap);
@@ -71,30 +68,46 @@
 
 /**
  * 4. LAB SYSTEM INTERFACE (SKELETON)
- * Только геометрия и позиционирование.
- * Визуал и транзишны отклика перенесены в 5-components/_lab-interface.scss.
  */
 body .l-lab-interface {
-  /* 1. ПОЗИЦИОНИРОВАНИЕ */
   position: fixed;
-  top: -1px; // Скрываем верхнюю грань hairline
+  /* 
+     ВОЗВРАЩАЕМ НА МЕСТО: 
+     Если лаба была слишком высоко, значит она попала под действие 
+     отрицательных марджинов. Ставим честный 0 или -1px.
+  */
+  top: 0; 
   left: 50%;
   z-index: var(--z-overlay);
   
-  /* 2. ГЕОМЕТРИЯ */
   width: min(var(--stable-content-width), var(--stable-max-content));
-  height: calc(100vh - var(--nav-top)); // Оставляем зазор снизу для видимости обводки
+  height: calc(100vh - var(--nav-top)); 
   margin: 0;
   padding: 0;
 
-  /* 3. СТРУКТУРА */
   display: grid;
   grid-template-columns: 380px 1fr 420px; 
+  
+  /* contain: paint может скрывать навбар, если он перекрывается. 
+     Используем только для лабы */
+  contain: paint;
   overflow: hidden;
 }
 
 /**
- * 6. CONTAINERS (Без изменений)
+ * 5. NAVBAR FIX
+ * Если навбар пропал, нужно убедиться, что он не "улетел" выше окна.
+ */
+batura-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: var(--z-nav);
+}
+
+/**
+ * 6. CONTAINERS
  */
 .l-container {
   width: 100%;
@@ -106,7 +119,7 @@ body .l-lab-interface {
 }
 
 /**
- * 7. EXPRESSIONS CATALOG SYSTEM (Grid Physics)
+ * 7. EXPRESSIONS CATALOG SYSTEM
  */
 .l-grid-expressions {
   display: grid;
@@ -114,6 +127,9 @@ body .l-lab-interface {
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
   gap: var(--space-md);
   width: 100%;
+  
+  /* Изоляция помогла карточкам не "грязнить" */
+  isolation: isolate;
 
   @media (max-width: 500px) {
     grid-template-columns: 1fr; 
@@ -127,3 +143,5 @@ body .l-lab-interface {
   gap: var(--space-xl); 
   width: 100%;
 }
+
+/* УДАЛЯЕМ viewport-proxy, он больше не нужен, раз clip-path сработал */

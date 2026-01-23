@@ -43,18 +43,18 @@
   &__viewport {
     padding: var(--p-card);
     @include flow-engine(var(--space-md)); 
-    
     display: flex;
     flex-direction: column;
-    
-    /* ИЗМЕНЕНИЕ: flex: 1 заставляет вьюпорт заполнять 
-       всё пространство карточки. */
     flex: 1; 
-    
     border-radius: inherit; 
     position: relative;
-    overflow: hidden; 
+    
+    /* ИЗМЕНЕНИЕ: Убираем overflow, если это возможно. 
+       Если внутри есть картинки, которые надо резать — 
+       лучше дать border-radius самим картинкам. */
+    overflow: visible; 
   }
+
 
   &__top { 
     display: flex; 

@@ -1,6 +1,6 @@
 /* ============================================================
    BACKGROUND.JS — HIGH-FIDELITY ENGINE (Persistence Optimized)
-   Batura Library | Shader Sync v11.1 [Theme Memory]
+   Batura Library | Shader Sync v11.2 [Overscan & Virtual Viewport]
    ============================================================ */
 
 (function() {
@@ -8,7 +8,6 @@
     if (!canvas) return;
 
     // 1. ЧИТАЕМ СОХРАНЕННУЮ ТЕМУ
-    // Если в памяти браузера ничего нет, по умолчанию ставим 0 (Blue)
     const savedTheme = localStorage.getItem('batura_theme_index');
     const initialIndex = savedTheme !== null ? parseInt(savedTheme) : 0;
 
@@ -32,7 +31,8 @@
     const renderer = new THREE.WebGLRenderer({ 
         canvas, 
         antialias: true, 
-        alpha: false 
+        alpha: false,
+        preserveDrawingBuffer: true
     });
     
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -43,7 +43,6 @@
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
     const geometry = new THREE.PlaneGeometry(2, 2);
 
-    // УСТАНАВЛИВАЕМ НАЧАЛЬНЫЕ ЦЕЛИ ИЗ ПАМЯТИ
     let targetC1 = themeColors[initialIndex][0].clone();
     let targetC2 = themeColors[initialIndex][1].clone();
 
@@ -113,7 +112,6 @@
         u_time: { value: 0 },
         u_mouse: { value: new THREE.Vector2(0.5, 0.5) },
         u_res: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
-        // ПРИМЕНЯЕМ НАЧАЛЬНУЮ ТЕМУ В UNIFORMS
         u_color1: { value: themeColors[initialIndex][0].clone() },
         u_color2: { value: themeColors[initialIndex][1].clone() }
     };
@@ -123,33 +121,44 @@
     scene.add(mesh);
 
     let tMouse = new THREE.Vector2(0.5, 0.5), cMouse = new THREE.Vector2(0.5, 0.5);
+
+    // КОРРЕКТИРОВКА МЫШИ ПОД OVERSCAN
+    // Поскольку канвас сдвинут на -100px, нам нужно добавить 100px к координатам мыши,
+    // чтобы "пятно" шейдера находилось точно под курсором в окне браузера.
     window.addEventListener('mousemove', e => {
-        tMouse.set(e.clientX / window.innerWidth, 1 - e.clientY / window.innerHeight);
+        const offset = 100; // Тот самый сдвиг из CSS
+        const canvasW = window.innerWidth + 200; // Полная ширина холста
+        const canvasH = window.innerHeight + 200; // Полная высота холста
+        
+        tMouse.set(
+            (e.clientX + offset) / canvasW, 
+            1 - (e.clientY + offset) / canvasH
+        );
     });
 
     window.updateBgTheme = (index) => {
         if (themeColors[index]) {
             targetC1.copy(themeColors[index][0]);
             targetC2.copy(themeColors[index][1]);
-            // СОХРАНЯЕМ ВЫБОР В ПАМЯТЬ
             localStorage.setItem('batura_theme_index', index);
         }
     };
 
-function resize() {
-    // Добавляем запас в 100 пикселей (по 50 с каждой стороны)
-    const offset = 100;
-    const w = window.innerWidth + offset;
-    const h = window.innerHeight + offset;
+    function resize() {
+        // Синхронизируем с calc(100vw + 200px) и calc(100vh + 200px) из _reset.scss
+        const totalPadding = 200; 
+        const w = window.innerWidth + totalPadding;
+        const h = window.innerHeight + totalPadding;
 
-    // 1. Устанавливаем размер рендерера БОЛЬШЕ экрана
-    renderer.setSize(w, h);
-    
-    // 2. Передаем в шейдер новое разрешение, чтобы картинка не растянулась
-    if (uniforms.u_res) {
-        uniforms.u_res.value.set(w, h);
+        // renderer.setSize установит размеры холста
+        renderer.setSize(w, h);
+        
+        // Передаем полное разрешение холста в шейдер для корректного UV-маппинга
+        if (uniforms.u_res) {
+            uniforms.u_res.value.set(w, h);
+        }
     }
-}
+    
     window.addEventListener('resize', resize);
     resize();
 

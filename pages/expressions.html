@@ -1,74 +1,82 @@
-<!-- File: ./pages/expressions.html -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Expressions | Batura Library</title>
-    <!-- Основной CSS бандл -->
-    <link rel="stylesheet" href="../src/scss/main.css">
+
+    <!-- Основной CSS -->
+    <link rel="stylesheet" href="../src/scss/main.css" />
 </head>
-<body class="is-loading">
+
+<!-- 
+  ВАЖНО:
+  --page-bg задаётся на уровне body (или через класс страницы)
+  Меняется от страницы к странице
+-->
+<body class="page-expressions is-loading">
+
+    <!-- 0. VIEWPORT BACKDROP (анти edge-bleeding) -->
+    <div id="viewport-backdrop"></div>
+
     <!-- 1. Слой цифровой физики -->
     <canvas id="liquid-bg-canvas"></canvas>
 
-    <!-- 2. ИНТЕРФЕЙС 3.0: ЛАБОРАТОРИЯ (Очищенный монолит) -->
-    <div class="l-lab-interface">
-        <!-- SETUP: Параметры -->
-        <aside class="l-lab-interface__column l-lab-interface__column--setup">
-            <!-- Сюда LabManager отрисует ползунки -->
-        </aside>
+    <!-- 2. FAKE VIEWPORT / VIEWPORT PROXY -->
+    <div id="viewport-proxy">
 
-        <!-- VIEWPORT: Живое превью (Пусто, без кнопки закрытия) -->
-        <main class="l-lab-interface__column l-lab-interface__column--viewport">
-            <div id="labViewport"></div>
-        </main>
+        <!-- LAB INTERFACE (НЕ ТРОГАЕМ, fixed) -->
+        <div class="l-lab-interface">
+            <aside class="l-lab-interface__column l-lab-interface__column--setup"></aside>
 
-        <!-- ENGINE: Код -->
-        <aside class="l-lab-interface__column l-lab-interface__column--engine">
-            <!-- Сюда LabManager отрисует окно кода -->
-        </aside>
-    </div>
-    
-    <!-- 3. Системные веб-компоненты -->
-    <batura-navbar></batura-navbar>
+            <main class="l-lab-interface__column l-lab-interface__column--viewport">
+                <div id="labViewport"></div>
+            </main>
 
-    <!-- 4. ТВОЙ ОРИГИНАЛЬНЫЙ КОНТЕНТ (Без изменений) -->
-    <div id="app-wrapper">
-        <main id="app-root">
-            
-            <!-- HEADER SECTION -->
-            <section class="l-container p-page-v">
-                <div class="l-flow">
-                    <span class="text-data">// AE_LIBRARY</span>
-                    <h1 class="text-hero">Expressions</h1>
-                    <p class="text-body">
-                        Библиотека математических решений для After Effects. 
-                        Автоматизируй движение, сохраняя полный контроль над физикой кадра.
-                    </p>
-                    
-                    <div class="l-flex-group" id="tagsContainer">
-                        <!-- Кнопки-фильтры рендерятся через ExpressionManager.js -->
+            <aside class="l-lab-interface__column l-lab-interface__column--engine"></aside>
+        </div>
+
+        <!-- NAVBAR -->
+        <batura-navbar></batura-navbar>
+
+        <!-- APP -->
+        <div id="app-wrapper">
+            <main id="app-root">
+
+                <!-- HEADER -->
+                <section class="l-container p-page-v">
+                    <div class="l-flow">
+                        <span class="text-data">// AE_LIBRARY</span>
+
+                        <h1 class="text-hero">Expressions</h1>
+
+                        <p class="text-body">
+                            Библиотека математических решений для After Effects.
+                            Автоматизируй движение, сохраняя полный контроль
+                            над физикой кадра.
+                        </p>
+
+                        <div class="l-flex-group" id="tagsContainer"></div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <!-- CATALOG SECTION -->
-            <section class="l-container">
-                <div id="expressionsGrid">
-                    <!-- Сюда вставляется динамическая сетка l-grid-expressions -->
-                </div>
-            </section>
+                <!-- CATALOG -->
+                <section class="l-container">
+                    <div id="expressionsGrid"></div>
+                </section>
 
-            <batura-footer></batura-footer>
-        </main>
+                <!-- FOOTER -->
+                <batura-footer></batura-footer>
+
+            </main>
+        </div>
+
     </div>
 
-    <!-- Зависимости -->
+    <!-- ЗАВИСИМОСТИ -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    
-    <!-- Логика систем -->
     <script src="../src/js/background.js"></script>
     <script src="../src/js/main.js" type="module"></script>
+
 </body>
 </html>

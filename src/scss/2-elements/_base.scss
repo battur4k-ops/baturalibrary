@@ -1,26 +1,47 @@
 /* ============================================================
    2-ELEMENTS / _BASE.SCSS
-   Batura Library | Master System v7.1 [Clean Foundation]
+   Batura Library | Master System v7.2 [PC Blur Stability Fix]
    ============================================================ */
 
 body {
-  /* body ОБЯЗАТЕЛЬНО прозрачный, чтобы видеть Canvas под ним */
-  background-color: transparent !important; 
-  width: 100%;
+  /* 
+     body остается прозрачным. Цвет фона должен быть задан ТОЛЬКО в html.
+     Это позволяет backdrop-filter видеть canvas, который лежит под body.
+  */
+  background-color: transparent; 
+  color: var(--color-text-main);
+  font-family: var(--font-main);
   min-height: 100vh;
+  width: 100%;
+
+  /* Оптимизация рендеринга слоев для PC */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 main {
-    position: relative;
-    z-index: var(--z-app);
-    width: 100%;
+  position: relative;
+  z-index: var(--z-app);
+  width: 100%;
+
+  /* 
+     ГЛАВНЫЙ ФИКС ДЛЯ PC (Chrome Edge-Bleeding):
+     Добавляем 1px отступа сверху. Это разрывает контакт между блюром 
+     карточек и физической рамой окна браузера. 
+     Теперь при масштабировании (Zoom) блюр будет видеть 1px твоего шейдера 
+     сверху, а не серую/белую полосу интерфейса Chrome.
+  */
+
+  /* Принудительная стабилизация GPU слоя, чтобы не было "дребезга" при зуме */
+  transform: translateZ(0);
 }
 
 canvas {
-    display: block; // Этого достаточно, чтобы убрать лишние отступы снизу
+  /* Убираем инлайновые зазоры и фиксируем как блок */
+  display: block; 
 }
 
 section {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
 }

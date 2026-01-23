@@ -1,6 +1,6 @@
 /* ============================================================
    1-GENERIC / _RESET.SCSS
-   Batura Library | Master System v7.1 [Foundation Reset Fix]
+   Batura Library | Master System v7.3 [Virtual Viewport Overscan]
    ============================================================ */
 
 /* [RULE:BOX_MODEL] */
@@ -13,12 +13,21 @@
 }
 
 html {
+  /* 
+     VIRTUAL BUFFER STRATEGY: 
+     Расширяем логическую область документа вверх на 100px.
+     Это создает "безопасную зону" для расчетов backdrop-filter.
+  */
+  padding-top: 100px;
+  margin-top: -100px;
+  
   width: 100%;
-  min-height: 100%;
+  /* Высота + компенсация буфера */
+  min-height: calc(100% + 100px); 
   overflow-x: hidden;
   
-  /* ФИКС: Задаем базовый цвет здесь, чтобы блюр не видел "пустоту" браузера */
-  background-color: var(--color-bg); 
+  /* Базовая подложка должна быть темной (под цвет темы) */
+  background-color: var(--p-blue-deep); 
   
   scrollbar-gutter: stable;
   -webkit-text-size-adjust: 100%;
@@ -32,23 +41,71 @@ html {
 
 body {
   width: 100%;
-  /* min-height: 100vh гарантирует заполнение экрана, но не блокирует рост */
   min-height: 100vh;
   
-  background-color: var(--color-bg);
+  /* body прозрачный, чтобы сквозь него просвечивал канвас в зоне буфера */
+  background-color: transparent !important; 
+  
   color: var(--color-text-main);
   font-family: var(--font-main);
   font-size: var(--fs-body);
   line-height: var(--lh-body);
   
-  /* Цифровая косметология Apple */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   
-  /* Контроль скролла для корректной работы Lenis */
+  /* Важно для работы Lenis в расширенном вьюпорте */
   overflow-y: visible;
   overflow-x: hidden;
   overscroll-behavior-y: none;
+}
+
+/* 
+   LAYER: BACKGROUND (Three.js Shader Sync)
+   Канвас теперь физически начинается в начале виртуального буфера (-100px).
+*/
+#liquid-bg-canvas {
+  position: fixed;
+  
+  /* Отрисовываем шейдер за пределами видимости */
+  top: -100px; 
+  left: -100px;
+  width: calc(100vw + 200px);
+  height: calc(100vh + 200px);
+  
+  z-index: -1; 
+  pointer-events: none;
+  
+  /* Аппаратная стабилизация */
+  transform: translateZ(0); 
+  will-change: transform;
+}
+
+/* 
+   BACKDROP FIX: 
+   Дополнительный слой-заглушка под канвасом 
+*/
+#viewport-backdrop {
+  position: fixed;
+  /* Тоже расширяем вверх */
+  top: -100px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: calc(100vh + 100px);
+  
+  z-index: -2;
+  background: var(--color-bg, #000);
+  pointer-events: none;
+  transform: translateZ(0);
+}
+
+/* Контентная обертка */
+#app-wrapper, 
+main {
+  position: relative;
+  /* Благодаря padding-top: 100px у html, контент начнется точно на y: 0 для юзера */
+  z-index: 1;
 }
 
 /* СБРОС ИНТЕРАКТИВНЫХ ЭЛЕМЕНТОВ */
@@ -83,24 +140,4 @@ img, svg {
   display: block;
   max-width: 100%;
   height: auto;
-}
-
-/* LAYER: BACKGROUND (Three.js Shader Sync) */
-#liquid-bg-canvas {
-  position: fixed;
-  
-  /* Сдвигаем холст на тот самый offset из JS */
-  top: -50px;
-  left: -50px;
-  
-  /* Растягиваем с учетом вылета */
-  width: calc(100vw + 100px);
-  height: calc(100vh + 100px);
-  
-  z-index: var(--z-bg); 
-  pointer-events: none;
-  
-  /* Оптимизация для плавности скролла */
-  transform: translateZ(0); 
-  will-change: transform;
 }

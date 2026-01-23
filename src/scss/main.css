@@ -237,7 +237,7 @@
 */
 /* ============================================================
    1-GENERIC / _RESET.SCSS
-   Batura Library | Master System v7.1 [Foundation Reset Fix]
+   Batura Library | Master System v7.3 [Virtual Viewport Overscan]
    ============================================================ */
 /* [RULE:BOX_MODEL] */
 *,
@@ -249,11 +249,19 @@
 }
 
 html {
+  /* 
+     VIRTUAL BUFFER STRATEGY: 
+     Расширяем логическую область документа вверх на 100px.
+     Это создает "безопасную зону" для расчетов backdrop-filter.
+  */
+  padding-top: 100px;
+  margin-top: -100px;
   width: 100%;
-  min-height: 100%;
+  /* Высота + компенсация буфера */
+  min-height: calc(100% + 100px);
   overflow-x: hidden;
-  /* ФИКС: Задаем базовый цвет здесь, чтобы блюр не видел "пустоту" браузера */
-  background-color: var(--color-bg);
+  /* Базовая подложка должна быть темной (под цвет темы) */
+  background-color: var(--p-blue-deep);
   scrollbar-gutter: stable;
   -webkit-text-size-adjust: 100%;
   scrollbar-width: none;
@@ -267,20 +275,63 @@ html::-webkit-scrollbar {
 
 body {
   width: 100%;
-  /* min-height: 100vh гарантирует заполнение экрана, но не блокирует рост */
   min-height: 100vh;
-  background-color: var(--color-bg);
+  /* body прозрачный, чтобы сквозь него просвечивал канвас в зоне буфера */
+  background-color: transparent !important;
   color: var(--color-text-main);
   font-family: var(--font-main);
   font-size: var(--fs-body);
   line-height: var(--lh-body);
-  /* Цифровая косметология Apple */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Контроль скролла для корректной работы Lenis */
+  /* Важно для работы Lenis в расширенном вьюпорте */
   overflow-y: visible;
   overflow-x: hidden;
   overscroll-behavior-y: none;
+}
+
+/* 
+   LAYER: BACKGROUND (Three.js Shader Sync)
+   Канвас теперь физически начинается в начале виртуального буфера (-100px).
+*/
+#liquid-bg-canvas {
+  position: fixed;
+  /* Отрисовываем шейдер за пределами видимости */
+  top: -100px;
+  left: -100px;
+  width: calc(100vw + 200px);
+  height: calc(100vh + 200px);
+  z-index: -1;
+  pointer-events: none;
+  /* Аппаратная стабилизация */
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* 
+   BACKDROP FIX: 
+   Дополнительный слой-заглушка под канвасом 
+*/
+#viewport-backdrop {
+  position: fixed;
+  /* Тоже расширяем вверх */
+  top: -100px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: calc(100vh + 100px);
+  z-index: -2;
+  background: var(--color-bg, #000);
+  pointer-events: none;
+  transform: translateZ(0);
+}
+
+/* Контентная обертка */
+#app-wrapper,
+main {
+  position: relative;
+  /* Благодаря padding-top: 100px у html, контент начнется точно на y: 0 для юзера */
+  z-index: 1;
 }
 
 /* СБРОС ИНТЕРАКТИВНЫХ ЭЛЕМЕНТОВ */
@@ -319,40 +370,42 @@ img, svg {
   height: auto;
 }
 
-/* LAYER: BACKGROUND (Three.js Shader Sync) */
-#liquid-bg-canvas {
-  position: fixed;
-  /* Сдвигаем холст на тот самый offset из JS */
-  top: -50px;
-  left: -50px;
-  /* Растягиваем с учетом вылета */
-  width: calc(100vw + 100px);
-  height: calc(100vh + 100px);
-  z-index: var(--z-bg);
-  pointer-events: none;
-  /* Оптимизация для плавности скролла */
-  transform: translateZ(0);
-  will-change: transform;
-}
-
 /* ============================================================
    2-ELEMENTS / _BASE.SCSS
-   Batura Library | Master System v7.1 [Clean Foundation]
+   Batura Library | Master System v7.2 [PC Blur Stability Fix]
    ============================================================ */
 body {
-  /* body ОБЯЗАТЕЛЬНО прозрачный, чтобы видеть Canvas под ним */
-  background-color: transparent !important;
-  width: 100%;
+  /* 
+     body остается прозрачным. Цвет фона должен быть задан ТОЛЬКО в html.
+     Это позволяет backdrop-filter видеть canvas, который лежит под body.
+  */
+  background-color: transparent;
+  color: var(--color-text-main);
+  font-family: var(--font-main);
   min-height: 100vh;
+  width: 100%;
+  /* Оптимизация рендеринга слоев для PC */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 main {
   position: relative;
   z-index: var(--z-app);
   width: 100%;
+  /* 
+     ГЛАВНЫЙ ФИКС ДЛЯ PC (Chrome Edge-Bleeding):
+     Добавляем 1px отступа сверху. Это разрывает контакт между блюром 
+     карточек и физической рамой окна браузера. 
+     Теперь при масштабировании (Zoom) блюр будет видеть 1px твоего шейдера 
+     сверху, а не серую/белую полосу интерфейса Chrome.
+  */
+  /* Принудительная стабилизация GPU слоя, чтобы не было "дребезга" при зуме */
+  transform: translateZ(0);
 }
 
 canvas {
+  /* Убираем инлайновые зазоры и фиксируем как блок */
   display: block;
 }
 
@@ -434,10 +487,10 @@ section {
 
 /* ============================================================
    3-OBJECTS / _LAYOUT.SCSS
-   Batura Library | System v20.1 [Variable Height Grid]
+   Batura Library | System v20.3 [Stable Geometry Fix]
    ============================================================ */
 /**
- * 1. FLOW ENGINE (Системный ритм)
+ * 1. FLOW ENGINE
  */
 .l-flow {
   display: flex;
@@ -466,7 +519,7 @@ section {
 }
 
 /**
- * 3. APP STRUCTURE & LAB TRANSITIONS
+ * 3. APP STRUCTURE
  */
 #app-wrapper {
   width: 100%;
@@ -474,8 +527,9 @@ section {
   flex-direction: column;
   position: relative;
   align-items: center;
-  /* Структурный переход при скрытии сайта */
-  transition: opacity var(--d-slow) var(--e-out), filter var(--d-slow) var(--e-out), transform var(--d-slow) var(--e-out), visibility var(--d-slow) var(--e-out);
+  /* Оставляем изоляцию - она помогла блюру */
+  isolation: isolate;
+  transition: opacity var(--d-slow) var(--e-out);
 }
 
 #app-root {
@@ -483,6 +537,13 @@ section {
   flex-direction: column;
   width: 100%;
   min-height: 100vh;
+  /* 
+     ЭТО ПОФИКСИЛО БЛЮР:
+     Микро-зазор в 1px и обрезка 0.5px. 
+     Это разрывает контакт блюра с "серым краем" браузера.
+  */
+  margin-top: 1px;
+  clip-path: inset(0.5px 0px 0px 0px);
   padding-top: calc(var(--nav-h) + var(--nav-top) + var(--hero-offset));
   padding-bottom: var(--p-page-bottom);
   gap: var(--s-block-gap);
@@ -491,28 +552,43 @@ section {
 
 /**
  * 4. LAB SYSTEM INTERFACE (SKELETON)
- * Только геометрия и позиционирование.
- * Визуал и транзишны отклика перенесены в 5-components/_lab-interface.scss.
  */
 body .l-lab-interface {
-  /* 1. ПОЗИЦИОНИРОВАНИЕ */
   position: fixed;
-  top: -1px;
+  /* 
+     ВОЗВРАЩАЕМ НА МЕСТО: 
+     Если лаба была слишком высоко, значит она попала под действие 
+     отрицательных марджинов. Ставим честный 0 или -1px.
+  */
+  top: 0;
   left: 50%;
   z-index: var(--z-overlay);
-  /* 2. ГЕОМЕТРИЯ */
   width: min(var(--stable-content-width), var(--stable-max-content));
   height: calc(100vh - var(--nav-top));
   margin: 0;
   padding: 0;
-  /* 3. СТРУКТУРА */
   display: grid;
   grid-template-columns: 380px 1fr 420px;
+  /* contain: paint может скрывать навбар, если он перекрывается. 
+     Используем только для лабы */
+  contain: paint;
   overflow: hidden;
 }
 
 /**
- * 6. CONTAINERS (Без изменений)
+ * 5. NAVBAR FIX
+ * Если навбар пропал, нужно убедиться, что он не "улетел" выше окна.
+ */
+batura-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: var(--z-nav);
+}
+
+/**
+ * 6. CONTAINERS
  */
 .l-container {
   width: 100%;
@@ -524,7 +600,7 @@ body .l-lab-interface {
 }
 
 /**
- * 7. EXPRESSIONS CATALOG SYSTEM (Grid Physics)
+ * 7. EXPRESSIONS CATALOG SYSTEM
  */
 .l-grid-expressions {
   display: grid;
@@ -532,6 +608,8 @@ body .l-lab-interface {
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
   gap: var(--space-md);
   width: 100%;
+  /* Изоляция помогла карточкам не "грязнить" */
+  isolation: isolate;
 }
 @media (max-width: 500px) {
   .l-grid-expressions {
@@ -547,6 +625,7 @@ body .l-lab-interface {
   width: 100%;
 }
 
+/* УДАЛЯЕМ viewport-proxy, он больше не нужен, раз clip-path сработал */
 /* ============================================================
    5-COMPONENTS / _NAVBAR.SCSS
    Batura Library | System Synced v14.6 [Lab-Resonance Fix]
@@ -564,6 +643,7 @@ body .l-lab-interface {
   --_stroke-op: var(--s-stroke-op-idle);
   position: relative;
   border-radius: var(--nav-radius);
+  isolation: isolate;
   background-clip: padding-box;
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
   box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
@@ -672,6 +752,7 @@ body.is-scrolled .b-navbar .ui-button:not(:hover):not(:focus), body.is-scrolled 
   border: none;
   position: relative;
   border-radius: var(--nav-inner-radius);
+  isolation: isolate;
   background-clip: padding-box;
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
   box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
@@ -796,6 +877,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   --_text-op: var(--s-text-op-idle);
   position: relative;
   border-radius: var(--btn-radius);
+  isolation: isolate;
   background-clip: padding-box;
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
   box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
@@ -930,6 +1012,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   --s-card-radius: var(--radius-master);
   position: relative;
   border-radius: var(--s-card-radius);
+  isolation: isolate;
   background-clip: padding-box;
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
   box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
@@ -1247,6 +1330,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   --_preview-radius: calc(var(--s-card-radius) - (var(--p-card) * 0.5));
   position: relative;
   border-radius: var(--s-card-radius);
+  isolation: isolate;
   background-clip: padding-box;
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
   box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
@@ -1304,12 +1388,13 @@ body.is-lab-active .b-navbar__search .close-icon {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  /* ИЗМЕНЕНИЕ: flex: 1 заставляет вьюпорт заполнять 
-     всё пространство карточки. */
   flex: 1;
   border-radius: inherit;
   position: relative;
-  overflow: hidden;
+  /* ИЗМЕНЕНИЕ: Убираем overflow, если это возможно. 
+     Если внутри есть картинки, которые надо резать — 
+     лучше дать border-radius самим картинкам. */
+  overflow: visible;
 }
 .b-static-card__viewport > * + * {
   margin-top: var(--space-md);
@@ -1361,6 +1446,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   aspect-ratio: 16/9;
   position: relative;
   border-radius: var(--local-preview-radius);
+  isolation: isolate;
   background-clip: padding-box;
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
   box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
@@ -1509,6 +1595,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   border-radius: var(--local-preview-radius, var(--radius-inner));
   position: relative;
   border-radius: inherit;
+  isolation: isolate;
   background-clip: padding-box;
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
   box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
@@ -1554,12 +1641,13 @@ body.is-lab-active .b-navbar__search .close-icon {
 
 /* ============================================================
    5-COMPONENTS / _LAB-INTERFACE.SCSS
-   Batura Library | Monolithic Scroll-Split v10.16 [Clean Fade]
+   Batura Library | Monolithic Scroll-Split v10.18 [Clean Top Edge]
    ============================================================ */
 .l-lab-interface {
   /* 1. МАТЕРИАЛ ОКНА (ДНК) */
   position: relative;
   border-radius: 0 0 var(--radius-master) var(--radius-master);
+  isolation: isolate;
   background-clip: padding-box;
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
   box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
@@ -1569,6 +1657,18 @@ body.is-lab-active .b-navbar__search .close-icon {
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  /* УДАЛЕНИЕ ВЕРХНЕЙ ОБВОДКИ (PC) */
+  box-shadow: inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))), inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))), inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  /* 
+     КОМПЕНСАЦИЯ ГЕОМЕТРИИ:
+     padding-top: 100px возвращает контент на место.
+     Убрали padding-bottom, чтобы скругление подтянулось выше.
+  */
+  padding-top: 100px;
+  padding-bottom: 0;
+  isolation: isolate;
+  contain: paint;
+  will-change: transform, opacity, backdrop-filter;
   /* 2. PROXY VARIABLES */
   --_bg-op: var(--s-glass-op-hover);
   --_stroke-op: var(--s-stroke-op-hover);
@@ -1577,12 +1677,14 @@ body.is-lab-active .b-navbar__search .close-icon {
   /* 3. NAVBAR SYNC */
   --_nav-bottom: calc(var(--nav-h) + var(--nav-top));
   --_content-top: var(--_nav-bottom);
-  /* 4. INITIAL STATE */
+  /* 4. INITIAL STATE 
+     Прячем за экран с запасом 100% + 100px
+  */
   opacity: 1;
   visibility: hidden;
   pointer-events: none;
-  transform: translate3d(-50%, -100%, 0);
-  /* 5. ВНУТРЕННИЕ КОЛОНКИ (Контр-сдвиг) */
+  transform: translate3d(-50%, calc(-100% - 100px), 0);
+  /* 5. ВНУТРЕННИЕ КОЛОНКИ */
   /* ------------------------------------------------------------
      DIVIDER CARTRIDGE (Optical Twin Sync)
      ------------------------------------------------------------ */
@@ -1615,7 +1717,6 @@ body.is-lab-active .b-navbar__search .close-icon {
   position: relative;
   transform: translateY(100%);
   transition: transform var(--d-morph) var(--e-out);
-  /* [SCROLL-SPLIT SYMMETRY] */
 }
 .l-lab-interface__column--setup, .l-lab-interface__column--engine {
   padding: 0;
@@ -1668,6 +1769,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   overflow: hidden;
   position: relative;
   border-radius: inherit;
+  isolation: isolate;
   background-clip: padding-box;
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
   box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
@@ -1846,6 +1948,7 @@ body.is-lab-active #app-wrapper {
   --_local-stroke-op: var(--s-stroke-op-idle);
   --_local-text-op: var(--s-text-op-idle);
   transition: opacity var(--d-fast) var(--e-out);
+  /* ЛОГИКА ПК (Ховер) */
 }
 .ui-range > * + * {
   margin-top: var(--space-xs);
@@ -1870,8 +1973,6 @@ body.is-lab-active #app-wrapper {
   min-width: 3ch;
   text-align: right;
   outline: none;
-  /* ФИКС: Убираем влияние letter-spacing для выравнивания по правому краю */
-  margin-right: -0.15em;
 }
 .ui-range__header .value:hover {
   --_local-text-op: 1;
@@ -1894,6 +1995,8 @@ body.is-lab-active #app-wrapper {
   cursor: pointer;
   outline: none;
   display: block;
+  /* ТРЕК: ПОЛНАЯ КОПИЯ .b-lab-divider */
+  /* КРУЖОЧЕК (THUMB) */
 }
 .ui-range input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
@@ -1913,6 +2016,7 @@ body.is-lab-active #app-wrapper {
   background: rgb(var(--p-white-rgb));
   position: relative;
   border-radius: 50%;
+  isolation: isolate;
   background-clip: padding-box;
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
   box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
@@ -2002,8 +2106,6 @@ body.is-lab-active #app-wrapper {
   --_local-tag-op: var(--s-text-op-idle);
   color: rgba(var(--p-white-rgb), var(--_local-tag-op));
   transition: color var(--d-fast) var(--e-out);
-  /* ФИКС: Убираем влияние letter-spacing для выравнивания по правому краю на ПК */
-  margin-right: -0.15em;
 }
 .ui-info-tag:hover {
   --_local-tag-op: 1;
@@ -2027,22 +2129,38 @@ body.is-lab-active #app-wrapper {
     --_local-text-op: var(--s-text-op-idle);
   }
   .ui-range input[type=range] {
+    -webkit-appearance: none;
     height: 30px;
   }
   .ui-range input[type=range]::-webkit-slider-runnable-track {
-    height: 2px;
-    box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
+    /* ФИКС ВИДИМОСТИ ТРЕКА:
+       Вместо прозрачного блока 2px с тенью, используем высоту самого токена.
+       Это гарантирует 100% видимость и одинаковую толщину на всех мобилках. */
+    height: var(--s-stroke-width);
+    background-color: rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
+    box-shadow: none;
+    -webkit-transition: background-color var(--d-fast) var(--e-out);
+    transition: background-color var(--d-fast) var(--e-out);
   }
   .ui-range input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    /* ФИКС ВИДИМОСТИ THUMB:
+       Мы не вызываем миксин @include glass-surface, так как его псевдоэлементы ломают Safari.
+       Вместо этого мы берем те же самые токены и применяем их напрямую. */
     height: 12px;
     width: 12px;
-    margin-top: -5px;
+    border-radius: 50%;
+    background-color: rgb(var(--p-white-rgb));
+    /* Эмуляция glass-surface через токены (без ::before) */
+    box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), 0.3);
+    -webkit-backdrop-filter: blur(var(--s-glass-blur));
+    backdrop-filter: blur(var(--s-glass-blur));
+    /* Выравнивание: (track_height / 2) - (thumb_height / 2) */
+    /* (var(--s-stroke-width) / 2) - (12px / 2) */
+    margin-top: calc(var(--s-stroke-width) / 2 - 6px);
   }
   .ui-range input[type=range]:active {
     --_local-stroke-op: var(--s-stroke-op-active);
-    --_local-text-op: 1;
-  }
-  .ui-range input[type=range]:active .value {
     --_local-text-op: 1;
   }
   .ui-range:active {
@@ -2052,12 +2170,7 @@ body.is-lab-active #app-wrapper {
   .ui-info-tag {
     --_local-tag-op: var(--s-text-op-idle);
     padding: 10px;
-    /* 
-       ФИНАЛЬНЫЙ ФИКС:
-       1. margin-right: -10.15em (10px паддинга + 0.15em letter-spacing).
-       Это гарантирует прилипание скобки ']' ровно к краю контейнера.
-    */
-    margin: -10px calc(-10px - 0.15em) -10px 0;
+    margin: -10px -10px -10px 0;
     position: relative;
     z-index: 10;
   }
