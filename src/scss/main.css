@@ -103,6 +103,7 @@
   --p-site-side: clamp(24px, 5vw, 60px);
   --p-page-bottom: clamp(60px, 10vh, 120px);
   --s-block-gap: clamp(64px, 12vh, 120px);
+  --viewport-padding: 120px;
   /* Математические константы ширины для центрирования */
   --stable-content-width: calc(100% - (var(--p-site-side) * 2));
   --stable-max-content: calc(var(--layout-max-width) - (var(--p-site-side) * 2));
