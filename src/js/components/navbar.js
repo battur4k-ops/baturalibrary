@@ -80,7 +80,7 @@ class BaturaNavbar extends HTMLElement {
     render() {
         this.innerHTML = `
             <nav class="b-navbar" id="mainNav">
-                <a href="/" class="b-navbar__brand" aria-label="Batura Home">
+                <a href="index.html" class="b-navbar__brand" aria-label="Batura Home">
                     <div class="ui-button ui-button--logo">
                         <div class="b-logo">
                             <svg viewBox="0 0 796 1027" fill="none" xmlns="http://www.w3.org/2000/svg">
