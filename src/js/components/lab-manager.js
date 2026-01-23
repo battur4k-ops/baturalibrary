@@ -71,15 +71,15 @@ export class LabManager {
         requestAnimationFrame(scrollFn);
     }
 
-    renderLayout(config) {
+renderLayout(config) {
         const setupCol = this.interface.querySelector('.l-lab-interface__column--setup');
         const engineCol = this.interface.querySelector('.l-lab-interface__column--engine');
         const viewportCol = this.interface.querySelector('.l-lab-interface__column--viewport');
 
         const prepareCol = (el) => {
             if (!el) return null;
-            // Сбрасываем инлайновые стили (важно для переключения мобилка/пк)
-            el.style.display = '';
+            // Убираем инлайновые стили, чтобы они не перебивали CSS при ресайзе
+            el.style.display = ''; 
             el.innerHTML = `<div class="b-lab-column-header l-flow"></div><div class="b-lab-column-body" data-lenis-prevent="true"><div class="l-flow"></div></div>`;
             return { 
                 header: el.querySelector('.b-lab-column-header'), 
@@ -118,8 +118,6 @@ export class LabManager {
                         desc.className = 'ui-info-group__description';
                         desc.innerHTML = `<div class="description-inner"><p class="text-info-hint">${item.info}</p></div>`;
 
-                        tag.addEventListener('mouseenter', () => group.classList.add('is-info-active'));
-                        tag.addEventListener('mouseleave', () => group.classList.remove('is-info-active'));
                         tag.addEventListener('click', (e) => {
                             e.stopPropagation();
                             group.classList.toggle('is-info-active');
@@ -174,39 +172,22 @@ export class LabManager {
                 </div>
             `;
 
-            // ЛОГИКА ПЕРЕКЛЮЧЕНИЯ ПАНЕЛЕЙ (Твой мобильный контроллер)
             const switchBtns = viewportCol.querySelectorAll('.lab-mobile-switch .ui-button');
             
-            const handleSwitch = (side) => {
-                if (window.innerWidth > 1100) return; // На ПК ничего не прячем
-
-                if (side === 'setup') {
-                    setupCol.style.display = 'flex';
-                    engineCol.style.display = 'none';
-                } else {
-                    setupCol.style.display = 'none';
-                    engineCol.style.display = 'flex';
-                }
-            };
+            // Инициализация атрибута (только для мобилки)
+            this.interface.setAttribute('data-mobile-panel', 'setup');
 
             switchBtns.forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     const side = btn.dataset.side;
-
-                    // Обновляем визуальное состояние кнопок (стиль твоих тегов)
                     switchBtns.forEach(b => b.classList.remove('is-active'));
                     btn.classList.add('is-active');
 
-                    handleSwitch(side);
+                    // Переключаем через CSS атрибут
+                    this.interface.setAttribute('data-mobile-panel', side);
                 });
             });
-
-            // Инициализация при открытии: по умолчанию SETUP
-            if (window.innerWidth <= 1100) {
-                setupCol.style.display = 'flex';
-                engineCol.style.display = 'none';
-            }
         }
     }
 
