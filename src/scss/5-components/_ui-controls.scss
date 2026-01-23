@@ -4,42 +4,7 @@
    ============================================================ */
 
 /* 1. UI-RANGE: Инженерный ползунок */
-.ui-range {
-  width: 100%;
-  min-width: 0;
-  @include flow-engine(var(--space-xs));
-  margin-bottom: var(--space-md);
-  
-  --_local-stroke-op: var(--s-stroke-op-idle);
-  --_local-text-op: var(--s-text-op-idle);
-
-  transition: opacity var(--d-fast) var(--e-out);
-
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    width: 100%;
-    @extend .text-data; 
-
-    .value {
-      @extend %text-base; 
-      color: rgba(var(--p-white-rgb), var(--_local-text-op));
-      font-weight: 500;
-      transition: color var(--d-fast) var(--e-out);
-      cursor: text;
-      min-width: 3ch;
-      text-align: right;
-      outline: none;
-      margin-right: -0.15em; 
-
-      &:hover { --_local-text-op: 1; }
-      &:focus { --_local-text-op: 1; color: rgba(var(--p-white-rgb), 1); }
-    }
-  }
-
-
-  input[type="range"] {
+input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
     width: 100%;
@@ -48,55 +13,59 @@
     cursor: pointer;
     outline: none;
     display: block;
+    margin: 0;
 
-    /* ТРЕК */
+    /* 1. ТРЕК (ПОЛОСКА) */
     &::-webkit-slider-runnable-track {
+      -webkit-appearance: none;
       width: 100%;
-      /* ФИКС: Вместо 2px ставим высоту самого токена. 
-         Это сделает линию физически видимой без теней. */
+      /* Используем токен толщины напрямую в высоту */
       height: var(--s-stroke-width); 
-      /* ФИКС: Используем background-color вместо box-shadow. 
-         Это гарантирует видимость на телефонах. */
+      /* Заливка цветом вместо тени гарантирует видимость на всех смартфонах */
       background-color: rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
-      border: none;
+      border: none; 
       transition: background-color var(--d-fast) var(--e-out);
-      transform: translateZ(0);
     }
 
-    /* КРУЖОЧЕК (THUMB) */
+    /* 2. КРУЖОЧЕК (THUMB) */
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
       
-      /* ФИКС: Явно убираем границу, чтобы убить серый ободок Safari */
-      border: 0 !important; 
+      /* Убираем системную рамку (ту самую серую обводку) */
+      border: 0; 
       
-      height: 12px; width: 12px; border-radius: 50%;
-      background: rgb(var(--p-white-rgb));
-      
-      @include glass-surface(50%);
-      
-      /* ФИКС: Чтобы не было серого ободка из миксина на мобиле, 
-         принудительно ставим прозрачность обводки миксина в 0.3 (как у тебя было) */
-      --_stroke-op: 0.3;
-      --_bg-op: 1;
+      height: 12px; 
+      width: 12px; 
+      border-radius: 50%;
+      background-color: rgb(var(--p-white-rgb));
 
-      /* ФИКС ЦЕНТРОВКИ: (track_height / 2) - (thumb_height / 2) */
-      /* Так как track теперь высотой var(--s-stroke-width), центруем через calc */
+      /* ВМЕСТО МИКСИНА: Прямые свойства для мобильной стабильности.
+         Мы используем те же токены, что и в glass-surface, но без псевдоэлементов. */
+      
+      // Тонкая обводка (имитируем inset через внешнюю тень, она чище рендерится на мобилках)
+      box-shadow: 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), 0.3);
+      
+      // Стеклянный эффект
+      -webkit-backdrop-filter: blur(var(--s-glass-blur));
+      backdrop-filter: blur(var(--s-glass-blur));
+
+      /* ЦЕНТРОВКА: (высота_трека / 2) - (радиус_кружка) */
       margin-top: calc((var(--s-stroke-width) / 2) - 6px); 
       
       transition: transform var(--d-fast) var(--e-out);
       will-change: transform;
     }
 
-    &:hover { &::-webkit-slider-thumb { transform: scale(1.2); } }
+    /* СОСТОЯНИЯ */
+    &:hover { 
+      &::-webkit-slider-thumb { transform: scale(1.2); } 
+    }
     
     &:active {
        --_local-stroke-op: var(--s-stroke-op-active);
-       --_local-text-op: 1;
        &::-webkit-slider-thumb { transform: scale(1.1); }
     }
-  }
   }
 /* 2. UI-INFO: Группа заголовка и морфинг */
 .l-lab-interface {
