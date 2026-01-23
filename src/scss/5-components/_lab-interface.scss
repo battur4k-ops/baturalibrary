@@ -166,34 +166,36 @@ body.is-lab-active {
 }
 
 /* ------------------------------------------------------------
-   10. ADAPTATION (Liquid Frame Sync - Surgical Strokes Version)
+   10. ADAPTATION (Liquid Frame & Smooth Mobile Scroll)
    ------------------------------------------------------------ */
 @media (max-width: 1100px) {
   body .l-lab-interface {
     left: 50%;
     width: min(var(--stable-content-width), var(--stable-max-content));
-    height: calc(100vh - var(--nav-top));
+    /* Используем динамическую высоту, чтобы избежать обрезания */
+    height: calc(100dvh - var(--nav-top)); 
     border-radius: 0 0 var(--radius-master) var(--radius-master);
     transform: translate3d(-50%, -100%, 0);
 
-    /* АКТИВНЫЙ МАТЕРИАЛ ОБЛОЧКИ (Внешняя рамка остается активной) */
-    --_stroke-op: var(--s-stroke-op-active); 
-    --_blur: 45px;                           
-    --_glare-op: var(--s-glare-op-hover);    
-
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1.2fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
     grid-template-areas: 
-      "viewport viewport"
-      "setup engine";
+      "viewport"
+      "panels";
+
+    /* АКТИВНЫЙ МАТЕРИАЛ ОБЛОЧКИ */
+    --_stroke-op: var(--s-stroke-op-active); 
+    --_blur: 45px;
 
     &__column {
       transform: none; 
+      min-height: 0;
 
       &--viewport {
         grid-area: viewport;
         padding: 0;
+        height: 48vh; 
         
         .lab-preview-display {
           margin-top: 0;
@@ -201,61 +203,63 @@ body.is-lab-active {
           border-radius: 0;
           border: none;
           
-          /* Полоска под превью */
+          /* СИНХРОННАЯ АКТИВНАЯ ПОЛОСКА */
           box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active));
           
           --_bg-op: var(--s-glass-op-active);
           background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op));
         }
+
+        .lab-mobile-switch {
+          display: flex;
+          position: absolute;
+          bottom: var(--space-sm);
+          left: 50%;
+          transform: translateX(-50%);
+          gap: var(--space-xs);
+          z-index: 100;
+
+          .ui-button {
+            min-width: 100px;
+            backdrop-filter: blur(15px);
+            &.is-active {
+              --_bg-op: var(--s-glass-op-active);
+              --_stroke-op: var(--s-stroke-op-active);
+              --_text-op: 1;
+            }
+          }
+        }
       }
 
       &--setup, &--engine {
+        grid-area: panels;
+        display: none; 
+        flex-direction: column;
+        overflow: hidden;
         mask-image: none;
         -webkit-mask-image: none;
 
         .b-lab-column-header {
-          padding: var(--space-sm) var(--space-sm) 0; 
-          .b-spacer { display: none; }
-
-          .text-data {
-            margin-top: 0;
-            margin-bottom: 0; 
-            display: block;
-          }
-          
-          .text-heading, .text-subheading {
-            margin-top: -6px; 
-            padding-bottom: var(--space-xs); 
-            line-height: 1;
-          }
-
-          .b-lab-divider {
-            --_stroke-op: var(--s-stroke-op-active);
-          }
+          display: none !important;
         }
         
         .b-lab-column-body {
-          padding: var(--space-sm) var(--space-sm) var(--space-md);
-          mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-          -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+          flex: 1 1 auto;
+          padding: var(--space-md) var(--space-md) calc(var(--space-xl) * 2);
+          
+          /* ПЛАВНЫЙ ИНЕРЦИОННЫЙ СКРОЛЛ */
+          overflow-y: auto;
+          scroll-behavior: smooth; // Плавность при программных сдвигах
+          -webkit-overflow-scrolling: touch; // Нативная инерция iOS/Android
+          overscroll-behavior-y: contain; // Чтобы не скроллился body при достижении края панели
 
-          /* 
-             УДАЛЕНО: Принудительная активация .ui-range и .ui-info-tag.
-             Теперь они подчиняются своим базовым стилям и состоянию :active
-          */
+          /* СКРЫТИЕ СКРОЛЛБАРА */
+          scrollbar-width: none; 
+          &::-webkit-scrollbar { display: none; } 
+
+          mask-image: linear-gradient(to bottom, black 92%, transparent 100%);
+          -webkit-mask-image: linear-gradient(to bottom, black 92%, transparent 100%);
         }
-      }
-
-      &--setup {
-        grid-area: setup;
-        border-right: none; 
-        
-        /* Вертикальная полоска */
-        box-shadow: inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active));
-      }
-
-      &--engine {
-        grid-area: engine;
       }
     }
   }

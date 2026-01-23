@@ -1752,81 +1752,88 @@ body.is-lab-active #app-wrapper {
 }
 
 /* ------------------------------------------------------------
-   10. ADAPTATION (Liquid Frame Sync - Surgical Strokes Version)
+   10. ADAPTATION (Liquid Frame & Smooth Mobile Scroll)
    ------------------------------------------------------------ */
 @media (max-width: 1100px) {
   body .l-lab-interface {
     left: 50%;
     width: min(var(--stable-content-width), var(--stable-max-content));
-    height: calc(100vh - var(--nav-top));
+    /* Используем динамическую высоту, чтобы избежать обрезания */
+    height: calc(100dvh - var(--nav-top));
     border-radius: 0 0 var(--radius-master) var(--radius-master);
     transform: translate3d(-50%, -100%, 0);
-    /* АКТИВНЫЙ МАТЕРИАЛ ОБЛОЧКИ (Внешняя рамка остается активной) */
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: "viewport" "panels";
+    /* АКТИВНЫЙ МАТЕРИАЛ ОБЛОЧКИ */
     --_stroke-op: var(--s-stroke-op-active);
     --_blur: 45px;
-    --_glare-op: var(--s-glare-op-hover);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1.2fr;
-    grid-template-areas: "viewport viewport" "setup engine";
   }
   body .l-lab-interface__column {
     transform: none;
+    min-height: 0;
   }
   body .l-lab-interface__column--viewport {
     grid-area: viewport;
     padding: 0;
+    height: 48vh;
   }
   body .l-lab-interface__column--viewport .lab-preview-display {
     margin-top: 0;
     height: 100%;
     border-radius: 0;
     border: none;
-    /* Полоска под превью */
+    /* СИНХРОННАЯ АКТИВНАЯ ПОЛОСКА */
     box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active));
     --_bg-op: var(--s-glass-op-active);
     background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op));
   }
+  body .l-lab-interface__column--viewport .lab-mobile-switch {
+    display: flex;
+    position: absolute;
+    bottom: var(--space-sm);
+    left: 50%;
+    transform: translateX(-50%);
+    gap: var(--space-xs);
+    z-index: 100;
+  }
+  body .l-lab-interface__column--viewport .lab-mobile-switch .ui-button {
+    min-width: 100px;
+    -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+  }
+  body .l-lab-interface__column--viewport .lab-mobile-switch .ui-button.is-active {
+    --_bg-op: var(--s-glass-op-active);
+    --_stroke-op: var(--s-stroke-op-active);
+    --_text-op: 1;
+  }
   body .l-lab-interface__column--setup, body .l-lab-interface__column--engine {
+    grid-area: panels;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
     mask-image: none;
     -webkit-mask-image: none;
   }
   body .l-lab-interface__column--setup .b-lab-column-header, body .l-lab-interface__column--engine .b-lab-column-header {
-    padding: var(--space-sm) var(--space-sm) 0;
-  }
-  body .l-lab-interface__column--setup .b-lab-column-header .b-spacer, body .l-lab-interface__column--engine .b-lab-column-header .b-spacer {
-    display: none;
-  }
-  body .l-lab-interface__column--setup .b-lab-column-header .text-data, body .l-lab-interface__column--setup .b-lab-column-header .ui-info-tag, body .l-lab-interface__column--setup .b-lab-column-header .ui-range__header, body .l-lab-interface__column--setup .b-lab-column-header small, body .l-lab-interface__column--setup .b-lab-column-header .b-navbar__search input, .b-navbar__search body .l-lab-interface__column--setup .b-lab-column-header input, body .l-lab-interface__column--setup .b-lab-column-header .ui-button, body .l-lab-interface__column--setup .b-lab-column-header .b-accordion .b-static-card__deco, .b-accordion body .l-lab-interface__column--setup .b-lab-column-header .b-static-card__deco, body .l-lab-interface__column--setup .b-lab-column-header .b-static-card__index, body .l-lab-interface__column--setup .b-lab-column-header .b-alphabet-nav__char, body .l-lab-interface__column--setup .b-lab-column-header .b-catalog-header .index, .b-catalog-header body .l-lab-interface__column--setup .b-lab-column-header .index, body .l-lab-interface__column--engine .b-lab-column-header .text-data, body .l-lab-interface__column--engine .b-lab-column-header .ui-info-tag, body .l-lab-interface__column--engine .b-lab-column-header .ui-range__header, body .l-lab-interface__column--engine .b-lab-column-header small, body .l-lab-interface__column--engine .b-lab-column-header .b-navbar__search input, .b-navbar__search body .l-lab-interface__column--engine .b-lab-column-header input, body .l-lab-interface__column--engine .b-lab-column-header .ui-button, body .l-lab-interface__column--engine .b-lab-column-header .b-accordion .b-static-card__deco, .b-accordion body .l-lab-interface__column--engine .b-lab-column-header .b-static-card__deco, body .l-lab-interface__column--engine .b-lab-column-header .b-static-card__index, body .l-lab-interface__column--engine .b-lab-column-header .b-alphabet-nav__char, body .l-lab-interface__column--engine .b-lab-column-header .b-catalog-header .index, .b-catalog-header body .l-lab-interface__column--engine .b-lab-column-header .index {
-    margin-top: 0;
-    margin-bottom: 0;
-    display: block;
-  }
-  body .l-lab-interface__column--setup .b-lab-column-header .text-heading, body .l-lab-interface__column--setup .b-lab-column-header h2, body .l-lab-interface__column--setup .b-lab-column-header .text-subheading, body .l-lab-interface__column--engine .b-lab-column-header .text-heading, body .l-lab-interface__column--engine .b-lab-column-header h2, body .l-lab-interface__column--engine .b-lab-column-header .text-subheading {
-    margin-top: -6px;
-    padding-bottom: var(--space-xs);
-    line-height: 1;
-  }
-  body .l-lab-interface__column--setup .b-lab-column-header .b-lab-divider, body .l-lab-interface__column--engine .b-lab-column-header .b-lab-divider {
-    --_stroke-op: var(--s-stroke-op-active);
+    display: none !important;
   }
   body .l-lab-interface__column--setup .b-lab-column-body, body .l-lab-interface__column--engine .b-lab-column-body {
-    padding: var(--space-sm) var(--space-sm) var(--space-md);
-    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-    /* 
-       УДАЛЕНО: Принудительная активация .ui-range и .ui-info-tag.
-       Теперь они подчиняются своим базовым стилям и состоянию :active
-    */
+    flex: 1 1 auto;
+    padding: var(--space-md) var(--space-md) calc(var(--space-xl) * 2);
+    /* ПЛАВНЫЙ ИНЕРЦИОННЫЙ СКРОЛЛ */
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+    /* СКРЫТИЕ СКРОЛЛБАРА */
+    scrollbar-width: none;
+    mask-image: linear-gradient(to bottom, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 92%, transparent 100%);
   }
-  body .l-lab-interface__column--setup {
-    grid-area: setup;
-    border-right: none;
-    /* Вертикальная полоска */
-    box-shadow: inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active));
-  }
-  body .l-lab-interface__column--engine {
-    grid-area: engine;
+  body .l-lab-interface__column--setup .b-lab-column-body::-webkit-scrollbar, body .l-lab-interface__column--engine .b-lab-column-body::-webkit-scrollbar {
+    display: none;
   }
   body.is-lab-active .l-lab-interface {
     transform: translate3d(-50%, 0, 0);

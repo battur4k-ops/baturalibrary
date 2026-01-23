@@ -17,7 +17,7 @@ export class LabManager {
         window.addEventListener('batura:labClosed', () => this.close());
 
         // Закрываем все открытые подсказки при клике в пустую область
-        document.addEventListener('click', () => {
+        document.addEventListener('click', (e) => {
             if (this.interface) {
                 const activeInfos = this.interface.querySelectorAll('.ui-info-group.is-info-active');
                 activeInfos.forEach(group => group.classList.remove('is-info-active'));
@@ -34,8 +34,12 @@ export class LabManager {
             const module = await import(`../lab/${labID}.js`);
             const config = module.labConfig;
             this.renderLayout(config);
-            await this.initScroll('left');
-            await this.initScroll('right');
+            
+            // Инициализируем скролл (Lenis только для больших экранов)
+            if (window.innerWidth > 1100) {
+                await this.initScroll('left');
+                await this.initScroll('right');
+            }
             
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
@@ -74,6 +78,8 @@ export class LabManager {
 
         const prepareCol = (el) => {
             if (!el) return null;
+            // Сбрасываем инлайновые стили (важно для переключения мобилка/пк)
+            el.style.display = '';
             el.innerHTML = `<div class="b-lab-column-header l-flow"></div><div class="b-lab-column-body" data-lenis-prevent="true"><div class="l-flow"></div></div>`;
             return { 
                 header: el.querySelector('.b-lab-column-header'), 
@@ -96,7 +102,6 @@ export class LabManager {
                 case 'heading':
                     const group = document.createElement('div');
                     group.className = 'ui-info-group';
-
                     const headerRow = document.createElement('div');
                     headerRow.className = 'ui-info-group__header';
 
@@ -109,22 +114,14 @@ export class LabManager {
                         const tag = document.createElement('span');
                         tag.className = 'ui-info-tag';
                         tag.textContent = '[INFO]';
-                        
                         const desc = document.createElement('div');
                         desc.className = 'ui-info-group__description';
-                        desc.innerHTML = `
-                            <div class="description-inner">
-                                <p class="text-info-hint">${item.info}</p>
-                            </div>
-                        `;
+                        desc.innerHTML = `<div class="description-inner"><p class="text-info-hint">${item.info}</p></div>`;
 
-                        // 1. Hover (для ПК)
                         tag.addEventListener('mouseenter', () => group.classList.add('is-info-active'));
                         tag.addEventListener('mouseleave', () => group.classList.remove('is-info-active'));
-
-                        // 2. Click/Tap (для Телефона: toggle логика)
                         tag.addEventListener('click', (e) => {
-                            e.stopPropagation(); // Не дает сработать глобальному закрытию
+                            e.stopPropagation();
                             group.classList.toggle('is-info-active');
                         });
 
@@ -148,14 +145,12 @@ export class LabManager {
                 case 'range': 
                     ctx.body.appendChild(this.createSlider(item)); 
                     break;
-
                 case 'data': 
                     const data = document.createElement('span'); 
                     data.className = 'text-data'; 
                     data.textContent = item.content; 
                     ctx.header.appendChild(data); 
                     break;
-
                 case 'spacer': 
                     const spacer = document.createElement('div'); 
                     spacer.className = 'b-spacer'; 
@@ -165,7 +160,53 @@ export class LabManager {
         });
         
         if (viewportCol) {
-            viewportCol.innerHTML = `<div class="lab-preview-display"><div id="previewCanvasContainer"></div></div>`;
+            viewportCol.innerHTML = `
+                <div class="lab-preview-display">
+                    <div id="previewCanvasContainer"></div>
+                    <div class="lab-mobile-switch">
+                        <button class="ui-button is-active" data-side="setup">
+                            <span>SETUP</span>
+                        </button>
+                        <button class="ui-button" data-side="engine">
+                            <span>ENGINE</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // ЛОГИКА ПЕРЕКЛЮЧЕНИЯ ПАНЕЛЕЙ (Твой мобильный контроллер)
+            const switchBtns = viewportCol.querySelectorAll('.lab-mobile-switch .ui-button');
+            
+            const handleSwitch = (side) => {
+                if (window.innerWidth > 1100) return; // На ПК ничего не прячем
+
+                if (side === 'setup') {
+                    setupCol.style.display = 'flex';
+                    engineCol.style.display = 'none';
+                } else {
+                    setupCol.style.display = 'none';
+                    engineCol.style.display = 'flex';
+                }
+            };
+
+            switchBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const side = btn.dataset.side;
+
+                    // Обновляем визуальное состояние кнопок (стиль твоих тегов)
+                    switchBtns.forEach(b => b.classList.remove('is-active'));
+                    btn.classList.add('is-active');
+
+                    handleSwitch(side);
+                });
+            });
+
+            // Инициализация при открытии: по умолчанию SETUP
+            if (window.innerWidth <= 1100) {
+                setupCol.style.display = 'flex';
+                engineCol.style.display = 'none';
+            }
         }
     }
 
@@ -196,7 +237,10 @@ export class LabManager {
         if (this.rightLenis) { this.rightLenis.destroy(); this.rightLenis = null; }
         this.cleanupTimeout = setTimeout(() => {
             if (this.interface) {
-                this.interface.querySelectorAll('.l-lab-interface__column').forEach(col => col.innerHTML = '');
+                this.interface.querySelectorAll('.l-lab-interface__column').forEach(col => {
+                    col.innerHTML = '';
+                    col.style.display = ''; // Сброс мобильных стилей
+                });
             }
             this.cleanupTimeout = null;
         }, 1000); 
