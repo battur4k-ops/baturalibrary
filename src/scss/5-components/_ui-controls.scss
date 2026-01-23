@@ -32,13 +32,16 @@
       text-align: right;
       outline: none;
 
-      &:hover { --_local-text-op: 1; }
+      /* ХОВЕР ТОЛЬКО ДЛЯ ПК */
+      @media (hover: hover) {
+        &:hover { --_local-text-op: 1; }
+      }
       &:focus { --_local-text-op: 1; color: rgba(var(--p-white-rgb), 1); }
     }
   }
 
-  /* ЛОГИКА ПК (Ховер) */
-  @media (min-width: 1101px) {
+  /* ЛОГИКА ПК (Ховер на весь блок) */
+  @media (min-width: 1101px) and (hover: hover) {
     &:hover {
       --_local-stroke-op: var(--s-stroke-op-hover);
       --_local-text-op: var(--s-text-op-hover);
@@ -47,13 +50,14 @@
 
   input[type="range"] {
     -webkit-appearance: none;
-    appearance: none; // Для Firefox
+    appearance: none;
     width: 100%;
     height: 20px; 
     background: transparent;
     cursor: pointer;
     outline: none;
     display: block;
+    -webkit-tap-highlight-color: transparent; // Убираем синий квадрат в Android
 
     /* --- ТРЕК --- */
     &::-webkit-slider-runnable-track {
@@ -69,7 +73,7 @@
       transition: box-shadow var(--d-fast) var(--e-out);
     }
 
-    /* --- КРУЖОЧЕК (THUMB) --- */
+    /* --- КРУЖОЧЕК --- */
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
       height: 12px; width: 12px; border-radius: 50%;
@@ -79,10 +83,10 @@
       margin-top: -5px; 
       transition: transform var(--d-fast) var(--e-out);
       will-change: transform;
+      border: none;
     }
 
     &::-moz-range-thumb {
-      /* В Firefox обязательно обнуляем border */
       border: none; 
       height: 12px; width: 12px; border-radius: 50%;
       background: rgb(var(--p-white-rgb));
@@ -91,11 +95,15 @@
       transition: transform var(--d-fast) var(--e-out);
     }
 
-    &:hover { 
-      &::-webkit-slider-thumb { transform: scale(1.2); } 
-      &::-moz-range-thumb { transform: scale(1.2); }
+    /* ХОВЕР (ТОЛЬКО ПК) */
+    @media (hover: hover) {
+      &:hover { 
+        &::-webkit-slider-thumb { transform: scale(1.2); } 
+        &::-moz-range-thumb { transform: scale(1.2); }
+      }
     }
     
+    /* АКТИВНОЕ СОСТОЯНИЕ (ПК И МОБИЛКА) */
     &:active {
        --_local-stroke-op: var(--s-stroke-op-active);
        --_local-text-op: 1;
@@ -113,7 +121,6 @@
     align-items: flex-start;
     width: 100%;
     position: relative;
-    margin-bottom: 0; 
 
     &__header {
       display: flex;
@@ -126,9 +133,7 @@
     &__description {
       display: grid;
       grid-template-rows: 0fr; 
-      transition: 
-        grid-template-rows var(--d-morph) var(--e-out),
-        margin-top var(--d-morph) var(--e-out);
+      transition: grid-template-rows var(--d-morph) var(--e-out), margin-top var(--d-morph) var(--e-out);
       overflow: hidden;
       width: 100%;
 
@@ -136,9 +141,7 @@
         min-height: 0;
         opacity: 0;
         transform: translateY(-5px); 
-        transition: 
-          opacity var(--d-fast) var(--e-out),
-          transform var(--d-base) var(--e-out);
+        transition: opacity var(--d-fast) var(--e-out), transform var(--d-base) var(--e-out);
       }
     }
 
@@ -149,7 +152,7 @@
         .description-inner {
           opacity: 1;
           transform: translateY(0);
-          transition-delay: 0.15s; 
+          transition-delay: 0.1s; 
         }
       }
     }
@@ -165,7 +168,16 @@
   --_local-tag-op: var(--s-text-op-idle);
   color: rgba(var(--p-white-rgb), var(--_local-tag-op));
   transition: color var(--d-fast) var(--e-out);
-  &:hover { --_local-tag-op: 1; }
+  -webkit-tap-highlight-color: transparent;
+
+  @media (hover: hover) {
+    &:hover { --_local-tag-op: 1; }
+  }
+  
+  /* Для мобилок: зажигаем только в момент нажатия */
+  &:active {
+    --_local-tag-op: 1;
+  }
 }
 
 .text-info-hint {
@@ -184,62 +196,40 @@
 
 @media (max-width: 1100px) {
   .ui-range {
-    --_local-stroke-op: var(--s-stroke-op-idle);
-    --_local-text-op: var(--s-text-op-idle);
-
     input[type="range"] {
-      -webkit-appearance: none;
-      appearance: none;
-      height: 30px; 
+      height: 34px; // Увеличили область тапа
 
-      /* ТРЕК (MOBILE) */
       &::-webkit-slider-runnable-track {
         height: var(--s-stroke-width); 
         background-color: rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
         box-shadow: none;
-        transition: background-color var(--d-fast) var(--e-out);
       }
 
-      &::-moz-range-track {
-        height: var(--s-stroke-width); 
-        background-color: rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
-        box-shadow: none;
+      /* ГАРАНТИРУЕМ ОТКЛИК ПОЛОСКИ ПРИ НАЖАТИИ */
+      &:active::-webkit-slider-runnable-track {
+        background-color: rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
       }
 
-      /* КРУЖОЧЕК (MOBILE) */
       &::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        height: 12px; width: 12px; border-radius: 50%;
-        background-color: rgb(var(--p-white-rgb));
+        height: 14px; width: 14px; 
+        margin-top: calc((var(--s-stroke-width) / 2) - 7px);
         box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), 0.3);
-        -webkit-backdrop-filter: blur(var(--s-glass-blur));
-        backdrop-filter: blur(var(--s-glass-blur));
-        margin-top: calc((var(--s-stroke-width) / 2) - 6px);
       }
-
-      &::-moz-range-thumb {
-        border: none;
-        height: 12px; width: 12px; border-radius: 50%;
-        background-color: rgb(var(--p-white-rgb));
-        box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), 0.3);
-        /* В Firefox поддержка backdrop-filter для thumb может зависеть от версии, 
-           но свойства не ломают верстку */
-        backdrop-filter: blur(var(--s-glass-blur));
-      }
-
-      &:active {
-         --_local-stroke-op: var(--s-stroke-op-active);
-         --_local-text-op: 1;
+      
+      /* Сбрасываем скейл, если он "залип" */
+      &:not(:active)::-webkit-slider-thumb {
+        transform: scale(1);
       }
     }
   }
 
   .ui-info-tag {
-    --_local-tag-op: var(--s-text-op-idle); 
     padding: 10px;
     margin: -10px -10px -10px 0; 
-    position: relative;
-    z-index: 10;
-    &:active { --_local-tag-op: 1; }
+    
+    /* Сбрасываем "залипший" цвет после тапа */
+    &:not(:active) {
+       --_local-tag-op: var(--s-text-op-idle);
+    }
   }
 }
