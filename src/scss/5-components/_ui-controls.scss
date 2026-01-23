@@ -32,7 +32,6 @@
       text-align: right;
       outline: none;
 
-      /* ХОВЕР ТОЛЬКО ДЛЯ ПК */
       @media (hover: hover) {
         &:hover { --_local-text-op: 1; }
       }
@@ -40,7 +39,7 @@
     }
   }
 
-  /* ЛОГИКА ПК (Ховер на весь блок) */
+  /* ЛОГИКА ПК */
   @media (min-width: 1101px) and (hover: hover) {
     &:hover {
       --_local-stroke-op: var(--s-stroke-op-hover);
@@ -57,14 +56,15 @@
     cursor: pointer;
     outline: none;
     display: block;
-    -webkit-tap-highlight-color: transparent; // Убираем синий квадрат в Android
+    -webkit-tap-highlight-color: transparent;
+    user-select: none; // Запрещаем выделение при перетаскивании
 
     /* --- ТРЕК --- */
     &::-webkit-slider-runnable-track {
       width: 100%; height: 2px; background: transparent; border: none;
+      /* Используем переменную для прозрачности */
       box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
       transition: box-shadow var(--d-fast) var(--e-out);
-      transform: translateZ(0);
     }
 
     &::-moz-range-track {
@@ -174,20 +174,9 @@
     &:hover { --_local-tag-op: 1; }
   }
   
-  /* Для мобилок: зажигаем только в момент нажатия */
   &:active {
     --_local-tag-op: 1;
   }
-}
-
-.text-info-hint {
-  @extend .text-body;
-  font-size: 11px;
-  line-height: 1.5;
-  color: rgba(var(--p-white-rgb), 0.5); 
-  max-width: 45ch;
-  text-transform: none;
-  margin: 0;
 }
 
 /* ============================================================
@@ -197,28 +186,45 @@
 @media (max-width: 1100px) {
   .ui-range {
     input[type="range"] {
-      height: 34px; // Увеличили область тапа
+      height: 36px; // Увеличенная зона для пальца
 
+      /* ТРЕК (MOBILE) */
       &::-webkit-slider-runnable-track {
+        height: var(--s-stroke-width); 
+        /* Используем переменную, которая меняется в input:active */
+        background-color: rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
+        box-shadow: none;
+        transition: background-color var(--d-fast) var(--e-out);
+      }
+
+      &::-moz-range-track {
         height: var(--s-stroke-width); 
         background-color: rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
         box-shadow: none;
       }
 
-      /* ГАРАНТИРУЕМ ОТКЛИК ПОЛОСКИ ПРИ НАЖАТИИ */
-      &:active::-webkit-slider-runnable-track {
-        background-color: rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
+      /* ГАРАНТИЯ: Пока палец на инпуте, переменная должна быть в активном состоянии */
+      &:active {
+        --_local-stroke-op: var(--s-stroke-op-active);
+        
+        &::-webkit-slider-runnable-track {
+          background-color: rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
+        }
+        &::-moz-range-track {
+          background-color: rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
+        }
       }
 
+      /* КРУЖОЧЕК (MOBILE) */
       &::-webkit-slider-thumb {
         height: 14px; width: 14px; 
         margin-top: calc((var(--s-stroke-width) / 2) - 7px);
         box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), 0.3);
       }
       
-      /* Сбрасываем скейл, если он "залип" */
-      &:not(:active)::-webkit-slider-thumb {
-        transform: scale(1);
+      &::-moz-range-thumb {
+        height: 14px; width: 14px; 
+        box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), 0.3);
       }
     }
   }
@@ -227,7 +233,6 @@
     padding: 10px;
     margin: -10px -10px -10px 0; 
     
-    /* Сбрасываем "залипший" цвет после тапа */
     &:not(:active) {
        --_local-tag-op: var(--s-text-op-idle);
     }

@@ -419,7 +419,7 @@ section {
    2-ELEMENTS / _TEXT.SCSS
    Batura Library | Dynamic Typography v7.5
    ============================================================ */
-.ui-range__header .value, .text-subheading, .text-data, .ui-info-tag, .ui-range__header, .b-catalog-header .index, .b-alphabet-nav__char, .b-static-card__index, .b-accordion .b-static-card__deco, .b-accordion .b-static-card__index, .ui-button, .b-navbar__search input, small, .text-body, .text-info-hint, p, .text-heading, h2, .text-hero, h1 {
+.ui-range__header .value, .text-subheading, .text-data, .ui-info-tag, .ui-range__header, .b-catalog-header .index, .b-alphabet-nav__char, .b-static-card__index, .b-accordion .b-static-card__deco, .b-accordion .b-static-card__index, .ui-button, .b-navbar__search input, small, .text-body, p, .text-heading, h2, .text-hero, h1 {
   margin: 0;
   color: rgba(var(--p-white-rgb), var(--_text-op, 1));
   transition: color var(--d-fast) var(--e-out);
@@ -446,7 +446,7 @@ section {
   margin-left: var(--text-offset-heading);
 }
 
-.text-body, .text-info-hint, p {
+.text-body, p {
   --_text-op: var(--s-text-op-idle);
   font-family: var(--font-main);
   font-size: var(--fs-body);
@@ -501,10 +501,10 @@ section {
 .l-flow > * + * {
   margin-top: var(--space-md);
 }
-.l-flow > .text-data + .text-hero, .l-flow > .ui-info-tag + .text-hero, .l-flow > .ui-range__header + .text-hero, .b-catalog-header .l-flow > .index + .text-hero, .l-flow > .b-alphabet-nav__char + .text-hero, .l-flow > .b-static-card__index + .text-hero, .b-accordion .l-flow > .b-static-card__deco + .text-hero, .l-flow > .ui-button + .text-hero, .b-navbar__search .l-flow > input + .text-hero, .l-flow > small + .text-hero, .l-flow > .text-data + h1, .l-flow > .ui-info-tag + h1, .l-flow > .ui-range__header + h1, .b-catalog-header .l-flow > .index + h1, .l-flow > .b-alphabet-nav__char + h1, .l-flow > .b-static-card__index + h1, .b-accordion .l-flow > .b-static-card__deco + h1, .l-flow > .ui-button + h1, .b-navbar__search .l-flow > input + h1, .l-flow > small + h1, .l-flow > .text-data + .text-heading, .l-flow > .ui-info-tag + .text-heading, .l-flow > .ui-range__header + .text-heading, .b-catalog-header .l-flow > .index + .text-heading, .l-flow > .b-alphabet-nav__char + .text-heading, .l-flow > .b-static-card__index + .text-heading, .b-accordion .l-flow > .b-static-card__deco + .text-heading, .l-flow > .ui-button + .text-heading, .b-navbar__search .l-flow > input + .text-heading, .l-flow > small + .text-heading, .l-flow > .text-data + h2, .l-flow > .ui-info-tag + h2, .l-flow > .ui-range__header + h2, .b-catalog-header .l-flow > .index + h2, .l-flow > .b-alphabet-nav__char + h2, .l-flow > .b-static-card__index + h2, .b-accordion .l-flow > .b-static-card__deco + h2, .l-flow > .ui-button + h2, .b-navbar__search .l-flow > input + h2, .l-flow > small + h2, .l-flow > .text-hero + .text-body, .l-flow > .text-hero + .text-info-hint, .l-flow > h1 + .text-body, .l-flow > h1 + .text-info-hint, .l-flow > .text-hero + p, .l-flow > h1 + p, .l-flow > .text-heading + .text-body, .l-flow > .text-heading + .text-info-hint, .l-flow > h2 + .text-body, .l-flow > h2 + .text-info-hint, .l-flow > .text-heading + p, .l-flow > h2 + p {
+.l-flow > .text-data + .text-hero, .l-flow > .ui-info-tag + .text-hero, .l-flow > .ui-range__header + .text-hero, .b-catalog-header .l-flow > .index + .text-hero, .l-flow > .b-alphabet-nav__char + .text-hero, .l-flow > .b-static-card__index + .text-hero, .b-accordion .l-flow > .b-static-card__deco + .text-hero, .l-flow > .ui-button + .text-hero, .b-navbar__search .l-flow > input + .text-hero, .l-flow > small + .text-hero, .l-flow > .text-data + h1, .l-flow > .ui-info-tag + h1, .l-flow > .ui-range__header + h1, .b-catalog-header .l-flow > .index + h1, .l-flow > .b-alphabet-nav__char + h1, .l-flow > .b-static-card__index + h1, .b-accordion .l-flow > .b-static-card__deco + h1, .l-flow > .ui-button + h1, .b-navbar__search .l-flow > input + h1, .l-flow > small + h1, .l-flow > .text-data + .text-heading, .l-flow > .ui-info-tag + .text-heading, .l-flow > .ui-range__header + .text-heading, .b-catalog-header .l-flow > .index + .text-heading, .l-flow > .b-alphabet-nav__char + .text-heading, .l-flow > .b-static-card__index + .text-heading, .b-accordion .l-flow > .b-static-card__deco + .text-heading, .l-flow > .ui-button + .text-heading, .b-navbar__search .l-flow > input + .text-heading, .l-flow > small + .text-heading, .l-flow > .text-data + h2, .l-flow > .ui-info-tag + h2, .l-flow > .ui-range__header + h2, .b-catalog-header .l-flow > .index + h2, .l-flow > .b-alphabet-nav__char + h2, .l-flow > .b-static-card__index + h2, .b-accordion .l-flow > .b-static-card__deco + h2, .l-flow > .ui-button + h2, .b-navbar__search .l-flow > input + h2, .l-flow > small + h2, .l-flow > .text-hero + .text-body, .l-flow > h1 + .text-body, .l-flow > .text-hero + p, .l-flow > h1 + p, .l-flow > .text-heading + .text-body, .l-flow > h2 + .text-body, .l-flow > .text-heading + p, .l-flow > h2 + p {
   margin-top: var(--space-xs);
 }
-.l-flow > .text-body + .l-flex-group, .l-flow > .text-info-hint + .l-flex-group, .l-flow > p + .l-flex-group {
+.l-flow > .text-body + .l-flex-group, .l-flow > p + .l-flex-group {
   margin-top: var(--space-lg);
 }
 
@@ -1110,7 +1110,7 @@ body.is-lab-active .b-navbar__search .close-icon {
 .b-accordion .b-static-card.is-active .b-static-card__body .text-heading, .b-accordion .b-static-card.is-active .b-static-card__body h2 {
   margin-left: var(--text-offset-heading);
 }
-.b-accordion .b-static-card.is-active .b-static-card__body .text-heading + .text-body, .b-accordion .b-static-card.is-active .b-static-card__body .text-heading + .text-info-hint, .b-accordion .b-static-card.is-active .b-static-card__body h2 + .text-body, .b-accordion .b-static-card.is-active .b-static-card__body h2 + .text-info-hint, .b-accordion .b-static-card.is-active .b-static-card__body .text-heading + p, .b-accordion .b-static-card.is-active .b-static-card__body h2 + p {
+.b-accordion .b-static-card.is-active .b-static-card__body .text-heading + .text-body, .b-accordion .b-static-card.is-active .b-static-card__body h2 + .text-body, .b-accordion .b-static-card.is-active .b-static-card__body .text-heading + p, .b-accordion .b-static-card.is-active .b-static-card__body h2 + p {
   margin-top: var(--space-xs);
 }
 .b-accordion .b-static-card.is-active .b-static-card__actions {
@@ -1218,10 +1218,10 @@ body.is-lab-active .b-navbar__search .close-icon {
 .b-footer__brand > * + * {
   margin-top: var(--space-md);
 }
-.b-footer__brand > .text-data + .text-hero, .b-footer__brand > .ui-info-tag + .text-hero, .b-footer__brand > .ui-range__header + .text-hero, .b-catalog-header .b-footer__brand > .index + .text-hero, .b-footer__brand > .b-alphabet-nav__char + .text-hero, .b-footer__brand > .b-static-card__index + .text-hero, .b-footer__brand > small + .text-hero, .b-navbar__search .b-footer__brand > input + .text-hero, .b-footer__brand > .ui-button + .text-hero, .b-accordion .b-footer__brand > .b-static-card__deco + .text-hero, .b-footer__brand > .text-data + h1, .b-footer__brand > .ui-info-tag + h1, .b-footer__brand > .ui-range__header + h1, .b-catalog-header .b-footer__brand > .index + h1, .b-footer__brand > .b-alphabet-nav__char + h1, .b-footer__brand > .b-static-card__index + h1, .b-footer__brand > small + h1, .b-navbar__search .b-footer__brand > input + h1, .b-footer__brand > .ui-button + h1, .b-accordion .b-footer__brand > .b-static-card__deco + h1, .b-footer__brand > .text-data + .text-heading, .b-footer__brand > .ui-info-tag + .text-heading, .b-footer__brand > .ui-range__header + .text-heading, .b-catalog-header .b-footer__brand > .index + .text-heading, .b-footer__brand > .b-alphabet-nav__char + .text-heading, .b-footer__brand > .b-static-card__index + .text-heading, .b-footer__brand > small + .text-heading, .b-navbar__search .b-footer__brand > input + .text-heading, .b-footer__brand > .ui-button + .text-heading, .b-accordion .b-footer__brand > .b-static-card__deco + .text-heading, .b-footer__brand > .text-data + h2, .b-footer__brand > .ui-info-tag + h2, .b-footer__brand > .ui-range__header + h2, .b-catalog-header .b-footer__brand > .index + h2, .b-footer__brand > .b-alphabet-nav__char + h2, .b-footer__brand > .b-static-card__index + h2, .b-footer__brand > small + h2, .b-navbar__search .b-footer__brand > input + h2, .b-footer__brand > .ui-button + h2, .b-accordion .b-footer__brand > .b-static-card__deco + h2, .b-footer__brand > .text-hero + .text-body, .b-footer__brand > .text-hero + .text-info-hint, .b-footer__brand > h1 + .text-body, .b-footer__brand > h1 + .text-info-hint, .b-footer__brand > .text-hero + p, .b-footer__brand > h1 + p, .b-footer__brand > .text-heading + .text-body, .b-footer__brand > .text-heading + .text-info-hint, .b-footer__brand > h2 + .text-body, .b-footer__brand > h2 + .text-info-hint, .b-footer__brand > .text-heading + p, .b-footer__brand > h2 + p {
+.b-footer__brand > .text-data + .text-hero, .b-footer__brand > .ui-info-tag + .text-hero, .b-footer__brand > .ui-range__header + .text-hero, .b-catalog-header .b-footer__brand > .index + .text-hero, .b-footer__brand > .b-alphabet-nav__char + .text-hero, .b-footer__brand > .b-static-card__index + .text-hero, .b-footer__brand > small + .text-hero, .b-navbar__search .b-footer__brand > input + .text-hero, .b-footer__brand > .ui-button + .text-hero, .b-accordion .b-footer__brand > .b-static-card__deco + .text-hero, .b-footer__brand > .text-data + h1, .b-footer__brand > .ui-info-tag + h1, .b-footer__brand > .ui-range__header + h1, .b-catalog-header .b-footer__brand > .index + h1, .b-footer__brand > .b-alphabet-nav__char + h1, .b-footer__brand > .b-static-card__index + h1, .b-footer__brand > small + h1, .b-navbar__search .b-footer__brand > input + h1, .b-footer__brand > .ui-button + h1, .b-accordion .b-footer__brand > .b-static-card__deco + h1, .b-footer__brand > .text-data + .text-heading, .b-footer__brand > .ui-info-tag + .text-heading, .b-footer__brand > .ui-range__header + .text-heading, .b-catalog-header .b-footer__brand > .index + .text-heading, .b-footer__brand > .b-alphabet-nav__char + .text-heading, .b-footer__brand > .b-static-card__index + .text-heading, .b-footer__brand > small + .text-heading, .b-navbar__search .b-footer__brand > input + .text-heading, .b-footer__brand > .ui-button + .text-heading, .b-accordion .b-footer__brand > .b-static-card__deco + .text-heading, .b-footer__brand > .text-data + h2, .b-footer__brand > .ui-info-tag + h2, .b-footer__brand > .ui-range__header + h2, .b-catalog-header .b-footer__brand > .index + h2, .b-footer__brand > .b-alphabet-nav__char + h2, .b-footer__brand > .b-static-card__index + h2, .b-footer__brand > small + h2, .b-navbar__search .b-footer__brand > input + h2, .b-footer__brand > .ui-button + h2, .b-accordion .b-footer__brand > .b-static-card__deco + h2, .b-footer__brand > .text-hero + .text-body, .b-footer__brand > h1 + .text-body, .b-footer__brand > .text-hero + p, .b-footer__brand > h1 + p, .b-footer__brand > .text-heading + .text-body, .b-footer__brand > h2 + .text-body, .b-footer__brand > .text-heading + p, .b-footer__brand > h2 + p {
   margin-top: var(--space-xs);
 }
-.b-footer__brand > .text-body + .l-flex-group, .b-footer__brand > .text-info-hint + .l-flex-group, .b-footer__brand > p + .l-flex-group {
+.b-footer__brand > .text-body + .l-flex-group, .b-footer__brand > p + .l-flex-group {
   margin-top: var(--space-lg);
 }
 .b-footer__logo {
@@ -1251,10 +1251,10 @@ body.is-lab-active .b-navbar__search .close-icon {
 .b-footer__group > * + * {
   margin-top: var(--space-md);
 }
-.b-footer__group > .text-data + .text-hero, .b-footer__group > .ui-info-tag + .text-hero, .b-footer__group > .ui-range__header + .text-hero, .b-catalog-header .b-footer__group > .index + .text-hero, .b-footer__group > .b-alphabet-nav__char + .text-hero, .b-footer__group > .b-static-card__index + .text-hero, .b-footer__group > small + .text-hero, .b-navbar__search .b-footer__group > input + .text-hero, .b-footer__group > .ui-button + .text-hero, .b-accordion .b-footer__group > .b-static-card__deco + .text-hero, .b-footer__group > .text-data + h1, .b-footer__group > .ui-info-tag + h1, .b-footer__group > .ui-range__header + h1, .b-catalog-header .b-footer__group > .index + h1, .b-footer__group > .b-alphabet-nav__char + h1, .b-footer__group > .b-static-card__index + h1, .b-footer__group > small + h1, .b-navbar__search .b-footer__group > input + h1, .b-footer__group > .ui-button + h1, .b-accordion .b-footer__group > .b-static-card__deco + h1, .b-footer__group > .text-data + .text-heading, .b-footer__group > .ui-info-tag + .text-heading, .b-footer__group > .ui-range__header + .text-heading, .b-catalog-header .b-footer__group > .index + .text-heading, .b-footer__group > .b-alphabet-nav__char + .text-heading, .b-footer__group > .b-static-card__index + .text-heading, .b-footer__group > small + .text-heading, .b-navbar__search .b-footer__group > input + .text-heading, .b-footer__group > .ui-button + .text-heading, .b-accordion .b-footer__group > .b-static-card__deco + .text-heading, .b-footer__group > .text-data + h2, .b-footer__group > .ui-info-tag + h2, .b-footer__group > .ui-range__header + h2, .b-catalog-header .b-footer__group > .index + h2, .b-footer__group > .b-alphabet-nav__char + h2, .b-footer__group > .b-static-card__index + h2, .b-footer__group > small + h2, .b-navbar__search .b-footer__group > input + h2, .b-footer__group > .ui-button + h2, .b-accordion .b-footer__group > .b-static-card__deco + h2, .b-footer__group > .text-hero + .text-body, .b-footer__group > .text-hero + .text-info-hint, .b-footer__group > h1 + .text-body, .b-footer__group > h1 + .text-info-hint, .b-footer__group > .text-hero + p, .b-footer__group > h1 + p, .b-footer__group > .text-heading + .text-body, .b-footer__group > .text-heading + .text-info-hint, .b-footer__group > h2 + .text-body, .b-footer__group > h2 + .text-info-hint, .b-footer__group > .text-heading + p, .b-footer__group > h2 + p {
+.b-footer__group > .text-data + .text-hero, .b-footer__group > .ui-info-tag + .text-hero, .b-footer__group > .ui-range__header + .text-hero, .b-catalog-header .b-footer__group > .index + .text-hero, .b-footer__group > .b-alphabet-nav__char + .text-hero, .b-footer__group > .b-static-card__index + .text-hero, .b-footer__group > small + .text-hero, .b-navbar__search .b-footer__group > input + .text-hero, .b-footer__group > .ui-button + .text-hero, .b-accordion .b-footer__group > .b-static-card__deco + .text-hero, .b-footer__group > .text-data + h1, .b-footer__group > .ui-info-tag + h1, .b-footer__group > .ui-range__header + h1, .b-catalog-header .b-footer__group > .index + h1, .b-footer__group > .b-alphabet-nav__char + h1, .b-footer__group > .b-static-card__index + h1, .b-footer__group > small + h1, .b-navbar__search .b-footer__group > input + h1, .b-footer__group > .ui-button + h1, .b-accordion .b-footer__group > .b-static-card__deco + h1, .b-footer__group > .text-data + .text-heading, .b-footer__group > .ui-info-tag + .text-heading, .b-footer__group > .ui-range__header + .text-heading, .b-catalog-header .b-footer__group > .index + .text-heading, .b-footer__group > .b-alphabet-nav__char + .text-heading, .b-footer__group > .b-static-card__index + .text-heading, .b-footer__group > small + .text-heading, .b-navbar__search .b-footer__group > input + .text-heading, .b-footer__group > .ui-button + .text-heading, .b-accordion .b-footer__group > .b-static-card__deco + .text-heading, .b-footer__group > .text-data + h2, .b-footer__group > .ui-info-tag + h2, .b-footer__group > .ui-range__header + h2, .b-catalog-header .b-footer__group > .index + h2, .b-footer__group > .b-alphabet-nav__char + h2, .b-footer__group > .b-static-card__index + h2, .b-footer__group > small + h2, .b-navbar__search .b-footer__group > input + h2, .b-footer__group > .ui-button + h2, .b-accordion .b-footer__group > .b-static-card__deco + h2, .b-footer__group > .text-hero + .text-body, .b-footer__group > h1 + .text-body, .b-footer__group > .text-hero + p, .b-footer__group > h1 + p, .b-footer__group > .text-heading + .text-body, .b-footer__group > h2 + .text-body, .b-footer__group > .text-heading + p, .b-footer__group > h2 + p {
   margin-top: var(--space-xs);
 }
-.b-footer__group > .text-body + .l-flex-group, .b-footer__group > .text-info-hint + .l-flex-group, .b-footer__group > p + .l-flex-group {
+.b-footer__group > .text-body + .l-flex-group, .b-footer__group > p + .l-flex-group {
   margin-top: var(--space-lg);
 }
 .b-footer__group .l-flow {
@@ -1265,10 +1265,10 @@ body.is-lab-active .b-navbar__search .close-icon {
 .b-footer__group .l-flow > * + * {
   margin-top: var(--space-xs);
 }
-.b-footer__group .l-flow > .text-data + .text-hero, .b-footer__group .l-flow > .ui-info-tag + .text-hero, .b-footer__group .l-flow > .ui-range__header + .text-hero, .b-footer__group .b-catalog-header .l-flow > .index + .text-hero, .b-catalog-header .b-footer__group .l-flow > .index + .text-hero, .b-footer__group .l-flow > .b-alphabet-nav__char + .text-hero, .b-footer__group .l-flow > .b-static-card__index + .text-hero, .b-footer__group .l-flow > small + .text-hero, .b-footer__group .b-navbar__search .l-flow > input + .text-hero, .b-navbar__search .b-footer__group .l-flow > input + .text-hero, .b-footer__group .l-flow > .ui-button + .text-hero, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + .text-hero, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + .text-hero, .b-footer__group .l-flow > .text-data + h1, .b-footer__group .l-flow > .ui-info-tag + h1, .b-footer__group .l-flow > .ui-range__header + h1, .b-footer__group .b-catalog-header .l-flow > .index + h1, .b-catalog-header .b-footer__group .l-flow > .index + h1, .b-footer__group .l-flow > .b-alphabet-nav__char + h1, .b-footer__group .l-flow > .b-static-card__index + h1, .b-footer__group .l-flow > small + h1, .b-footer__group .b-navbar__search .l-flow > input + h1, .b-navbar__search .b-footer__group .l-flow > input + h1, .b-footer__group .l-flow > .ui-button + h1, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + h1, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + h1, .b-footer__group .l-flow > .text-data + .text-heading, .b-footer__group .l-flow > .ui-info-tag + .text-heading, .b-footer__group .l-flow > .ui-range__header + .text-heading, .b-footer__group .b-catalog-header .l-flow > .index + .text-heading, .b-catalog-header .b-footer__group .l-flow > .index + .text-heading, .b-footer__group .l-flow > .b-alphabet-nav__char + .text-heading, .b-footer__group .l-flow > .b-static-card__index + .text-heading, .b-footer__group .l-flow > small + .text-heading, .b-footer__group .b-navbar__search .l-flow > input + .text-heading, .b-navbar__search .b-footer__group .l-flow > input + .text-heading, .b-footer__group .l-flow > .ui-button + .text-heading, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + .text-heading, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + .text-heading, .b-footer__group .l-flow > .text-data + h2, .b-footer__group .l-flow > .ui-info-tag + h2, .b-footer__group .l-flow > .ui-range__header + h2, .b-footer__group .b-catalog-header .l-flow > .index + h2, .b-catalog-header .b-footer__group .l-flow > .index + h2, .b-footer__group .l-flow > .b-alphabet-nav__char + h2, .b-footer__group .l-flow > .b-static-card__index + h2, .b-footer__group .l-flow > small + h2, .b-footer__group .b-navbar__search .l-flow > input + h2, .b-navbar__search .b-footer__group .l-flow > input + h2, .b-footer__group .l-flow > .ui-button + h2, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + h2, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + h2, .b-footer__group .l-flow > .text-hero + .text-body, .b-footer__group .l-flow > .text-hero + .text-info-hint, .b-footer__group .l-flow > h1 + .text-body, .b-footer__group .l-flow > h1 + .text-info-hint, .b-footer__group .l-flow > .text-hero + p, .b-footer__group .l-flow > h1 + p, .b-footer__group .l-flow > .text-heading + .text-body, .b-footer__group .l-flow > .text-heading + .text-info-hint, .b-footer__group .l-flow > h2 + .text-body, .b-footer__group .l-flow > h2 + .text-info-hint, .b-footer__group .l-flow > .text-heading + p, .b-footer__group .l-flow > h2 + p {
+.b-footer__group .l-flow > .text-data + .text-hero, .b-footer__group .l-flow > .ui-info-tag + .text-hero, .b-footer__group .l-flow > .ui-range__header + .text-hero, .b-footer__group .b-catalog-header .l-flow > .index + .text-hero, .b-catalog-header .b-footer__group .l-flow > .index + .text-hero, .b-footer__group .l-flow > .b-alphabet-nav__char + .text-hero, .b-footer__group .l-flow > .b-static-card__index + .text-hero, .b-footer__group .l-flow > small + .text-hero, .b-footer__group .b-navbar__search .l-flow > input + .text-hero, .b-navbar__search .b-footer__group .l-flow > input + .text-hero, .b-footer__group .l-flow > .ui-button + .text-hero, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + .text-hero, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + .text-hero, .b-footer__group .l-flow > .text-data + h1, .b-footer__group .l-flow > .ui-info-tag + h1, .b-footer__group .l-flow > .ui-range__header + h1, .b-footer__group .b-catalog-header .l-flow > .index + h1, .b-catalog-header .b-footer__group .l-flow > .index + h1, .b-footer__group .l-flow > .b-alphabet-nav__char + h1, .b-footer__group .l-flow > .b-static-card__index + h1, .b-footer__group .l-flow > small + h1, .b-footer__group .b-navbar__search .l-flow > input + h1, .b-navbar__search .b-footer__group .l-flow > input + h1, .b-footer__group .l-flow > .ui-button + h1, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + h1, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + h1, .b-footer__group .l-flow > .text-data + .text-heading, .b-footer__group .l-flow > .ui-info-tag + .text-heading, .b-footer__group .l-flow > .ui-range__header + .text-heading, .b-footer__group .b-catalog-header .l-flow > .index + .text-heading, .b-catalog-header .b-footer__group .l-flow > .index + .text-heading, .b-footer__group .l-flow > .b-alphabet-nav__char + .text-heading, .b-footer__group .l-flow > .b-static-card__index + .text-heading, .b-footer__group .l-flow > small + .text-heading, .b-footer__group .b-navbar__search .l-flow > input + .text-heading, .b-navbar__search .b-footer__group .l-flow > input + .text-heading, .b-footer__group .l-flow > .ui-button + .text-heading, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + .text-heading, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + .text-heading, .b-footer__group .l-flow > .text-data + h2, .b-footer__group .l-flow > .ui-info-tag + h2, .b-footer__group .l-flow > .ui-range__header + h2, .b-footer__group .b-catalog-header .l-flow > .index + h2, .b-catalog-header .b-footer__group .l-flow > .index + h2, .b-footer__group .l-flow > .b-alphabet-nav__char + h2, .b-footer__group .l-flow > .b-static-card__index + h2, .b-footer__group .l-flow > small + h2, .b-footer__group .b-navbar__search .l-flow > input + h2, .b-navbar__search .b-footer__group .l-flow > input + h2, .b-footer__group .l-flow > .ui-button + h2, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + h2, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + h2, .b-footer__group .l-flow > .text-hero + .text-body, .b-footer__group .l-flow > h1 + .text-body, .b-footer__group .l-flow > .text-hero + p, .b-footer__group .l-flow > h1 + p, .b-footer__group .l-flow > .text-heading + .text-body, .b-footer__group .l-flow > h2 + .text-body, .b-footer__group .l-flow > .text-heading + p, .b-footer__group .l-flow > h2 + p {
   margin-top: var(--space-xs);
 }
-.b-footer__group .l-flow > .text-body + .l-flex-group, .b-footer__group .l-flow > .text-info-hint + .l-flex-group, .b-footer__group .l-flow > p + .l-flex-group {
+.b-footer__group .l-flow > .text-body + .l-flex-group, .b-footer__group .l-flow > p + .l-flex-group {
   margin-top: var(--space-lg);
 }
 .b-footer__link {
@@ -1400,10 +1400,10 @@ body.is-lab-active .b-navbar__search .close-icon {
 .b-static-card__viewport > * + * {
   margin-top: var(--space-md);
 }
-.b-static-card__viewport > .text-data + .text-hero, .b-static-card__viewport > .ui-info-tag + .text-hero, .b-static-card__viewport > .ui-range__header + .text-hero, .b-catalog-header .b-static-card__viewport > .index + .text-hero, .b-static-card__viewport > .b-alphabet-nav__char + .text-hero, .b-static-card__viewport > .b-static-card__index + .text-hero, .b-static-card__viewport > small + .text-hero, .b-navbar__search .b-static-card__viewport > input + .text-hero, .b-static-card__viewport > .ui-button + .text-hero, .b-accordion .b-static-card__viewport > .b-static-card__deco + .text-hero, .b-static-card__viewport > .text-data + h1, .b-static-card__viewport > .ui-info-tag + h1, .b-static-card__viewport > .ui-range__header + h1, .b-catalog-header .b-static-card__viewport > .index + h1, .b-static-card__viewport > .b-alphabet-nav__char + h1, .b-static-card__viewport > .b-static-card__index + h1, .b-static-card__viewport > small + h1, .b-navbar__search .b-static-card__viewport > input + h1, .b-static-card__viewport > .ui-button + h1, .b-accordion .b-static-card__viewport > .b-static-card__deco + h1, .b-static-card__viewport > .text-data + .text-heading, .b-static-card__viewport > .ui-info-tag + .text-heading, .b-static-card__viewport > .ui-range__header + .text-heading, .b-catalog-header .b-static-card__viewport > .index + .text-heading, .b-static-card__viewport > .b-alphabet-nav__char + .text-heading, .b-static-card__viewport > .b-static-card__index + .text-heading, .b-static-card__viewport > small + .text-heading, .b-navbar__search .b-static-card__viewport > input + .text-heading, .b-static-card__viewport > .ui-button + .text-heading, .b-accordion .b-static-card__viewport > .b-static-card__deco + .text-heading, .b-static-card__viewport > .text-data + h2, .b-static-card__viewport > .ui-info-tag + h2, .b-static-card__viewport > .ui-range__header + h2, .b-catalog-header .b-static-card__viewport > .index + h2, .b-static-card__viewport > .b-alphabet-nav__char + h2, .b-static-card__viewport > .b-static-card__index + h2, .b-static-card__viewport > small + h2, .b-navbar__search .b-static-card__viewport > input + h2, .b-static-card__viewport > .ui-button + h2, .b-accordion .b-static-card__viewport > .b-static-card__deco + h2, .b-static-card__viewport > .text-hero + .text-body, .b-static-card__viewport > .text-hero + .text-info-hint, .b-static-card__viewport > h1 + .text-body, .b-static-card__viewport > h1 + .text-info-hint, .b-static-card__viewport > .text-hero + p, .b-static-card__viewport > h1 + p, .b-static-card__viewport > .text-heading + .text-body, .b-static-card__viewport > .text-heading + .text-info-hint, .b-static-card__viewport > h2 + .text-body, .b-static-card__viewport > h2 + .text-info-hint, .b-static-card__viewport > .text-heading + p, .b-static-card__viewport > h2 + p {
+.b-static-card__viewport > .text-data + .text-hero, .b-static-card__viewport > .ui-info-tag + .text-hero, .b-static-card__viewport > .ui-range__header + .text-hero, .b-catalog-header .b-static-card__viewport > .index + .text-hero, .b-static-card__viewport > .b-alphabet-nav__char + .text-hero, .b-static-card__viewport > .b-static-card__index + .text-hero, .b-static-card__viewport > small + .text-hero, .b-navbar__search .b-static-card__viewport > input + .text-hero, .b-static-card__viewport > .ui-button + .text-hero, .b-accordion .b-static-card__viewport > .b-static-card__deco + .text-hero, .b-static-card__viewport > .text-data + h1, .b-static-card__viewport > .ui-info-tag + h1, .b-static-card__viewport > .ui-range__header + h1, .b-catalog-header .b-static-card__viewport > .index + h1, .b-static-card__viewport > .b-alphabet-nav__char + h1, .b-static-card__viewport > .b-static-card__index + h1, .b-static-card__viewport > small + h1, .b-navbar__search .b-static-card__viewport > input + h1, .b-static-card__viewport > .ui-button + h1, .b-accordion .b-static-card__viewport > .b-static-card__deco + h1, .b-static-card__viewport > .text-data + .text-heading, .b-static-card__viewport > .ui-info-tag + .text-heading, .b-static-card__viewport > .ui-range__header + .text-heading, .b-catalog-header .b-static-card__viewport > .index + .text-heading, .b-static-card__viewport > .b-alphabet-nav__char + .text-heading, .b-static-card__viewport > .b-static-card__index + .text-heading, .b-static-card__viewport > small + .text-heading, .b-navbar__search .b-static-card__viewport > input + .text-heading, .b-static-card__viewport > .ui-button + .text-heading, .b-accordion .b-static-card__viewport > .b-static-card__deco + .text-heading, .b-static-card__viewport > .text-data + h2, .b-static-card__viewport > .ui-info-tag + h2, .b-static-card__viewport > .ui-range__header + h2, .b-catalog-header .b-static-card__viewport > .index + h2, .b-static-card__viewport > .b-alphabet-nav__char + h2, .b-static-card__viewport > .b-static-card__index + h2, .b-static-card__viewport > small + h2, .b-navbar__search .b-static-card__viewport > input + h2, .b-static-card__viewport > .ui-button + h2, .b-accordion .b-static-card__viewport > .b-static-card__deco + h2, .b-static-card__viewport > .text-hero + .text-body, .b-static-card__viewport > h1 + .text-body, .b-static-card__viewport > .text-hero + p, .b-static-card__viewport > h1 + p, .b-static-card__viewport > .text-heading + .text-body, .b-static-card__viewport > h2 + .text-body, .b-static-card__viewport > .text-heading + p, .b-static-card__viewport > h2 + p {
   margin-top: var(--space-xs);
 }
-.b-static-card__viewport > .text-body + .l-flex-group, .b-static-card__viewport > .text-info-hint + .l-flex-group, .b-static-card__viewport > p + .l-flex-group {
+.b-static-card__viewport > .text-body + .l-flex-group, .b-static-card__viewport > p + .l-flex-group {
   margin-top: var(--space-lg);
 }
 .b-static-card__top {
@@ -1421,10 +1421,10 @@ body.is-lab-active .b-navbar__search .close-icon {
   flex-direction: column;
   align-items: flex-start;
 }
-.b-static-card__body > .text-heading + .text-body, .b-static-card__body > .text-heading + .text-info-hint, .b-static-card__body > h2 + .text-body, .b-static-card__body > h2 + .text-info-hint, .b-static-card__body > .text-heading + p, .b-static-card__body > h2 + p {
+.b-static-card__body > .text-heading + .text-body, .b-static-card__body > h2 + .text-body, .b-static-card__body > .text-heading + p, .b-static-card__body > h2 + p {
   margin-top: var(--space-xs);
 }
-.b-static-card__body > .text-body + .b-static-card__tags, .b-static-card__body > .text-info-hint + .b-static-card__tags, .b-static-card__body > p + .b-static-card__tags {
+.b-static-card__body > .text-body + .b-static-card__tags, .b-static-card__body > p + .b-static-card__tags {
   margin-top: var(--space-xs);
 }
 .b-static-card__actions {
@@ -1954,15 +1954,15 @@ body.is-lab-active #app-wrapper {
   --_local-stroke-op: var(--s-stroke-op-idle);
   --_local-text-op: var(--s-text-op-idle);
   transition: opacity var(--d-fast) var(--e-out);
-  /* ЛОГИКА ПК (Ховер на весь блок) */
+  /* ЛОГИКА ПК */
 }
 .ui-range > * + * {
   margin-top: var(--space-xs);
 }
-.ui-range > .text-data + .text-hero, .ui-range > .ui-info-tag + .text-hero, .ui-range > .ui-range__header + .text-hero, .ui-range > small + .text-hero, .b-navbar__search .ui-range > input + .text-hero, .ui-range > .ui-button + .text-hero, .b-accordion .ui-range > .b-static-card__deco + .text-hero, .ui-range > .b-static-card__index + .text-hero, .ui-range > .b-alphabet-nav__char + .text-hero, .b-catalog-header .ui-range > .index + .text-hero, .ui-range > .text-data + h1, .ui-range > .ui-info-tag + h1, .ui-range > .ui-range__header + h1, .ui-range > small + h1, .b-navbar__search .ui-range > input + h1, .ui-range > .ui-button + h1, .b-accordion .ui-range > .b-static-card__deco + h1, .ui-range > .b-static-card__index + h1, .ui-range > .b-alphabet-nav__char + h1, .b-catalog-header .ui-range > .index + h1, .ui-range > .text-data + .text-heading, .ui-range > .ui-info-tag + .text-heading, .ui-range > .ui-range__header + .text-heading, .ui-range > small + .text-heading, .b-navbar__search .ui-range > input + .text-heading, .ui-range > .ui-button + .text-heading, .b-accordion .ui-range > .b-static-card__deco + .text-heading, .ui-range > .b-static-card__index + .text-heading, .ui-range > .b-alphabet-nav__char + .text-heading, .b-catalog-header .ui-range > .index + .text-heading, .ui-range > .text-data + h2, .ui-range > .ui-info-tag + h2, .ui-range > .ui-range__header + h2, .ui-range > small + h2, .b-navbar__search .ui-range > input + h2, .ui-range > .ui-button + h2, .b-accordion .ui-range > .b-static-card__deco + h2, .ui-range > .b-static-card__index + h2, .ui-range > .b-alphabet-nav__char + h2, .b-catalog-header .ui-range > .index + h2, .ui-range > .text-hero + .text-body, .ui-range > .text-hero + .text-info-hint, .ui-range > h1 + .text-body, .ui-range > h1 + .text-info-hint, .ui-range > .text-hero + p, .ui-range > h1 + p, .ui-range > .text-heading + .text-body, .ui-range > .text-heading + .text-info-hint, .ui-range > h2 + .text-body, .ui-range > h2 + .text-info-hint, .ui-range > .text-heading + p, .ui-range > h2 + p {
+.ui-range > .text-data + .text-hero, .ui-range > .ui-info-tag + .text-hero, .ui-range > .ui-range__header + .text-hero, .ui-range > small + .text-hero, .b-navbar__search .ui-range > input + .text-hero, .ui-range > .ui-button + .text-hero, .b-accordion .ui-range > .b-static-card__deco + .text-hero, .ui-range > .b-static-card__index + .text-hero, .ui-range > .b-alphabet-nav__char + .text-hero, .b-catalog-header .ui-range > .index + .text-hero, .ui-range > .text-data + h1, .ui-range > .ui-info-tag + h1, .ui-range > .ui-range__header + h1, .ui-range > small + h1, .b-navbar__search .ui-range > input + h1, .ui-range > .ui-button + h1, .b-accordion .ui-range > .b-static-card__deco + h1, .ui-range > .b-static-card__index + h1, .ui-range > .b-alphabet-nav__char + h1, .b-catalog-header .ui-range > .index + h1, .ui-range > .text-data + .text-heading, .ui-range > .ui-info-tag + .text-heading, .ui-range > .ui-range__header + .text-heading, .ui-range > small + .text-heading, .b-navbar__search .ui-range > input + .text-heading, .ui-range > .ui-button + .text-heading, .b-accordion .ui-range > .b-static-card__deco + .text-heading, .ui-range > .b-static-card__index + .text-heading, .ui-range > .b-alphabet-nav__char + .text-heading, .b-catalog-header .ui-range > .index + .text-heading, .ui-range > .text-data + h2, .ui-range > .ui-info-tag + h2, .ui-range > .ui-range__header + h2, .ui-range > small + h2, .b-navbar__search .ui-range > input + h2, .ui-range > .ui-button + h2, .b-accordion .ui-range > .b-static-card__deco + h2, .ui-range > .b-static-card__index + h2, .ui-range > .b-alphabet-nav__char + h2, .b-catalog-header .ui-range > .index + h2, .ui-range > .text-hero + .text-body, .ui-range > h1 + .text-body, .ui-range > .text-hero + p, .ui-range > h1 + p, .ui-range > .text-heading + .text-body, .ui-range > h2 + .text-body, .ui-range > .text-heading + p, .ui-range > h2 + p {
   margin-top: var(--space-xs);
 }
-.ui-range > .text-body + .l-flex-group, .ui-range > .text-info-hint + .l-flex-group, .ui-range > p + .l-flex-group {
+.ui-range > .text-body + .l-flex-group, .ui-range > p + .l-flex-group {
   margin-top: var(--space-lg);
 }
 .ui-range__header {
@@ -1979,7 +1979,6 @@ body.is-lab-active #app-wrapper {
   min-width: 3ch;
   text-align: right;
   outline: none;
-  /* ХОВЕР ТОЛЬКО ДЛЯ ПК */
 }
 @media (hover: hover) {
   .ui-range__header .value:hover {
@@ -2007,6 +2006,9 @@ body.is-lab-active #app-wrapper {
   outline: none;
   display: block;
   -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
   /* --- ТРЕК --- */
   /* --- КРУЖОЧЕК --- */
   /* ХОВЕР (ТОЛЬКО ПК) */
@@ -2017,10 +2019,10 @@ body.is-lab-active #app-wrapper {
   height: 2px;
   background: transparent;
   border: none;
+  /* Используем переменную для прозрачности */
   box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
   -webkit-transition: box-shadow var(--d-fast) var(--e-out);
   transition: box-shadow var(--d-fast) var(--e-out);
-  transform: translateZ(0);
 }
 .ui-range input[type=range]::-moz-range-track {
   width: 100%;
@@ -2172,7 +2174,6 @@ body.is-lab-active #app-wrapper {
   color: rgba(var(--p-white-rgb), var(--_local-tag-op));
   transition: color var(--d-fast) var(--e-out);
   -webkit-tap-highlight-color: transparent;
-  /* Для мобилок: зажигаем только в момент нажатия */
 }
 @media (hover: hover) {
   .ui-info-tag:hover {
@@ -2183,30 +2184,36 @@ body.is-lab-active #app-wrapper {
   --_local-tag-op: 1;
 }
 
-.text-info-hint {
-  font-size: 11px;
-  line-height: 1.5;
-  color: rgba(var(--p-white-rgb), 0.5);
-  max-width: 45ch;
-  text-transform: none;
-  margin: 0;
-}
-
 /* ============================================================
    [UI ADAPTATION BLOCK]
    ============================================================ */
 @media (max-width: 1100px) {
   .ui-range input[type=range] {
-    height: 34px;
-    /* ГАРАНТИРУЕМ ОТКЛИК ПОЛОСКИ ПРИ НАЖАТИИ */
-    /* Сбрасываем скейл, если он "залип" */
+    height: 36px;
+    /* ТРЕК (MOBILE) */
+    /* ГАРАНТИЯ: Пока палец на инпуте, переменная должна быть в активном состоянии */
+    /* КРУЖОЧЕК (MOBILE) */
   }
   .ui-range input[type=range]::-webkit-slider-runnable-track {
+    height: var(--s-stroke-width);
+    /* Используем переменную, которая меняется в input:active */
+    background-color: rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
+    box-shadow: none;
+    -webkit-transition: background-color var(--d-fast) var(--e-out);
+    transition: background-color var(--d-fast) var(--e-out);
+  }
+  .ui-range input[type=range]::-moz-range-track {
     height: var(--s-stroke-width);
     background-color: rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
     box-shadow: none;
   }
+  .ui-range input[type=range]:active {
+    --_local-stroke-op: var(--s-stroke-op-active);
+  }
   .ui-range input[type=range]:active::-webkit-slider-runnable-track {
+    background-color: rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
+  }
+  .ui-range input[type=range]:active::-moz-range-track {
     background-color: rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
   }
   .ui-range input[type=range]::-webkit-slider-thumb {
@@ -2215,13 +2222,14 @@ body.is-lab-active #app-wrapper {
     margin-top: calc(var(--s-stroke-width) / 2 - 7px);
     box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), 0.3);
   }
-  .ui-range input[type=range]:not(:active)::-webkit-slider-thumb {
-    transform: scale(1);
+  .ui-range input[type=range]::-moz-range-thumb {
+    height: 14px;
+    width: 14px;
+    box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), 0.3);
   }
   .ui-info-tag {
     padding: 10px;
     margin: -10px -10px -10px 0;
-    /* Сбрасываем "залипший" цвет после тапа */
   }
   .ui-info-tag:not(:active) {
     --_local-tag-op: var(--s-text-op-idle);
