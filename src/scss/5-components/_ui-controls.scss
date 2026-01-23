@@ -31,13 +31,13 @@
       min-width: 3ch;
       text-align: right;
       outline: none;
+      margin-right: -0.15em; 
 
       &:hover { --_local-text-op: 1; }
       &:focus { --_local-text-op: 1; color: rgba(var(--p-white-rgb), 1); }
     }
   }
 
-  /* ЛОГИКА ПК (Ховер) */
   @media (min-width: 1101px) {
     &:hover {
       --_local-stroke-op: var(--s-stroke-op-hover);
@@ -47,6 +47,7 @@
 
   input[type="range"] {
     -webkit-appearance: none;
+    appearance: none; // Для кроссбраузерности
     width: 100%;
     height: 20px; 
     background: transparent;
@@ -54,20 +55,22 @@
     outline: none;
     display: block;
 
-    /* ТРЕК: ПОЛНАЯ КОПИЯ .b-lab-divider */
+    /* ТРЕК (ПК) */
     &::-webkit-slider-runnable-track {
+      -webkit-appearance: none;
       width: 100%;
       height: 2px; 
       background: transparent;
       border: none;
+      /* Твой оригинальный стиль через тень */
       box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
       transition: box-shadow var(--d-fast) var(--e-out);
-      transform: translateZ(0);
     }
 
-    /* КРУЖОЧЕК (THUMB) */
+    /* КРУЖОЧЕК (ПК) */
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
+      border: none; // Убираем ту самую серую обводку
       height: 12px; width: 12px; border-radius: 50%;
       background: rgb(var(--p-white-rgb));
       @include glass-surface(50%);
@@ -77,12 +80,9 @@
       will-change: transform;
     }
 
-    &:hover { &::-webkit-slider-thumb { transform: scale(1.2); } }
-    
     &:active {
        --_local-stroke-op: var(--s-stroke-op-active);
        --_local-text-op: 1;
-       &::-webkit-slider-thumb { transform: scale(1.1); }
     }
   }
 }
@@ -172,55 +172,52 @@
     input[type="range"] {
       -webkit-appearance: none;
       height: 30px; 
+      background: transparent;
 
       &::-webkit-slider-runnable-track {
-        /* ФИКС ВИДИМОСТИ ТРЕКА:
-           Вместо прозрачного блока 2px с тенью, используем высоту самого токена.
-           Это гарантирует 100% видимость и одинаковую толщину на всех мобилках. */
+        -webkit-appearance: none;
+        /* ФИКС ВИДИМОСТИ: 
+           На мобилках inset shadow в прозрачном блоке не работает.
+           Используем высоту самого токена var(--s-stroke-width) и фоновый цвет. */
         height: var(--s-stroke-width); 
         background-color: rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
-        box-shadow: none;
-        transition: background-color var(--d-fast) var(--e-out);
+        box-shadow: none; 
+        border: none;
       }
 
       &::-webkit-slider-thumb {
         -webkit-appearance: none;
-        /* ФИКС ВИДИМОСТИ THUMB:
-           Мы не вызываем миксин @include glass-surface, так как его псевдоэлементы ломают Safari.
-           Вместо этого мы берем те же самые токены и применяем их напрямую. */
+        /* ФИКС СЕРОЙ ОБВОДКИ И ВИДИМОСТИ:
+           Убираем миксин, так как ::before внутри инпута не рендерится на iOS.
+           Используем токены напрямую. */
+        border: none; 
+        outline: none;
         height: 12px; 
         width: 12px;
         border-radius: 50%;
         background-color: rgb(var(--p-white-rgb));
         
-        /* Эмуляция glass-surface через токены (без ::before) */
-        box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), 0.3);
+        /* Стилизация через токены (имитация glass-surface без псевдоэлементов) */
+        box-shadow: 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), 0.2);
         -webkit-backdrop-filter: blur(var(--s-glass-blur));
         backdrop-filter: blur(var(--s-glass-blur));
 
-        /* Выравнивание: (track_height / 2) - (thumb_height / 2) */
-        /* (var(--s-stroke-width) / 2) - (12px / 2) */
-        margin-top: calc((var(--s-stroke-width) / 2) - 6px);
+        /* Центрирование относительно линии трека (через токены) */
+        margin-top: calc((var(--s-stroke-width) / 2) - 6px); 
       }
 
       &:active {
          --_local-stroke-op: var(--s-stroke-op-active);
-         --_local-text-op: 1;
+         /* Фикс для JS: подсвечиваем значение при таче */
+         & ~ .ui-range__header .value { --_local-text-op: 1; }
       }
-    }
-
-    &:active {
-      --_local-stroke-op: var(--s-stroke-op-active);
-      --_local-text-op: 1;
     }
   }
 
   .ui-info-tag {
-    --_local-tag-op: var(--s-text-op-idle); 
     padding: 10px;
     margin: -10px -10px -10px 0; 
     position: relative;
     z-index: 10;
-    &:active { --_local-tag-op: 1; }
   }
 }
