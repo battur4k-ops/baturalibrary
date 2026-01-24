@@ -17,16 +17,16 @@
   transform: translate3d(-50%, -100%, 0);
   will-change: transform, backdrop-filter;
   
-  /* 2. ЕДИНАЯ ОБВОДКА (3 стороны, без верхней) */
-  &, .lab-preview-display {
-    --_border-shadow: 
-      inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))),
-      inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))),
-      inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
-    
-    border-top: none;
-    box-shadow: var(--_border-shadow);
-  }
+  /* 2. ОБВОДКА (3 стороны, без верхней) - УБРАЛИ ИЗ MIXIN */
+  border-top: none;
+  
+  /* Единая переменная для обводки */
+  --_border-shadow: 
+    inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))),
+    inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))),
+    inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  
+  box-shadow: var(--_border-shadow);
   
   /* 3. ПЕРЕМЕННЫЕ */
   --_bg-op: var(--s-glass-op-hover);
@@ -123,6 +123,8 @@
     position: relative;
     border-radius: var(--radius-inner) var(--radius-inner) 0 0;
     overflow: hidden;
+    
+    /* ТОЛЬКО СТЕКЛО, БЕЗ ОБВОДКИ */
     @include glass-surface(inherit);
     
     /* iOS FIX: изолируем backdrop-filter от glow */
@@ -130,6 +132,12 @@
     
     --_bg-op: var(--s-glare-op-hover);
     border-top: none;
+    
+    /* ОБВОДКА ПРЕВЬЮ (3 стороны) - ОТДЕЛЬНО ОТ MIXIN */
+    box-shadow: 
+      inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))),
+      inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))),
+      inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
     
     transition: background-color var(--d-fast) var(--e-out), 
                 box-shadow var(--d-fast) var(--e-out), 
@@ -261,6 +269,8 @@ body.is-lab-active {
           height: 100%;
           border: none;
           border-radius: 0;
+          
+          /* ОБВОДКА ПРЕВЬЮ НА МОБИЛКЕ (только снизу) */
           box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active));
         }
         

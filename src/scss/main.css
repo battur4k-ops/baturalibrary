@@ -645,15 +645,14 @@ batura-navbar {
   position: relative;
   border-radius: var(--nav-radius);
   isolation: isolate;
-  background-clip: padding-box;
+  /* УДАЛИЛИ: background-clip: padding-box; */
+  /* УДАЛИЛИ: box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(...); */
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
-  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
   backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
   -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
-  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
   position: fixed;
   top: var(--nav-top);
   z-index: var(--z-nav);
@@ -754,15 +753,14 @@ body.is-scrolled .b-navbar .ui-button:not(:hover):not(:focus), body.is-scrolled 
   position: relative;
   border-radius: var(--nav-inner-radius);
   isolation: isolate;
-  background-clip: padding-box;
+  /* УДАЛИЛИ: background-clip: padding-box; */
+  /* УДАЛИЛИ: box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(...); */
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
-  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
   backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
   -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
-  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
   height: var(--nav-content-h);
   width: var(--_search-w-idle);
   padding-inline: var(--space-sm);
@@ -879,15 +877,14 @@ body.is-lab-active .b-navbar__search .close-icon {
   position: relative;
   border-radius: var(--btn-radius);
   isolation: isolate;
-  background-clip: padding-box;
+  /* УДАЛИЛИ: background-clip: padding-box; */
+  /* УДАЛИЛИ: box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(...); */
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
-  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
   backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
   -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
-  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
   /* ПОРЯДОК ВАЖЕН: сначала экстенд, потом переопределение */
   line-height: 1;
   display: inline-flex;
@@ -1014,15 +1011,14 @@ body.is-lab-active .b-navbar__search .close-icon {
   position: relative;
   border-radius: var(--s-card-radius);
   isolation: isolate;
-  background-clip: padding-box;
+  /* УДАЛИЛИ: background-clip: padding-box; */
+  /* УДАЛИЛИ: box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(...); */
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
-  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
   backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
   -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
-  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
   transition: flex var(--d-slow) var(--e-out), background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out);
   /* Логика декора и индекса при наведении на карту */
 }
@@ -1332,15 +1328,14 @@ body.is-lab-active .b-navbar__search .close-icon {
   position: relative;
   border-radius: var(--s-card-radius);
   isolation: isolate;
-  background-clip: padding-box;
+  /* УДАЛИЛИ: background-clip: padding-box; */
+  /* УДАЛИЛИ: box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(...); */
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
-  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
   backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
   -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
-  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -1448,15 +1443,14 @@ body.is-lab-active .b-navbar__search .close-icon {
   position: relative;
   border-radius: var(--local-preview-radius);
   isolation: isolate;
-  background-clip: padding-box;
+  /* УДАЛИЛИ: background-clip: padding-box; */
+  /* УДАЛИЛИ: box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(...); */
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
-  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
   backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
   -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
-  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
   overflow: hidden;
 }
 .b-static-card .b-preview-box::before, .b-static-card .b-code-box::before {
@@ -1597,15 +1591,14 @@ body.is-lab-active .b-navbar__search .close-icon {
   position: relative;
   border-radius: inherit;
   isolation: isolate;
-  background-clip: padding-box;
+  /* УДАЛИЛИ: background-clip: padding-box; */
+  /* УДАЛИЛИ: box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(...); */
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
-  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
   backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
   -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
-  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
   --_bg-op: var(--s-glare-op-hover);
   overflow: hidden;
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-base) var(--e-out);
@@ -1649,15 +1642,14 @@ body.is-lab-active .b-navbar__search .close-icon {
   position: relative;
   border-radius: 0 0 var(--radius-master) var(--radius-master);
   isolation: isolate;
-  background-clip: padding-box;
+  /* УДАЛИЛИ: background-clip: padding-box; */
+  /* УДАЛИЛИ: box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(...); */
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
-  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
   backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
   -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
-  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
   --_dynamic-blur: 0px;
   backdrop-filter: blur(var(--_dynamic-blur));
   -webkit-backdrop-filter: none;
@@ -1666,7 +1658,14 @@ body.is-lab-active .b-navbar__search .close-icon {
   pointer-events: none;
   transform: translate3d(-50%, -100%, 0);
   will-change: transform, backdrop-filter;
-  /* 2. ЕДИНАЯ ОБВОДКА (3 стороны, без верхней) */
+  /* 2. ОБВОДКА (3 стороны, без верхней) - УБРАЛИ ИЗ MIXIN */
+  border-top: none;
+  /* Единая переменная для обводки */
+  --_border-shadow:
+    inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))),
+    inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))),
+    inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  box-shadow: var(--_border-shadow);
   /* 3. ПЕРЕМЕННЫЕ */
   --_bg-op: var(--s-glass-op-hover);
   --_stroke-op: var(--s-stroke-op-hover);
@@ -1695,14 +1694,6 @@ body.is-lab-active .b-navbar__search .close-icon {
   background: radial-gradient(circle at 50% 0%, rgba(var(--m-glass-base-rgb), 0.4), transparent);
   opacity: var(--_glare-op, 0);
   transition: opacity var(--d-fast) var(--e-out);
-}
-.l-lab-interface, .l-lab-interface .lab-preview-display {
-  --_border-shadow:
-    inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))),
-    inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))),
-    inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
-  border-top: none;
-  box-shadow: var(--_border-shadow);
 }
 .l-lab-interface__column {
   height: 100%;
@@ -1767,22 +1758,24 @@ body.is-lab-active .b-navbar__search .close-icon {
   position: relative;
   border-radius: var(--radius-inner) var(--radius-inner) 0 0;
   overflow: hidden;
+  /* ТОЛЬКО СТЕКЛО, БЕЗ ОБВОДКИ */
   position: relative;
   border-radius: inherit;
   isolation: isolate;
-  background-clip: padding-box;
+  /* УДАЛИЛИ: background-clip: padding-box; */
+  /* УДАЛИЛИ: box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(...); */
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
-  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
   backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
   -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
-  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
   /* iOS FIX: изолируем backdrop-filter от glow */
   isolation: isolate;
   --_bg-op: var(--s-glare-op-hover);
   border-top: none;
+  /* ОБВОДКА ПРЕВЬЮ (3 стороны) - ОТДЕЛЬНО ОТ MIXIN */
+  box-shadow: inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))), inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))), inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), -webkit-backdrop-filter var(--d-fast) var(--e-out);
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-fast) var(--e-out);
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-fast) var(--e-out), -webkit-backdrop-filter var(--d-fast) var(--e-out);
@@ -1896,6 +1889,7 @@ body.is-lab-active #app-wrapper {
     height: 100%;
     border: none;
     border-radius: 0;
+    /* ОБВОДКА ПРЕВЬЮ НА МОБИЛКЕ (только снизу) */
     box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active));
   }
   body .l-lab-interface__column--viewport .lab-mobile-switch {
@@ -2067,16 +2061,15 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   position: relative;
   border-radius: 50%;
   isolation: isolate;
-  background-clip: padding-box;
+  /* УДАЛИЛИ: background-clip: padding-box; */
+  /* УДАЛИЛИ: box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(...); */
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
-  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
   backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
   -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
-  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
-  -webkit-transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  -webkit-transition: background-color var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
   --_bg-op: 1;
   --_stroke-op: 0.3;
   margin-top: -5px;
@@ -2106,14 +2099,13 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   position: relative;
   border-radius: 50%;
   isolation: isolate;
-  background-clip: padding-box;
+  /* УДАЛИЛИ: background-clip: padding-box; */
+  /* УДАЛИЛИ: box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(...); */
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
-  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
   backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
   -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
-  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
-  -moz-transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  -moz-transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
   --_bg-op: 1;
   --_stroke-op: 0.3;
   -moz-transition: transform var(--d-fast) var(--e-out);
@@ -2295,15 +2287,14 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   position: relative;
   border-radius: var(--_code-radius);
   isolation: isolate;
-  background-clip: padding-box;
+  /* УДАЛИЛИ: background-clip: padding-box; */
+  /* УДАЛИЛИ: box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(...); */
   background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
-  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
   backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
   -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
-  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
 }
 .b-code-box::before {
   content: "";
