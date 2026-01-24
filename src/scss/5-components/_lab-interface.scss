@@ -278,7 +278,7 @@ body.is-lab-active {
           flex: 1 1 auto;
           width: 100%;
           padding: 0 var(--space-md) 140px; 
-          overflow: hidden; 
+          overflow: auto; 
           touch-action: pan-y; 
 
           /* Маска без верхнего блюра */
