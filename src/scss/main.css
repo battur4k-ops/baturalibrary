@@ -1658,9 +1658,9 @@ body.is-lab-active .b-navbar__search .close-icon {
   pointer-events: none;
   transform: translate3d(-50%, -100%, 0);
   will-change: transform, backdrop-filter;
-  /* 2. ОБВОДКА (3 стороны, без верхней) - УБРАЛИ ИЗ MIXIN */
+  /* 2. ОБВОДКА (3 стороны, без верхней) */
   border-top: none;
-  /* Единая переменная для обводки */
+  /* iOS FIX: убираем box-shadow из превью, оставляем для основного контейнера */
   --_border-shadow:
     inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))),
     inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))),
@@ -1774,12 +1774,13 @@ body.is-lab-active .b-navbar__search .close-icon {
   isolation: isolate;
   --_bg-op: var(--s-glare-op-hover);
   border-top: none;
-  /* ОБВОДКА ПРЕВЬЮ (3 стороны) - ОТДЕЛЬНО ОТ MIXIN */
-  box-shadow: inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))), inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))), inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), -webkit-backdrop-filter var(--d-fast) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-fast) var(--e-out);
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-fast) var(--e-out), -webkit-backdrop-filter var(--d-fast) var(--e-out);
+  /* iOS FIX: УБИРАЕМ inset box-shadow из превью */
+  box-shadow: none;
+  transition: background-color var(--d-fast) var(--e-out), -webkit-backdrop-filter var(--d-fast) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-fast) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), backdrop-filter var(--d-fast) var(--e-out), -webkit-backdrop-filter var(--d-fast) var(--e-out);
   /* Градиенты превью (обновлено для iOS) */
+  /* iOS FIX: ОБВОДКА ПРЕВЬЮ ЧЕРЕЗ ПСЕВДОЭЛЕМЕНТ */
 }
 .l-lab-interface .lab-preview-display::before {
   content: "";
@@ -1792,13 +1793,11 @@ body.is-lab-active .b-navbar__search .close-icon {
   opacity: var(--_glare-op, 0);
   transition: opacity var(--d-fast) var(--e-out);
 }
-.l-lab-interface .lab-preview-display::before, .l-lab-interface .lab-preview-display::after {
+.l-lab-interface .lab-preview-display::before {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-}
-.l-lab-interface .lab-preview-display::before {
   /* iOS-safe glow с фиксированной позицией */
   background: radial-gradient(circle at top center, rgba(var(--theme-accent-rgb), 0.15), transparent 70%);
   transform: translateZ(0);
@@ -1806,10 +1805,20 @@ body.is-lab-active .b-navbar__search .close-icon {
   z-index: 1;
 }
 .l-lab-interface .lab-preview-display::after {
-  background-image: radial-gradient(rgba(var(--p-white-rgb), 0.02) 1px, transparent 1px);
-  background-size: var(--space-sm) var(--space-sm);
-  opacity: 0.15;
-  z-index: 2;
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  border-radius: inherit;
+  /* ОБВОДКА 3 СТОРОНЫ */
+  border-left: var(--s-stroke-width) solid rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  border-right: var(--s-stroke-width) solid rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  border-bottom: var(--s-stroke-width) solid rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  border-top: none;
+  /* КЛЮЧ ДЛЯ iOS */
+  transform: translateZ(0);
+  transition: border-color var(--d-fast) var(--e-out);
 }
 .l-lab-interface:hover {
   transition-delay: 0s;
@@ -1824,6 +1833,11 @@ body.is-lab-active .b-navbar__search .close-icon {
 }
 .l-lab-interface:hover .lab-preview-display {
   --_bg-op: var(--s-glass-op-active);
+}
+.l-lab-interface:hover .lab-preview-display::after {
+  border-left-color: rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
+  border-right-color: rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
+  border-bottom-color: rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
 }
 
 /* ============================================================
@@ -1889,8 +1903,13 @@ body.is-lab-active #app-wrapper {
     height: 100%;
     border: none;
     border-radius: 0;
-    /* ОБВОДКА ПРЕВЬЮ НА МОБИЛКЕ (только снизу) */
-    box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active));
+    /* iOS FIX: на мобилке только нижняя обводка */
+  }
+  body .l-lab-interface__column--viewport .lab-preview-display::after {
+    border-left: none;
+    border-right: none;
+    border-bottom: var(--s-stroke-width) solid rgba(var(--p-white-rgb), var(--s-stroke-op-active));
+    border-top: none;
   }
   body .l-lab-interface__column--viewport .lab-mobile-switch {
     display: flex;
