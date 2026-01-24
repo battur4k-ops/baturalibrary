@@ -1,59 +1,50 @@
 export const labConfig = {
-    // Схема для построения интерфейса
+    defaultTab: 'position',
     schema: [
-        // По умолчанию всё идет в LEFT
         { type: 'spacer' },
-        { type: 'data',    content: '// ПАРАМЕТРЫ' },
+        { type: 'data', content: '// ПАРАМЕТРЫ' },
+        { type: 'hero', content: 'SETUP' },
         
-        // ПРИМЕР 1: Инфо для главного заголовка
-        { 
-            type: 'hero',    
-            content: 'SETUP', 
-        },
-        
-        
-        // ПРИМЕР 2: Инфо для подзаголовка группы
-        { 
-            type: 'heading', 
-            content: 'EXPRESSION', 
-            info: 'Параметры математической формулы вычисления координат.' 
-        },
-        
-        { type: 'range',   id: 'delay_1', label: 'ЗАДЕРЖКА (СЕК)', min: 0.1, max: 2, step: 0.1, default: 0.5 },
-        { type: 'range',   id: 'delay_2', label: 'ЗАДЕРЖКА (СЕК)', min: 0.1, max: 2, step: 0.1, default: 0.5 },
-        
-        { type: 'heading', content: 'EXPRESSION' },
-        { type: 'range',   id: 'delay_3', label: 'ЗАДЕРЖКА (СЕК)', min: 0.1, max: 2, step: 0.1, default: 0.5 },
-        { type: 'range',   id: 'delay_4', label: 'ЗАДЕРЖКА (СЕК)', min: 0.1, max: 2, step: 0.1, default: 0.5 },
+        { type: 'heading', content: 'DELAY SETTINGS', info: 'Настройка инерции слоев.' },
+        { type: 'range', id: 'delay', label: 'DELAY (SEC)', min: 0.1, max: 2, step: 0.1, default: 0.5 },
+        { type: 'range', id: 'offset', label: 'OFFSET XY', min: 0, max: 500, step: 1, default: 100 },
 
-        // ПЕРЕКЛЮЧАЕМ НА ПРАВО
         { side: 'right' }, 
-        
         { type: 'spacer' },
-        { type: 'data',    content: '// РЕЗУЛЬТАТ' },
-        
-        // ПРИМЕР 3: Инфо на правой стороне
+        { type: 'data', content: '// КОМПИЛЯТОР' },
+        { type: 'hero', content: 'ENGINE' },
+
+        // Вкладки
         { 
-            type: 'hero',    
-            content: 'OUTPUT', 
-            info: 'Здесь отображается итоговый результат генерации кода для After Effects.' 
+            type: 'tabs', 
+            id: 'mode', 
+            options: [
+                { id: 'position', label: 'POSITION' },
+                { id: 'scale', label: 'SCALE' }
+            ] 
         },
-                { 
-            type: 'heading', 
-            content: 'EXPRESSION', 
-            info: 'Параметры математической формулы вычисления координат.' 
-        },
-        
-        { type: 'range',   id: 'amp', label: 'АМПЛИТУДА', min: 0, max: 100, step: 1, default: 50 },
-        { type: 'range',   id: 'delay_right_1', label: 'ЗАДЕРЖКА (СЕК)', min: 0.1, max: 2, step: 0.1, default: 0.5 },
-        { type: 'range',   id: 'delay_right_2', label: 'ЗАДЕРЖКА (СЕК)', min: 0.1, max: 2, step: 0.1, default: 0.5 },
-        
-        { type: 'heading', content: 'EXPRESSION' },
-        { type: 'range',   id: 'delay_right_3', label: 'ЗАДЕРЖКА (СЕК)', min: 0.1, max: 2, step: 0.1, default: 0.5 },
-        { type: 'range',   id: 'delay_right_4', label: 'ЗАДЕРЖКА (СЕК)', min: 0.1, max: 2, step: 0.1, default: 0.5 },
+
+        // Окно кода
+        { type: 'code-block' },
+
+        // Кнопка копирования
+        { type: 'copy-button', label: 'COPY EXPRESSION' },
+ 
+        // Инструкция
+        { 
+            type: 'instruction', 
+            content: [
+                'Верхним должен стоять слой с ключами анимации.',
+                'Примените код к параметру Position или Scale на всех слоях ниже.',
+                'Убедитесь, что слои идут по порядку в таймлайне.'
+            ] 
+        }
     ],
 
-    codeTemplate: (v) => {
-        return `var delay = ${v.delay}; \nposition.valueAtTime(time - delay);`;
+    // Формулы для вкладок
+    codeTemplates: {
+        position: (v) => `// AE_CHAIN_CORE_POS\nvar delay = ${v.delay};\nvar off = ${v.offset};\n\nif (index > 1) {\n  var p = thisComp.layer(index-1);\n  p.transform.position.valueAtTime(time - delay) + [off, 0];\n} else { value; }`,
+        
+        scale: (v) => `// AE_CHAIN_CORE_SCALE\nvar delay = ${v.delay};\n\nif (index > 1) {\n  var p = thisComp.layer(index-1);\n  p.transform.scale.valueAtTime(time - delay);\n} else { value; }`
     }
 };

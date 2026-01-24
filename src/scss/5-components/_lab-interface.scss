@@ -1,6 +1,6 @@
 /* ============================================================
    5-COMPONENTS / _LAB-INTERFACE.SCSS
-   Batura Library | Monolithic Scroll-Split v10.18 [Clean Top Edge]
+   Batura Library | Monolithic Scroll-Split v10.16 [Clean Fade]
    ============================================================ */
 
 .l-lab-interface {
@@ -8,35 +8,26 @@
   @include glass-surface(0 0 var(--radius-master) var(--radius-master));
 
   /* 
-     УДАЛЕНИЕ ВЕРХНЕЙ ОБВОДКИ (PC):
-     Переопределяем box-shadow миксина. Оставляем только лево, право и низ.
+     [DYNAMIC BLUR FIX] 
+     Изначально ставим блюр в 0. Это отключает тяжелые вычисления 
+     на краях слоя во время анимации, убирая артефакты Chrome.
   */
+  --_dynamic-blur: 0px;
+  backdrop-filter: blur(var(--_dynamic-blur));
+  -webkit-backdrop-filter: blur(var(--_dynamic-blur));
+
+  /* УДАЛЕНИЕ ВЕРХНЕЙ ОБВОДКИ (Перекрываем inset из миксина) */
   box-shadow: 
     inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))),
     inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))),
     inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
 
-  /* 
-     ФИКС БЛЮРА (Local Overscan Strategy):
-     Мы физически поднимаем блок выше окна на 20px. 
-  */
-  position: fixed;
-  top: -20px; 
-  left: 50%;
-  z-index: var(--z-overlay);
-  
-  padding-top: 20px; 
-  height: calc(100vh - var(--nav-top) + 20px); 
-  width: min(var(--stable-content-width), var(--stable-max-content));
-
-  isolation: isolate;
-  contain: paint; 
-  will-change: transform, opacity, backdrop-filter;
+  border-top: none;
 
   /* 2. PROXY VARIABLES */
   --_bg-op: var(--s-glass-op-hover);      
   --_stroke-op: var(--s-stroke-op-hover); 
-  --_blur: 25px;
+  --_blur: var(--_dynamic-blur); // Синхронизация с динамическим блюром
   --_glare-op: 0;
   
   /* 3. NAVBAR SYNC */
@@ -47,7 +38,8 @@
   opacity: 1; 
   visibility: hidden;
   pointer-events: none;
-  transform: translate3d(-50%, -110%, 0); 
+  transform: translate3d(-50%, -100%, 0); 
+  will-change: transform, backdrop-filter;
 
   /* 5. ВНУТРЕННИЕ КОЛОНКИ */
   &__column {
@@ -69,18 +61,40 @@
         position: relative;
       }
 
-      .b-lab-column-body {
+.b-lab-column-body {
         flex: 1 1 auto;
-        overflow: hidden; 
-        padding: var(--space-md) var(--space-md) var(--space-xl);
+        overflow: hidden;
         position: relative;
         z-index: 1;
-        mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-        -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+
+        /* 1. ПАДДИНГ КОНТЕЙНЕРА */
+        padding: 0 var(--space-md) var(--space-xl); 
+
+        /* 2. ОДНОСТОРОННЯЯ МАСКА (ТОЛЬКО СНИЗУ) */
+        /* Мы убрали transparent в начале. Теперь контент на 100% виден 
+           сразу от края линии заголовка без всякого размытия. */
+        --_fade-bottom: 90%; 
+
+        mask-image: linear-gradient(
+          to bottom,
+          black 0%,               // Сразу жесткий край (никакого блюра сверху)
+          black var(--_fade-bottom), 
+          transparent 100%        // Мягкий уход остается только снизу
+        );
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          black 0%,
+          black var(--_fade-bottom), 
+          transparent 100%
+        );
+
+        /* 3. ОТСТУП КОНТЕНТА */
+        .l-flow {
+          padding-top: var(--space-md); 
+        }
       }
     }
   }
-
   /* ------------------------------------------------------------
      DIVIDER CARTRIDGE (Optical Twin Sync)
      ------------------------------------------------------------ */
@@ -91,6 +105,7 @@
     position: relative;
     background: transparent;
     border: none;
+    /* Только нижняя линия разделителя */
     box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
     transition: box-shadow var(--d-fast) var(--e-out);
     pointer-events: none;
@@ -115,10 +130,15 @@
     border-radius: var(--radius-inner) var(--radius-inner) 0 0;
     overflow: hidden;
     @include glass-surface(inherit); 
+    
+    /* У ПРЕВЬЮ тоже убираем верхнюю тень из миксина */
+    border-top: none;
     --_bg-op: var(--s-glare-op-hover); 
+    
     box-shadow: 
       inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))),
       inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+    
     transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-fast) var(--e-out);
 
     .l-lab-interface:hover & {
@@ -146,6 +166,13 @@
     --_stroke-op: var(--s-stroke-op-active); 
     --_blur: 45px;                        
     --_glare-op: var(--s-glare-op-hover); 
+
+    /* Поддерживаем 3-стороннюю тень при ховере */
+    box-shadow: 
+      inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active)),
+      inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active)),
+      inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
+
     .lab-preview-display { --_bg-op: var(--s-glass-op-active); }
   }
 
@@ -160,20 +187,17 @@
 }
 
 /* ============================================================
-   9 & 10. ACTIVATION & ADAPTATION (Flush Top & Floating Bottom)
+   9 & 10. ACTIVATION & ADAPTATION
    ============================================================ */
 
-/* Кнопки переключения скрыты на ПК */
 .lab-mobile-switch {
   display: none;
 }
 
-/* --- GLOBAL ACTIVATION (PC & MOBILE) --- */
 body.is-lab-active {
   .l-lab-interface {
     visibility: visible;
     pointer-events: all;
-    /* Центровка по X всегда -50%, выезд по Y в ноль */
     transform: translate3d(-50%, 0, 0); 
 
     .l-lab-interface__column { 
@@ -189,43 +213,39 @@ body.is-lab-active {
   }
 }
 
-/* --- MOBILE ADAPTATION (<= 1100px) --- */
+/* --- MOBILE ADAPTATION --- */
 @media (max-width: 1100px) {
   body .l-lab-interface {
-    top: 0; // Впритык к верхней грани браузера
+    top: 0; 
     left: 50%;
     width: min(var(--stable-content-width), var(--stable-max-content));
-    
-    /* Эстетика парящего окна: зазор снизу 20px */
     height: calc(100dvh - 20px); 
     border-radius: 0 0 var(--radius-master) var(--radius-master);
+    border-top: none;
     
     transform: translate3d(-50%, -100%, 0);
     overflow: hidden; 
     position: fixed;
 
-    /* MATERIAL ACTIVE */
     --_stroke-op: var(--s-stroke-op-active); 
     --_blur: 45px;
     --_bg-op: var(--s-glass-op-active);
 
-    /* РАМКА: Убираем верх, бока и низ — активны */
+    /* ТЕНЬ МОБИЛКИ: Внутренняя (inset) на 3 стороны */
     box-shadow: 
-      calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active)),
-      var(--s-stroke-width) 0 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active)),
-      0 var(--s-stroke-width) 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active));
+      inset var(--s-stroke-width) 0 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active)),
+      inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active)),
+      inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active));
 
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 45dvh 1fr; // Viewport 45%, Panels забирают остаток
+    grid-template-rows: 45dvh 1fr; 
     grid-template-areas: "viewport" "panels";
 
     &__column {
       transform: none; 
       min-height: 0;
       height: 100%;
-      display: flex;
-      flex-direction: column;
 
       &--viewport {
         grid-area: viewport;
@@ -236,10 +256,10 @@ body.is-lab-active {
           height: 100%;
           border: none;
           border-radius: 0;
+          /* Разделитель снизу превью */
           box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active));
         }
 
-        /* КОНТЕЙНЕР ПЕРЕКЛЮЧАТЕЛЕЙ: Только позиция */
         .lab-mobile-switch {
           display: flex;
           position: absolute;
@@ -248,34 +268,38 @@ body.is-lab-active {
           transform: translateX(-50%);
           gap: var(--space-xs);
           z-index: 100;
-          
-          /* СТИЛИ .ui-button ЗДЕСЬ УДАЛЕНЫ. Они теперь в button.scss */
         }
       }
 
-      &--setup, &--engine {
+     &--setup, &--engine {
         grid-area: panels;
-        flex-direction: column;
-        overflow: hidden; 
-
-        .b-lab-column-header { display: none !important; }
-        
-        .b-lab-column-body {
+        .b-lab-column-header { display: none; }
+.b-lab-column-body {
           flex: 1 1 auto;
           width: 100%;
-          padding: var(--space-md) var(--space-md) 140px;
-          
-          /* LENIS СКРОЛЛ (В JS он включен для мобилок) */
+          padding: 0 var(--space-md) 140px; 
           overflow: hidden; 
-          touch-action: none; 
+          touch-action: pan-y; 
 
-          mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
-          -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+          /* Маска без верхнего блюра */
+          mask-image: linear-gradient(
+            to bottom, 
+            black 0%, 
+            black 90%, 
+            transparent 100%
+          );
+          -webkit-mask-image: linear-gradient(
+            to bottom, 
+            black 0%, 
+            black 90%, 
+            transparent 100%
+          );
+
+          .l-flow {
+            padding-top: var(--space-md);
+          }
         }
-      }
-    }
-
-    /* ЛОГИКА ТАБОВ */
+}}
     &[data-mobile-panel="setup"] .l-lab-interface__column--engine { display: none; }
     &[data-mobile-panel="engine"] .l-lab-interface__column--setup { display: none; }
   }

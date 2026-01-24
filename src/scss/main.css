@@ -152,7 +152,7 @@
   --fs-h1: clamp(40px, 8vw, 92px);
   --fs-h2: clamp(28px, 4vw, 54px);
   --fs-h3: clamp(18px, 1.5vw, 22px); /* Тот самый промежуточный шаг */
-  --fs-body: clamp(14px, 1.1vw, 16px);
+  --fs-body: clamp(12px, 1.1vw, 14px);
   --fs-caption: 11px;
   --fs-data: 10px;
   /* --- 3. OPTICAL SPACING --- */
@@ -419,7 +419,7 @@ section {
    2-ELEMENTS / _TEXT.SCSS
    Batura Library | Dynamic Typography v7.5
    ============================================================ */
-.ui-range__header .value, .text-subheading, .text-data, .ui-info-tag, .ui-range__header, .b-catalog-header .index, .b-alphabet-nav__char, .b-static-card__index, .b-accordion .b-static-card__deco, .b-accordion .b-static-card__index, .ui-button, .b-navbar__search input, small, .text-body, p, .text-heading, h2, .text-hero, h1 {
+.ui-range__header .value, .text-subheading, .ui-instruction__title, .text-data, .b-code-box__content, .ui-info-tag, .ui-range__header, .b-catalog-header .index, .b-alphabet-nav__char, .b-static-card__index, .b-accordion .b-static-card__deco, .b-accordion .b-static-card__index, .ui-button, .ui-button.is-full-width, .ui-tabs-group .ui-button, .b-navbar__search input, small, .text-body, .ui-instruction .text-info-hint, p, .text-heading, h2, .text-hero, h1 {
   margin: 0;
   color: rgba(var(--p-white-rgb), var(--_text-op, 1));
   transition: color var(--d-fast) var(--e-out);
@@ -446,7 +446,7 @@ section {
   margin-left: var(--text-offset-heading);
 }
 
-.text-body, p {
+.text-body, .ui-instruction .text-info-hint, p {
   --_text-op: var(--s-text-op-idle);
   font-family: var(--font-main);
   font-size: var(--fs-body);
@@ -457,7 +457,7 @@ section {
 }
 
 /* DATA: Индексы и технические теги */
-.text-data, .ui-info-tag, .ui-range__header, .b-catalog-header .index, .b-alphabet-nav__char, .b-static-card__index, .b-accordion .b-static-card__deco, .b-accordion .b-static-card__index, .ui-button, .b-navbar__search input, small {
+.text-data, .b-code-box__content, .ui-info-tag, .ui-range__header, .b-catalog-header .index, .b-alphabet-nav__char, .b-static-card__index, .b-accordion .b-static-card__deco, .b-accordion .b-static-card__index, .ui-button, .ui-button.is-full-width, .ui-tabs-group .ui-button, .b-navbar__search input, small {
   font-family: var(--font-mono);
   font-size: var(--fs-data); /* Привязка к токену 10px */
   font-weight: 300; /* Оставляем легкое начертание */
@@ -471,7 +471,7 @@ section {
   --_text-op: var(--s-text-op-idle);
 }
 
-.text-subheading {
+.text-subheading, .ui-instruction__title {
   font-family: var(--font-main);
   font-size: var(--fs-h3); /* Используем новый токен */
   font-weight: 200; /* Чуть легче, чем основной заголовок */
@@ -501,10 +501,10 @@ section {
 .l-flow > * + * {
   margin-top: var(--space-md);
 }
-.l-flow > .text-data + .text-hero, .l-flow > .ui-info-tag + .text-hero, .l-flow > .ui-range__header + .text-hero, .b-catalog-header .l-flow > .index + .text-hero, .l-flow > .b-alphabet-nav__char + .text-hero, .l-flow > .b-static-card__index + .text-hero, .b-accordion .l-flow > .b-static-card__deco + .text-hero, .l-flow > .ui-button + .text-hero, .b-navbar__search .l-flow > input + .text-hero, .l-flow > small + .text-hero, .l-flow > .text-data + h1, .l-flow > .ui-info-tag + h1, .l-flow > .ui-range__header + h1, .b-catalog-header .l-flow > .index + h1, .l-flow > .b-alphabet-nav__char + h1, .l-flow > .b-static-card__index + h1, .b-accordion .l-flow > .b-static-card__deco + h1, .l-flow > .ui-button + h1, .b-navbar__search .l-flow > input + h1, .l-flow > small + h1, .l-flow > .text-data + .text-heading, .l-flow > .ui-info-tag + .text-heading, .l-flow > .ui-range__header + .text-heading, .b-catalog-header .l-flow > .index + .text-heading, .l-flow > .b-alphabet-nav__char + .text-heading, .l-flow > .b-static-card__index + .text-heading, .b-accordion .l-flow > .b-static-card__deco + .text-heading, .l-flow > .ui-button + .text-heading, .b-navbar__search .l-flow > input + .text-heading, .l-flow > small + .text-heading, .l-flow > .text-data + h2, .l-flow > .ui-info-tag + h2, .l-flow > .ui-range__header + h2, .b-catalog-header .l-flow > .index + h2, .l-flow > .b-alphabet-nav__char + h2, .l-flow > .b-static-card__index + h2, .b-accordion .l-flow > .b-static-card__deco + h2, .l-flow > .ui-button + h2, .b-navbar__search .l-flow > input + h2, .l-flow > small + h2, .l-flow > .text-hero + .text-body, .l-flow > h1 + .text-body, .l-flow > .text-hero + p, .l-flow > h1 + p, .l-flow > .text-heading + .text-body, .l-flow > h2 + .text-body, .l-flow > .text-heading + p, .l-flow > h2 + p {
+.l-flow > .text-data + .text-hero, .l-flow > .b-code-box__content + .text-hero, .l-flow > .ui-info-tag + .text-hero, .l-flow > .ui-range__header + .text-hero, .b-catalog-header .l-flow > .index + .text-hero, .l-flow > .b-alphabet-nav__char + .text-hero, .l-flow > .b-static-card__index + .text-hero, .b-accordion .l-flow > .b-static-card__deco + .text-hero, .l-flow > .ui-button + .text-hero, .b-navbar__search .l-flow > input + .text-hero, .l-flow > small + .text-hero, .l-flow > .text-data + h1, .l-flow > .b-code-box__content + h1, .l-flow > .ui-info-tag + h1, .l-flow > .ui-range__header + h1, .b-catalog-header .l-flow > .index + h1, .l-flow > .b-alphabet-nav__char + h1, .l-flow > .b-static-card__index + h1, .b-accordion .l-flow > .b-static-card__deco + h1, .l-flow > .ui-button + h1, .b-navbar__search .l-flow > input + h1, .l-flow > small + h1, .l-flow > .text-data + .text-heading, .l-flow > .b-code-box__content + .text-heading, .l-flow > .ui-info-tag + .text-heading, .l-flow > .ui-range__header + .text-heading, .b-catalog-header .l-flow > .index + .text-heading, .l-flow > .b-alphabet-nav__char + .text-heading, .l-flow > .b-static-card__index + .text-heading, .b-accordion .l-flow > .b-static-card__deco + .text-heading, .l-flow > .ui-button + .text-heading, .b-navbar__search .l-flow > input + .text-heading, .l-flow > small + .text-heading, .l-flow > .text-data + h2, .l-flow > .b-code-box__content + h2, .l-flow > .ui-info-tag + h2, .l-flow > .ui-range__header + h2, .b-catalog-header .l-flow > .index + h2, .l-flow > .b-alphabet-nav__char + h2, .l-flow > .b-static-card__index + h2, .b-accordion .l-flow > .b-static-card__deco + h2, .l-flow > .ui-button + h2, .b-navbar__search .l-flow > input + h2, .l-flow > small + h2, .l-flow > .text-hero + .text-body, .ui-instruction .l-flow > .text-hero + .text-info-hint, .l-flow > h1 + .text-body, .ui-instruction .l-flow > h1 + .text-info-hint, .l-flow > .text-hero + p, .l-flow > h1 + p, .l-flow > .text-heading + .text-body, .ui-instruction .l-flow > .text-heading + .text-info-hint, .l-flow > h2 + .text-body, .ui-instruction .l-flow > h2 + .text-info-hint, .l-flow > .text-heading + p, .l-flow > h2 + p {
   margin-top: var(--space-xs);
 }
-.l-flow > .text-body + .l-flex-group, .l-flow > p + .l-flex-group {
+.l-flow > .text-body + .l-flex-group, .ui-instruction .l-flow > .text-info-hint + .l-flex-group, .l-flow > p + .l-flex-group {
   margin-top: var(--space-lg);
 }
 
@@ -859,7 +859,7 @@ body.is-lab-active .b-navbar__search .close-icon {
    5-COMPONENTS / _BUTTON.SCSS (Fixed Centering & Jitter)
    Batura Library | Unified Button v24.4 [Clean Center]
    ============================================================ */
-.ui-button {
+.ui-button, .ui-button.is-full-width, .ui-tabs-group .ui-button {
   text-decoration: none;
   color: inherit;
   -webkit-user-select: none;
@@ -915,7 +915,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   /* 3. КНОПКА ЗАКРЫТИЯ */
   /* Вне контекста */
 }
-.ui-button::before {
+.ui-button::before, .ui-button.is-full-width::before, .ui-tabs-group .ui-button::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -926,7 +926,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   opacity: var(--_glare-op, 0);
   transition: opacity var(--d-fast) var(--e-out);
 }
-.ui-button span {
+.ui-button span, .ui-button.is-full-width span, .ui-tabs-group .ui-button span {
   display: block;
   line-height: 1;
   pointer-events: none;
@@ -937,7 +937,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   --_stroke-op: var(--s-stroke-op-hover);
   --_text-op: var(--s-text-op-hover);
 }
-.ui-button.ui-button:hover {
+.ui-button.ui-button:hover, .ui-tabs-group .ui-button:hover {
   transition-delay: 0s;
   --_bg-op: var(--s-glass-op-active);
   --_stroke-op: var(--s-stroke-op-active);
@@ -1102,7 +1102,7 @@ body.is-lab-active .b-navbar__search .close-icon {
 .b-accordion .b-static-card.is-active .b-static-card__body h3, .b-accordion .b-static-card.is-active .b-static-card__body p {
   margin: 0;
 }
-.b-accordion .b-static-card.is-active .b-static-card__body .text-data, .b-accordion .b-static-card.is-active .b-static-card__body .ui-info-tag, .b-accordion .b-static-card.is-active .b-static-card__body .ui-range__header, .b-accordion .b-static-card.is-active .b-static-card__body .b-catalog-header .index, .b-catalog-header .b-accordion .b-static-card.is-active .b-static-card__body .index, .b-accordion .b-static-card.is-active .b-static-card__body .b-alphabet-nav__char, .b-accordion .b-static-card.is-active .b-static-card__body .b-static-card__index, .b-accordion .b-static-card.is-active .b-static-card__body small, .b-accordion .b-static-card.is-active .b-static-card__body .b-navbar__search input, .b-navbar__search .b-accordion .b-static-card.is-active .b-static-card__body input, .b-accordion .b-static-card.is-active .b-static-card__body .ui-button, .b-accordion .b-static-card.is-active .b-static-card__body .b-static-card__deco {
+.b-accordion .b-static-card.is-active .b-static-card__body .text-data, .b-accordion .b-static-card.is-active .b-static-card__body .b-code-box__content, .b-accordion .b-static-card.is-active .b-static-card__body .ui-info-tag, .b-accordion .b-static-card.is-active .b-static-card__body .ui-range__header, .b-accordion .b-static-card.is-active .b-static-card__body .b-catalog-header .index, .b-catalog-header .b-accordion .b-static-card.is-active .b-static-card__body .index, .b-accordion .b-static-card.is-active .b-static-card__body .b-alphabet-nav__char, .b-accordion .b-static-card.is-active .b-static-card__body .b-static-card__index, .b-accordion .b-static-card.is-active .b-static-card__body small, .b-accordion .b-static-card.is-active .b-static-card__body .b-navbar__search input, .b-navbar__search .b-accordion .b-static-card.is-active .b-static-card__body input, .b-accordion .b-static-card.is-active .b-static-card__body .ui-button, .b-accordion .b-static-card.is-active .b-static-card__body .b-static-card__deco {
   display: block;
   margin-bottom: var(--space-xs);
   opacity: var(--s-text-op-hover);
@@ -1110,7 +1110,7 @@ body.is-lab-active .b-navbar__search .close-icon {
 .b-accordion .b-static-card.is-active .b-static-card__body .text-heading, .b-accordion .b-static-card.is-active .b-static-card__body h2 {
   margin-left: var(--text-offset-heading);
 }
-.b-accordion .b-static-card.is-active .b-static-card__body .text-heading + .text-body, .b-accordion .b-static-card.is-active .b-static-card__body h2 + .text-body, .b-accordion .b-static-card.is-active .b-static-card__body .text-heading + p, .b-accordion .b-static-card.is-active .b-static-card__body h2 + p {
+.b-accordion .b-static-card.is-active .b-static-card__body .text-heading + .text-body, .b-accordion .b-static-card.is-active .b-static-card__body .ui-instruction .text-heading + .text-info-hint, .ui-instruction .b-accordion .b-static-card.is-active .b-static-card__body .text-heading + .text-info-hint, .b-accordion .b-static-card.is-active .b-static-card__body h2 + .text-body, .b-accordion .b-static-card.is-active .b-static-card__body .ui-instruction h2 + .text-info-hint, .ui-instruction .b-accordion .b-static-card.is-active .b-static-card__body h2 + .text-info-hint, .b-accordion .b-static-card.is-active .b-static-card__body .text-heading + p, .b-accordion .b-static-card.is-active .b-static-card__body h2 + p {
   margin-top: var(--space-xs);
 }
 .b-accordion .b-static-card.is-active .b-static-card__actions {
@@ -1218,10 +1218,10 @@ body.is-lab-active .b-navbar__search .close-icon {
 .b-footer__brand > * + * {
   margin-top: var(--space-md);
 }
-.b-footer__brand > .text-data + .text-hero, .b-footer__brand > .ui-info-tag + .text-hero, .b-footer__brand > .ui-range__header + .text-hero, .b-catalog-header .b-footer__brand > .index + .text-hero, .b-footer__brand > .b-alphabet-nav__char + .text-hero, .b-footer__brand > .b-static-card__index + .text-hero, .b-footer__brand > small + .text-hero, .b-navbar__search .b-footer__brand > input + .text-hero, .b-footer__brand > .ui-button + .text-hero, .b-accordion .b-footer__brand > .b-static-card__deco + .text-hero, .b-footer__brand > .text-data + h1, .b-footer__brand > .ui-info-tag + h1, .b-footer__brand > .ui-range__header + h1, .b-catalog-header .b-footer__brand > .index + h1, .b-footer__brand > .b-alphabet-nav__char + h1, .b-footer__brand > .b-static-card__index + h1, .b-footer__brand > small + h1, .b-navbar__search .b-footer__brand > input + h1, .b-footer__brand > .ui-button + h1, .b-accordion .b-footer__brand > .b-static-card__deco + h1, .b-footer__brand > .text-data + .text-heading, .b-footer__brand > .ui-info-tag + .text-heading, .b-footer__brand > .ui-range__header + .text-heading, .b-catalog-header .b-footer__brand > .index + .text-heading, .b-footer__brand > .b-alphabet-nav__char + .text-heading, .b-footer__brand > .b-static-card__index + .text-heading, .b-footer__brand > small + .text-heading, .b-navbar__search .b-footer__brand > input + .text-heading, .b-footer__brand > .ui-button + .text-heading, .b-accordion .b-footer__brand > .b-static-card__deco + .text-heading, .b-footer__brand > .text-data + h2, .b-footer__brand > .ui-info-tag + h2, .b-footer__brand > .ui-range__header + h2, .b-catalog-header .b-footer__brand > .index + h2, .b-footer__brand > .b-alphabet-nav__char + h2, .b-footer__brand > .b-static-card__index + h2, .b-footer__brand > small + h2, .b-navbar__search .b-footer__brand > input + h2, .b-footer__brand > .ui-button + h2, .b-accordion .b-footer__brand > .b-static-card__deco + h2, .b-footer__brand > .text-hero + .text-body, .b-footer__brand > h1 + .text-body, .b-footer__brand > .text-hero + p, .b-footer__brand > h1 + p, .b-footer__brand > .text-heading + .text-body, .b-footer__brand > h2 + .text-body, .b-footer__brand > .text-heading + p, .b-footer__brand > h2 + p {
+.b-footer__brand > .text-data + .text-hero, .b-footer__brand > .b-code-box__content + .text-hero, .b-footer__brand > .ui-info-tag + .text-hero, .b-footer__brand > .ui-range__header + .text-hero, .b-catalog-header .b-footer__brand > .index + .text-hero, .b-footer__brand > .b-alphabet-nav__char + .text-hero, .b-footer__brand > .b-static-card__index + .text-hero, .b-footer__brand > small + .text-hero, .b-navbar__search .b-footer__brand > input + .text-hero, .b-footer__brand > .ui-button + .text-hero, .b-accordion .b-footer__brand > .b-static-card__deco + .text-hero, .b-footer__brand > .text-data + h1, .b-footer__brand > .b-code-box__content + h1, .b-footer__brand > .ui-info-tag + h1, .b-footer__brand > .ui-range__header + h1, .b-catalog-header .b-footer__brand > .index + h1, .b-footer__brand > .b-alphabet-nav__char + h1, .b-footer__brand > .b-static-card__index + h1, .b-footer__brand > small + h1, .b-navbar__search .b-footer__brand > input + h1, .b-footer__brand > .ui-button + h1, .b-accordion .b-footer__brand > .b-static-card__deco + h1, .b-footer__brand > .text-data + .text-heading, .b-footer__brand > .b-code-box__content + .text-heading, .b-footer__brand > .ui-info-tag + .text-heading, .b-footer__brand > .ui-range__header + .text-heading, .b-catalog-header .b-footer__brand > .index + .text-heading, .b-footer__brand > .b-alphabet-nav__char + .text-heading, .b-footer__brand > .b-static-card__index + .text-heading, .b-footer__brand > small + .text-heading, .b-navbar__search .b-footer__brand > input + .text-heading, .b-footer__brand > .ui-button + .text-heading, .b-accordion .b-footer__brand > .b-static-card__deco + .text-heading, .b-footer__brand > .text-data + h2, .b-footer__brand > .b-code-box__content + h2, .b-footer__brand > .ui-info-tag + h2, .b-footer__brand > .ui-range__header + h2, .b-catalog-header .b-footer__brand > .index + h2, .b-footer__brand > .b-alphabet-nav__char + h2, .b-footer__brand > .b-static-card__index + h2, .b-footer__brand > small + h2, .b-navbar__search .b-footer__brand > input + h2, .b-footer__brand > .ui-button + h2, .b-accordion .b-footer__brand > .b-static-card__deco + h2, .b-footer__brand > .text-hero + .text-body, .ui-instruction .b-footer__brand > .text-hero + .text-info-hint, .b-footer__brand > h1 + .text-body, .ui-instruction .b-footer__brand > h1 + .text-info-hint, .b-footer__brand > .text-hero + p, .b-footer__brand > h1 + p, .b-footer__brand > .text-heading + .text-body, .ui-instruction .b-footer__brand > .text-heading + .text-info-hint, .b-footer__brand > h2 + .text-body, .ui-instruction .b-footer__brand > h2 + .text-info-hint, .b-footer__brand > .text-heading + p, .b-footer__brand > h2 + p {
   margin-top: var(--space-xs);
 }
-.b-footer__brand > .text-body + .l-flex-group, .b-footer__brand > p + .l-flex-group {
+.b-footer__brand > .text-body + .l-flex-group, .ui-instruction .b-footer__brand > .text-info-hint + .l-flex-group, .b-footer__brand > p + .l-flex-group {
   margin-top: var(--space-lg);
 }
 .b-footer__logo {
@@ -1251,10 +1251,10 @@ body.is-lab-active .b-navbar__search .close-icon {
 .b-footer__group > * + * {
   margin-top: var(--space-md);
 }
-.b-footer__group > .text-data + .text-hero, .b-footer__group > .ui-info-tag + .text-hero, .b-footer__group > .ui-range__header + .text-hero, .b-catalog-header .b-footer__group > .index + .text-hero, .b-footer__group > .b-alphabet-nav__char + .text-hero, .b-footer__group > .b-static-card__index + .text-hero, .b-footer__group > small + .text-hero, .b-navbar__search .b-footer__group > input + .text-hero, .b-footer__group > .ui-button + .text-hero, .b-accordion .b-footer__group > .b-static-card__deco + .text-hero, .b-footer__group > .text-data + h1, .b-footer__group > .ui-info-tag + h1, .b-footer__group > .ui-range__header + h1, .b-catalog-header .b-footer__group > .index + h1, .b-footer__group > .b-alphabet-nav__char + h1, .b-footer__group > .b-static-card__index + h1, .b-footer__group > small + h1, .b-navbar__search .b-footer__group > input + h1, .b-footer__group > .ui-button + h1, .b-accordion .b-footer__group > .b-static-card__deco + h1, .b-footer__group > .text-data + .text-heading, .b-footer__group > .ui-info-tag + .text-heading, .b-footer__group > .ui-range__header + .text-heading, .b-catalog-header .b-footer__group > .index + .text-heading, .b-footer__group > .b-alphabet-nav__char + .text-heading, .b-footer__group > .b-static-card__index + .text-heading, .b-footer__group > small + .text-heading, .b-navbar__search .b-footer__group > input + .text-heading, .b-footer__group > .ui-button + .text-heading, .b-accordion .b-footer__group > .b-static-card__deco + .text-heading, .b-footer__group > .text-data + h2, .b-footer__group > .ui-info-tag + h2, .b-footer__group > .ui-range__header + h2, .b-catalog-header .b-footer__group > .index + h2, .b-footer__group > .b-alphabet-nav__char + h2, .b-footer__group > .b-static-card__index + h2, .b-footer__group > small + h2, .b-navbar__search .b-footer__group > input + h2, .b-footer__group > .ui-button + h2, .b-accordion .b-footer__group > .b-static-card__deco + h2, .b-footer__group > .text-hero + .text-body, .b-footer__group > h1 + .text-body, .b-footer__group > .text-hero + p, .b-footer__group > h1 + p, .b-footer__group > .text-heading + .text-body, .b-footer__group > h2 + .text-body, .b-footer__group > .text-heading + p, .b-footer__group > h2 + p {
+.b-footer__group > .text-data + .text-hero, .b-footer__group > .b-code-box__content + .text-hero, .b-footer__group > .ui-info-tag + .text-hero, .b-footer__group > .ui-range__header + .text-hero, .b-catalog-header .b-footer__group > .index + .text-hero, .b-footer__group > .b-alphabet-nav__char + .text-hero, .b-footer__group > .b-static-card__index + .text-hero, .b-footer__group > small + .text-hero, .b-navbar__search .b-footer__group > input + .text-hero, .b-footer__group > .ui-button + .text-hero, .b-accordion .b-footer__group > .b-static-card__deco + .text-hero, .b-footer__group > .text-data + h1, .b-footer__group > .b-code-box__content + h1, .b-footer__group > .ui-info-tag + h1, .b-footer__group > .ui-range__header + h1, .b-catalog-header .b-footer__group > .index + h1, .b-footer__group > .b-alphabet-nav__char + h1, .b-footer__group > .b-static-card__index + h1, .b-footer__group > small + h1, .b-navbar__search .b-footer__group > input + h1, .b-footer__group > .ui-button + h1, .b-accordion .b-footer__group > .b-static-card__deco + h1, .b-footer__group > .text-data + .text-heading, .b-footer__group > .b-code-box__content + .text-heading, .b-footer__group > .ui-info-tag + .text-heading, .b-footer__group > .ui-range__header + .text-heading, .b-catalog-header .b-footer__group > .index + .text-heading, .b-footer__group > .b-alphabet-nav__char + .text-heading, .b-footer__group > .b-static-card__index + .text-heading, .b-footer__group > small + .text-heading, .b-navbar__search .b-footer__group > input + .text-heading, .b-footer__group > .ui-button + .text-heading, .b-accordion .b-footer__group > .b-static-card__deco + .text-heading, .b-footer__group > .text-data + h2, .b-footer__group > .b-code-box__content + h2, .b-footer__group > .ui-info-tag + h2, .b-footer__group > .ui-range__header + h2, .b-catalog-header .b-footer__group > .index + h2, .b-footer__group > .b-alphabet-nav__char + h2, .b-footer__group > .b-static-card__index + h2, .b-footer__group > small + h2, .b-navbar__search .b-footer__group > input + h2, .b-footer__group > .ui-button + h2, .b-accordion .b-footer__group > .b-static-card__deco + h2, .b-footer__group > .text-hero + .text-body, .ui-instruction .b-footer__group > .text-hero + .text-info-hint, .b-footer__group > h1 + .text-body, .ui-instruction .b-footer__group > h1 + .text-info-hint, .b-footer__group > .text-hero + p, .b-footer__group > h1 + p, .b-footer__group > .text-heading + .text-body, .ui-instruction .b-footer__group > .text-heading + .text-info-hint, .b-footer__group > h2 + .text-body, .ui-instruction .b-footer__group > h2 + .text-info-hint, .b-footer__group > .text-heading + p, .b-footer__group > h2 + p {
   margin-top: var(--space-xs);
 }
-.b-footer__group > .text-body + .l-flex-group, .b-footer__group > p + .l-flex-group {
+.b-footer__group > .text-body + .l-flex-group, .ui-instruction .b-footer__group > .text-info-hint + .l-flex-group, .b-footer__group > p + .l-flex-group {
   margin-top: var(--space-lg);
 }
 .b-footer__group .l-flow {
@@ -1265,10 +1265,10 @@ body.is-lab-active .b-navbar__search .close-icon {
 .b-footer__group .l-flow > * + * {
   margin-top: var(--space-xs);
 }
-.b-footer__group .l-flow > .text-data + .text-hero, .b-footer__group .l-flow > .ui-info-tag + .text-hero, .b-footer__group .l-flow > .ui-range__header + .text-hero, .b-footer__group .b-catalog-header .l-flow > .index + .text-hero, .b-catalog-header .b-footer__group .l-flow > .index + .text-hero, .b-footer__group .l-flow > .b-alphabet-nav__char + .text-hero, .b-footer__group .l-flow > .b-static-card__index + .text-hero, .b-footer__group .l-flow > small + .text-hero, .b-footer__group .b-navbar__search .l-flow > input + .text-hero, .b-navbar__search .b-footer__group .l-flow > input + .text-hero, .b-footer__group .l-flow > .ui-button + .text-hero, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + .text-hero, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + .text-hero, .b-footer__group .l-flow > .text-data + h1, .b-footer__group .l-flow > .ui-info-tag + h1, .b-footer__group .l-flow > .ui-range__header + h1, .b-footer__group .b-catalog-header .l-flow > .index + h1, .b-catalog-header .b-footer__group .l-flow > .index + h1, .b-footer__group .l-flow > .b-alphabet-nav__char + h1, .b-footer__group .l-flow > .b-static-card__index + h1, .b-footer__group .l-flow > small + h1, .b-footer__group .b-navbar__search .l-flow > input + h1, .b-navbar__search .b-footer__group .l-flow > input + h1, .b-footer__group .l-flow > .ui-button + h1, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + h1, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + h1, .b-footer__group .l-flow > .text-data + .text-heading, .b-footer__group .l-flow > .ui-info-tag + .text-heading, .b-footer__group .l-flow > .ui-range__header + .text-heading, .b-footer__group .b-catalog-header .l-flow > .index + .text-heading, .b-catalog-header .b-footer__group .l-flow > .index + .text-heading, .b-footer__group .l-flow > .b-alphabet-nav__char + .text-heading, .b-footer__group .l-flow > .b-static-card__index + .text-heading, .b-footer__group .l-flow > small + .text-heading, .b-footer__group .b-navbar__search .l-flow > input + .text-heading, .b-navbar__search .b-footer__group .l-flow > input + .text-heading, .b-footer__group .l-flow > .ui-button + .text-heading, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + .text-heading, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + .text-heading, .b-footer__group .l-flow > .text-data + h2, .b-footer__group .l-flow > .ui-info-tag + h2, .b-footer__group .l-flow > .ui-range__header + h2, .b-footer__group .b-catalog-header .l-flow > .index + h2, .b-catalog-header .b-footer__group .l-flow > .index + h2, .b-footer__group .l-flow > .b-alphabet-nav__char + h2, .b-footer__group .l-flow > .b-static-card__index + h2, .b-footer__group .l-flow > small + h2, .b-footer__group .b-navbar__search .l-flow > input + h2, .b-navbar__search .b-footer__group .l-flow > input + h2, .b-footer__group .l-flow > .ui-button + h2, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + h2, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + h2, .b-footer__group .l-flow > .text-hero + .text-body, .b-footer__group .l-flow > h1 + .text-body, .b-footer__group .l-flow > .text-hero + p, .b-footer__group .l-flow > h1 + p, .b-footer__group .l-flow > .text-heading + .text-body, .b-footer__group .l-flow > h2 + .text-body, .b-footer__group .l-flow > .text-heading + p, .b-footer__group .l-flow > h2 + p {
+.b-footer__group .l-flow > .text-data + .text-hero, .b-footer__group .l-flow > .b-code-box__content + .text-hero, .b-footer__group .l-flow > .ui-info-tag + .text-hero, .b-footer__group .l-flow > .ui-range__header + .text-hero, .b-footer__group .b-catalog-header .l-flow > .index + .text-hero, .b-catalog-header .b-footer__group .l-flow > .index + .text-hero, .b-footer__group .l-flow > .b-alphabet-nav__char + .text-hero, .b-footer__group .l-flow > .b-static-card__index + .text-hero, .b-footer__group .l-flow > small + .text-hero, .b-footer__group .b-navbar__search .l-flow > input + .text-hero, .b-navbar__search .b-footer__group .l-flow > input + .text-hero, .b-footer__group .l-flow > .ui-button + .text-hero, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + .text-hero, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + .text-hero, .b-footer__group .l-flow > .text-data + h1, .b-footer__group .l-flow > .b-code-box__content + h1, .b-footer__group .l-flow > .ui-info-tag + h1, .b-footer__group .l-flow > .ui-range__header + h1, .b-footer__group .b-catalog-header .l-flow > .index + h1, .b-catalog-header .b-footer__group .l-flow > .index + h1, .b-footer__group .l-flow > .b-alphabet-nav__char + h1, .b-footer__group .l-flow > .b-static-card__index + h1, .b-footer__group .l-flow > small + h1, .b-footer__group .b-navbar__search .l-flow > input + h1, .b-navbar__search .b-footer__group .l-flow > input + h1, .b-footer__group .l-flow > .ui-button + h1, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + h1, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + h1, .b-footer__group .l-flow > .text-data + .text-heading, .b-footer__group .l-flow > .b-code-box__content + .text-heading, .b-footer__group .l-flow > .ui-info-tag + .text-heading, .b-footer__group .l-flow > .ui-range__header + .text-heading, .b-footer__group .b-catalog-header .l-flow > .index + .text-heading, .b-catalog-header .b-footer__group .l-flow > .index + .text-heading, .b-footer__group .l-flow > .b-alphabet-nav__char + .text-heading, .b-footer__group .l-flow > .b-static-card__index + .text-heading, .b-footer__group .l-flow > small + .text-heading, .b-footer__group .b-navbar__search .l-flow > input + .text-heading, .b-navbar__search .b-footer__group .l-flow > input + .text-heading, .b-footer__group .l-flow > .ui-button + .text-heading, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + .text-heading, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + .text-heading, .b-footer__group .l-flow > .text-data + h2, .b-footer__group .l-flow > .b-code-box__content + h2, .b-footer__group .l-flow > .ui-info-tag + h2, .b-footer__group .l-flow > .ui-range__header + h2, .b-footer__group .b-catalog-header .l-flow > .index + h2, .b-catalog-header .b-footer__group .l-flow > .index + h2, .b-footer__group .l-flow > .b-alphabet-nav__char + h2, .b-footer__group .l-flow > .b-static-card__index + h2, .b-footer__group .l-flow > small + h2, .b-footer__group .b-navbar__search .l-flow > input + h2, .b-navbar__search .b-footer__group .l-flow > input + h2, .b-footer__group .l-flow > .ui-button + h2, .b-footer__group .b-accordion .l-flow > .b-static-card__deco + h2, .b-accordion .b-footer__group .l-flow > .b-static-card__deco + h2, .b-footer__group .l-flow > .text-hero + .text-body, .b-footer__group .ui-instruction .l-flow > .text-hero + .text-info-hint, .ui-instruction .b-footer__group .l-flow > .text-hero + .text-info-hint, .b-footer__group .l-flow > h1 + .text-body, .b-footer__group .ui-instruction .l-flow > h1 + .text-info-hint, .ui-instruction .b-footer__group .l-flow > h1 + .text-info-hint, .b-footer__group .l-flow > .text-hero + p, .b-footer__group .l-flow > h1 + p, .b-footer__group .l-flow > .text-heading + .text-body, .b-footer__group .ui-instruction .l-flow > .text-heading + .text-info-hint, .ui-instruction .b-footer__group .l-flow > .text-heading + .text-info-hint, .b-footer__group .l-flow > h2 + .text-body, .b-footer__group .ui-instruction .l-flow > h2 + .text-info-hint, .ui-instruction .b-footer__group .l-flow > h2 + .text-info-hint, .b-footer__group .l-flow > .text-heading + p, .b-footer__group .l-flow > h2 + p {
   margin-top: var(--space-xs);
 }
-.b-footer__group .l-flow > .text-body + .l-flex-group, .b-footer__group .l-flow > p + .l-flex-group {
+.b-footer__group .l-flow > .text-body + .l-flex-group, .b-footer__group .ui-instruction .l-flow > .text-info-hint + .l-flex-group, .ui-instruction .b-footer__group .l-flow > .text-info-hint + .l-flex-group, .b-footer__group .l-flow > p + .l-flex-group {
   margin-top: var(--space-lg);
 }
 .b-footer__link {
@@ -1294,7 +1294,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   justify-content: space-between;
   align-items: center;
 }
-.b-footer__bottom .text-data, .b-footer__bottom .ui-info-tag, .b-footer__bottom .ui-range__header, .b-footer__bottom .b-catalog-header .index, .b-catalog-header .b-footer__bottom .index, .b-footer__bottom .b-alphabet-nav__char, .b-footer__bottom .b-static-card__index, .b-footer__bottom small, .b-footer__bottom .b-navbar__search input, .b-navbar__search .b-footer__bottom input, .b-footer__bottom .ui-button, .b-footer__bottom .b-accordion .b-static-card__deco, .b-accordion .b-footer__bottom .b-static-card__deco {
+.b-footer__bottom .text-data, .b-footer__bottom .b-code-box__content, .b-footer__bottom .ui-info-tag, .b-footer__bottom .ui-range__header, .b-footer__bottom .b-catalog-header .index, .b-catalog-header .b-footer__bottom .index, .b-footer__bottom .b-alphabet-nav__char, .b-footer__bottom .b-static-card__index, .b-footer__bottom small, .b-footer__bottom .b-navbar__search input, .b-navbar__search .b-footer__bottom input, .b-footer__bottom .ui-button, .b-footer__bottom .b-accordion .b-static-card__deco, .b-accordion .b-footer__bottom .b-static-card__deco {
   font-size: 10px;
   opacity: calc(var(--s-text-op-idle) * 0.6);
   letter-spacing: var(--ls-caption);
@@ -1400,10 +1400,10 @@ body.is-lab-active .b-navbar__search .close-icon {
 .b-static-card__viewport > * + * {
   margin-top: var(--space-md);
 }
-.b-static-card__viewport > .text-data + .text-hero, .b-static-card__viewport > .ui-info-tag + .text-hero, .b-static-card__viewport > .ui-range__header + .text-hero, .b-catalog-header .b-static-card__viewport > .index + .text-hero, .b-static-card__viewport > .b-alphabet-nav__char + .text-hero, .b-static-card__viewport > .b-static-card__index + .text-hero, .b-static-card__viewport > small + .text-hero, .b-navbar__search .b-static-card__viewport > input + .text-hero, .b-static-card__viewport > .ui-button + .text-hero, .b-accordion .b-static-card__viewport > .b-static-card__deco + .text-hero, .b-static-card__viewport > .text-data + h1, .b-static-card__viewport > .ui-info-tag + h1, .b-static-card__viewport > .ui-range__header + h1, .b-catalog-header .b-static-card__viewport > .index + h1, .b-static-card__viewport > .b-alphabet-nav__char + h1, .b-static-card__viewport > .b-static-card__index + h1, .b-static-card__viewport > small + h1, .b-navbar__search .b-static-card__viewport > input + h1, .b-static-card__viewport > .ui-button + h1, .b-accordion .b-static-card__viewport > .b-static-card__deco + h1, .b-static-card__viewport > .text-data + .text-heading, .b-static-card__viewport > .ui-info-tag + .text-heading, .b-static-card__viewport > .ui-range__header + .text-heading, .b-catalog-header .b-static-card__viewport > .index + .text-heading, .b-static-card__viewport > .b-alphabet-nav__char + .text-heading, .b-static-card__viewport > .b-static-card__index + .text-heading, .b-static-card__viewport > small + .text-heading, .b-navbar__search .b-static-card__viewport > input + .text-heading, .b-static-card__viewport > .ui-button + .text-heading, .b-accordion .b-static-card__viewport > .b-static-card__deco + .text-heading, .b-static-card__viewport > .text-data + h2, .b-static-card__viewport > .ui-info-tag + h2, .b-static-card__viewport > .ui-range__header + h2, .b-catalog-header .b-static-card__viewport > .index + h2, .b-static-card__viewport > .b-alphabet-nav__char + h2, .b-static-card__viewport > .b-static-card__index + h2, .b-static-card__viewport > small + h2, .b-navbar__search .b-static-card__viewport > input + h2, .b-static-card__viewport > .ui-button + h2, .b-accordion .b-static-card__viewport > .b-static-card__deco + h2, .b-static-card__viewport > .text-hero + .text-body, .b-static-card__viewport > h1 + .text-body, .b-static-card__viewport > .text-hero + p, .b-static-card__viewport > h1 + p, .b-static-card__viewport > .text-heading + .text-body, .b-static-card__viewport > h2 + .text-body, .b-static-card__viewport > .text-heading + p, .b-static-card__viewport > h2 + p {
+.b-static-card__viewport > .text-data + .text-hero, .b-static-card__viewport > .b-code-box__content + .text-hero, .b-static-card__viewport > .ui-info-tag + .text-hero, .b-static-card__viewport > .ui-range__header + .text-hero, .b-catalog-header .b-static-card__viewport > .index + .text-hero, .b-static-card__viewport > .b-alphabet-nav__char + .text-hero, .b-static-card__viewport > .b-static-card__index + .text-hero, .b-static-card__viewport > small + .text-hero, .b-navbar__search .b-static-card__viewport > input + .text-hero, .b-static-card__viewport > .ui-button + .text-hero, .b-accordion .b-static-card__viewport > .b-static-card__deco + .text-hero, .b-static-card__viewport > .text-data + h1, .b-static-card__viewport > .b-code-box__content + h1, .b-static-card__viewport > .ui-info-tag + h1, .b-static-card__viewport > .ui-range__header + h1, .b-catalog-header .b-static-card__viewport > .index + h1, .b-static-card__viewport > .b-alphabet-nav__char + h1, .b-static-card__viewport > .b-static-card__index + h1, .b-static-card__viewport > small + h1, .b-navbar__search .b-static-card__viewport > input + h1, .b-static-card__viewport > .ui-button + h1, .b-accordion .b-static-card__viewport > .b-static-card__deco + h1, .b-static-card__viewport > .text-data + .text-heading, .b-static-card__viewport > .b-code-box__content + .text-heading, .b-static-card__viewport > .ui-info-tag + .text-heading, .b-static-card__viewport > .ui-range__header + .text-heading, .b-catalog-header .b-static-card__viewport > .index + .text-heading, .b-static-card__viewport > .b-alphabet-nav__char + .text-heading, .b-static-card__viewport > .b-static-card__index + .text-heading, .b-static-card__viewport > small + .text-heading, .b-navbar__search .b-static-card__viewport > input + .text-heading, .b-static-card__viewport > .ui-button + .text-heading, .b-accordion .b-static-card__viewport > .b-static-card__deco + .text-heading, .b-static-card__viewport > .text-data + h2, .b-static-card__viewport > .b-code-box__content + h2, .b-static-card__viewport > .ui-info-tag + h2, .b-static-card__viewport > .ui-range__header + h2, .b-catalog-header .b-static-card__viewport > .index + h2, .b-static-card__viewport > .b-alphabet-nav__char + h2, .b-static-card__viewport > .b-static-card__index + h2, .b-static-card__viewport > small + h2, .b-navbar__search .b-static-card__viewport > input + h2, .b-static-card__viewport > .ui-button + h2, .b-accordion .b-static-card__viewport > .b-static-card__deco + h2, .b-static-card__viewport > .text-hero + .text-body, .ui-instruction .b-static-card__viewport > .text-hero + .text-info-hint, .b-static-card__viewport > h1 + .text-body, .ui-instruction .b-static-card__viewport > h1 + .text-info-hint, .b-static-card__viewport > .text-hero + p, .b-static-card__viewport > h1 + p, .b-static-card__viewport > .text-heading + .text-body, .ui-instruction .b-static-card__viewport > .text-heading + .text-info-hint, .b-static-card__viewport > h2 + .text-body, .ui-instruction .b-static-card__viewport > h2 + .text-info-hint, .b-static-card__viewport > .text-heading + p, .b-static-card__viewport > h2 + p {
   margin-top: var(--space-xs);
 }
-.b-static-card__viewport > .text-body + .l-flex-group, .b-static-card__viewport > p + .l-flex-group {
+.b-static-card__viewport > .text-body + .l-flex-group, .ui-instruction .b-static-card__viewport > .text-info-hint + .l-flex-group, .b-static-card__viewport > p + .l-flex-group {
   margin-top: var(--space-lg);
 }
 .b-static-card__top {
@@ -1421,10 +1421,10 @@ body.is-lab-active .b-navbar__search .close-icon {
   flex-direction: column;
   align-items: flex-start;
 }
-.b-static-card__body > .text-heading + .text-body, .b-static-card__body > h2 + .text-body, .b-static-card__body > .text-heading + p, .b-static-card__body > h2 + p {
+.b-static-card__body > .text-heading + .text-body, .ui-instruction .b-static-card__body > .text-heading + .text-info-hint, .b-static-card__body > h2 + .text-body, .ui-instruction .b-static-card__body > h2 + .text-info-hint, .b-static-card__body > .text-heading + p, .b-static-card__body > h2 + p {
   margin-top: var(--space-xs);
 }
-.b-static-card__body > .text-body + .b-static-card__tags, .b-static-card__body > p + .b-static-card__tags {
+.b-static-card__body > .text-body + .b-static-card__tags, .ui-instruction .b-static-card__body > .text-info-hint + .b-static-card__tags, .b-static-card__body > p + .b-static-card__tags {
   margin-top: var(--space-xs);
 }
 .b-static-card__actions {
@@ -1441,7 +1441,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   flex-wrap: wrap;
   gap: var(--space-sm);
 }
-.b-static-card .b-preview-box {
+.b-static-card .b-preview-box, .b-static-card .b-code-box {
   --local-preview-radius: var(--_preview-radius);
   width: 100%;
   aspect-ratio: 16/9;
@@ -1459,7 +1459,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
   overflow: hidden;
 }
-.b-static-card .b-preview-box::before {
+.b-static-card .b-preview-box::before, .b-static-card .b-code-box::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -1589,7 +1589,7 @@ body.is-lab-active .b-navbar__search .close-icon {
    4-COMPONENTS / _B-PREVIEW-BOX.SCSS
    Batura Library | Preview Engine [Lab Sync Update]
    ============================================================ */
-.b-preview-box {
+.b-preview-box, .b-code-box {
   width: 100%;
   aspect-ratio: 16/9;
   position: relative;
@@ -1610,7 +1610,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   overflow: hidden;
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-base) var(--e-out);
 }
-.b-preview-box::before {
+.b-preview-box::before, .b-code-box::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -1621,7 +1621,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   opacity: var(--_glare-op, 0);
   transition: opacity var(--d-fast) var(--e-out);
 }
-.b-preview-box::before {
+.b-preview-box::before, .b-code-box::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -1629,7 +1629,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   pointer-events: none;
   z-index: 1;
 }
-.b-preview-box::after {
+.b-preview-box::after, .b-code-box::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -1642,7 +1642,7 @@ body.is-lab-active .b-navbar__search .close-icon {
 
 /* ============================================================
    5-COMPONENTS / _LAB-INTERFACE.SCSS
-   Batura Library | Monolithic Scroll-Split v10.18 [Clean Top Edge]
+   Batura Library | Monolithic Scroll-Split v10.16 [Clean Fade]
    ============================================================ */
 .l-lab-interface {
   /* 1. МАТЕРИАЛ ОКНА (ДНК) */
@@ -1659,28 +1659,20 @@ body.is-lab-active .b-navbar__search .close-icon {
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
   /* 
-     УДАЛЕНИЕ ВЕРХНЕЙ ОБВОДКИ (PC):
-     Переопределяем box-shadow миксина. Оставляем только лево, право и низ.
+     [DYNAMIC BLUR FIX] 
+     Изначально ставим блюр в 0. Это отключает тяжелые вычисления 
+     на краях слоя во время анимации, убирая артефакты Chrome.
   */
+  --_dynamic-blur: 0px;
+  backdrop-filter: blur(var(--_dynamic-blur));
+  -webkit-backdrop-filter: blur(var(--_dynamic-blur));
+  /* УДАЛЕНИЕ ВЕРХНЕЙ ОБВОДКИ (Перекрываем inset из миксина) */
   box-shadow: inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))), inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))), inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
-  /* 
-     ФИКС БЛЮРА (Local Overscan Strategy):
-     Мы физически поднимаем блок выше окна на 20px. 
-  */
-  position: fixed;
-  top: -20px;
-  left: 50%;
-  z-index: var(--z-overlay);
-  padding-top: 20px;
-  height: calc(100vh - var(--nav-top) + 20px);
-  width: min(var(--stable-content-width), var(--stable-max-content));
-  isolation: isolate;
-  contain: paint;
-  will-change: transform, opacity, backdrop-filter;
+  border-top: none;
   /* 2. PROXY VARIABLES */
   --_bg-op: var(--s-glass-op-hover);
   --_stroke-op: var(--s-stroke-op-hover);
-  --_blur: 25px;
+  --_blur: var(--_dynamic-blur);
   --_glare-op: 0;
   /* 3. NAVBAR SYNC */
   --_nav-bottom: calc(var(--nav-h) + var(--nav-top));
@@ -1689,7 +1681,8 @@ body.is-lab-active .b-navbar__search .close-icon {
   opacity: 1;
   visibility: hidden;
   pointer-events: none;
-  transform: translate3d(-50%, -110%, 0);
+  transform: translate3d(-50%, -100%, 0);
+  will-change: transform, backdrop-filter;
   /* 5. ВНУТРЕННИЕ КОЛОНКИ */
   /* ------------------------------------------------------------
      DIVIDER CARTRIDGE (Optical Twin Sync)
@@ -1736,11 +1729,20 @@ body.is-lab-active .b-navbar__search .close-icon {
 .l-lab-interface__column--setup .b-lab-column-body, .l-lab-interface__column--engine .b-lab-column-body {
   flex: 1 1 auto;
   overflow: hidden;
-  padding: var(--space-md) var(--space-md) var(--space-xl);
   position: relative;
   z-index: 1;
-  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  /* 1. ПАДДИНГ КОНТЕЙНЕРА */
+  padding: 0 var(--space-md) var(--space-xl);
+  /* 2. ОДНОСТОРОННЯЯ МАСКА (ТОЛЬКО СНИЗУ) */
+  /* Мы убрали transparent в начале. Теперь контент на 100% виден 
+     сразу от края линии заголовка без всякого размытия. */
+  --_fade-bottom: 90%;
+  mask-image: linear-gradient(to bottom, black 0%, black var(--_fade-bottom), transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black var(--_fade-bottom), transparent 100%);
+  /* 3. ОТСТУП КОНТЕНТА */
+}
+.l-lab-interface__column--setup .b-lab-column-body .l-flow, .l-lab-interface__column--engine .b-lab-column-body .l-flow {
+  padding-top: var(--space-md);
 }
 .l-lab-interface .b-lab-divider {
   width: 100%;
@@ -1749,6 +1751,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   position: relative;
   background: transparent;
   border: none;
+  /* Только нижняя линия разделителя */
   box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
   transition: box-shadow var(--d-fast) var(--e-out);
   pointer-events: none;
@@ -1761,7 +1764,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   margin: 0;
   padding-bottom: var(--space-xs);
 }
-.l-lab-interface .text-subheading {
+.l-lab-interface .text-subheading, .l-lab-interface .ui-instruction__title {
   position: relative;
   display: block;
   padding-bottom: 0;
@@ -1785,6 +1788,8 @@ body.is-lab-active .b-navbar__search .close-icon {
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  /* У ПРЕВЬЮ тоже убираем верхнюю тень из миксина */
+  border-top: none;
   --_bg-op: var(--s-glare-op-hover);
   box-shadow: inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))), inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), -webkit-backdrop-filter var(--d-fast) var(--e-out);
@@ -1829,24 +1834,23 @@ body.is-lab-active .b-navbar__search .close-icon {
   --_stroke-op: var(--s-stroke-op-active);
   --_blur: 45px;
   --_glare-op: var(--s-glare-op-hover);
+  /* Поддерживаем 3-стороннюю тень при ховере */
+  box-shadow: inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active)), inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active)), inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
 }
 .l-lab-interface:hover .lab-preview-display {
   --_bg-op: var(--s-glass-op-active);
 }
 
 /* ============================================================
-   9 & 10. ACTIVATION & ADAPTATION (Flush Top & Floating Bottom)
+   9 & 10. ACTIVATION & ADAPTATION
    ============================================================ */
-/* Кнопки переключения скрыты на ПК */
 .lab-mobile-switch {
   display: none;
 }
 
-/* --- GLOBAL ACTIVATION (PC & MOBILE) --- */
 body.is-lab-active .l-lab-interface {
   visibility: visible;
   pointer-events: all;
-  /* Центровка по X всегда -50%, выезд по Y в ноль */
   transform: translate3d(-50%, 0, 0);
 }
 @media (min-width: 1101px) {
@@ -1861,47 +1865,43 @@ body.is-lab-active #app-wrapper {
   transition: all var(--d-morph) var(--e-out);
 }
 
-/* --- MOBILE ADAPTATION (<= 1100px) --- */
+/* --- MOBILE ADAPTATION --- */
 @media (max-width: 1100px) {
   body .l-lab-interface {
     top: 0;
     left: 50%;
     width: min(var(--stable-content-width), var(--stable-max-content));
-    /* Эстетика парящего окна: зазор снизу 20px */
     height: calc(100dvh - 20px);
     border-radius: 0 0 var(--radius-master) var(--radius-master);
+    border-top: none;
     transform: translate3d(-50%, -100%, 0);
     overflow: hidden;
     position: fixed;
-    /* MATERIAL ACTIVE */
     --_stroke-op: var(--s-stroke-op-active);
     --_blur: 45px;
     --_bg-op: var(--s-glass-op-active);
-    /* РАМКА: Убираем верх, бока и низ — активны */
-    box-shadow: calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active)), var(--s-stroke-width) 0 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active)), 0 var(--s-stroke-width) 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active));
+    /* ТЕНЬ МОБИЛКИ: Внутренняя (inset) на 3 стороны */
+    box-shadow: inset var(--s-stroke-width) 0 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active)), inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active)), inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active));
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 45dvh 1fr;
     grid-template-areas: "viewport" "panels";
-    /* ЛОГИКА ТАБОВ */
   }
   body .l-lab-interface__column {
     transform: none;
     min-height: 0;
     height: 100%;
-    display: flex;
-    flex-direction: column;
   }
   body .l-lab-interface__column--viewport {
     grid-area: viewport;
     padding: 0;
-    /* КОНТЕЙНЕР ПЕРЕКЛЮЧАТЕЛЕЙ: Только позиция */
   }
   body .l-lab-interface__column--viewport .lab-preview-display {
     margin-top: 0;
     height: 100%;
     border: none;
     border-radius: 0;
+    /* Разделитель снизу превью */
     box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active));
   }
   body .l-lab-interface__column--viewport .lab-mobile-switch {
@@ -1912,25 +1912,25 @@ body.is-lab-active #app-wrapper {
     transform: translateX(-50%);
     gap: var(--space-xs);
     z-index: 100;
-    /* СТИЛИ .ui-button ЗДЕСЬ УДАЛЕНЫ. Они теперь в button.scss */
   }
   body .l-lab-interface__column--setup, body .l-lab-interface__column--engine {
     grid-area: panels;
-    flex-direction: column;
-    overflow: hidden;
   }
   body .l-lab-interface__column--setup .b-lab-column-header, body .l-lab-interface__column--engine .b-lab-column-header {
-    display: none !important;
+    display: none;
   }
   body .l-lab-interface__column--setup .b-lab-column-body, body .l-lab-interface__column--engine .b-lab-column-body {
     flex: 1 1 auto;
     width: 100%;
-    padding: var(--space-md) var(--space-md) 140px;
-    /* LENIS СКРОЛЛ (В JS он включен для мобилок) */
+    padding: 0 var(--space-md) 140px;
     overflow: hidden;
-    touch-action: none;
-    mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+    touch-action: pan-y;
+    /* Маска без верхнего блюра */
+    mask-image: linear-gradient(to bottom, black 0%, black 90%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 90%, transparent 100%);
+  }
+  body .l-lab-interface__column--setup .b-lab-column-body .l-flow, body .l-lab-interface__column--engine .b-lab-column-body .l-flow {
+    padding-top: var(--space-md);
   }
   body .l-lab-interface[data-mobile-panel=setup] .l-lab-interface__column--engine {
     display: none;
@@ -1953,17 +1953,18 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   margin-bottom: var(--space-md);
   --_local-stroke-op: var(--s-stroke-op-idle);
   --_local-text-op: var(--s-text-op-idle);
-  --_thumb-scale: 1;
   transition: opacity var(--d-fast) var(--e-out);
-  /* Реакция всей обертки на взаимодействие с инпутом */
+  /* ЛОГИКА СОСТОЯНИЙ (ПК + Общая) */
+  /* Прокидываем состояния на родительский контейнер для трека и текста */
+  /* Обычный ховер для родителя на ПК */
 }
 .ui-range > * + * {
   margin-top: var(--space-xs);
 }
-.ui-range > .text-data + .text-hero, .ui-range > .ui-info-tag + .text-hero, .ui-range > .ui-range__header + .text-hero, .ui-range > small + .text-hero, .b-navbar__search .ui-range > input + .text-hero, .ui-range > .ui-button + .text-hero, .b-accordion .ui-range > .b-static-card__deco + .text-hero, .ui-range > .b-static-card__index + .text-hero, .ui-range > .b-alphabet-nav__char + .text-hero, .b-catalog-header .ui-range > .index + .text-hero, .ui-range > .text-data + h1, .ui-range > .ui-info-tag + h1, .ui-range > .ui-range__header + h1, .ui-range > small + h1, .b-navbar__search .ui-range > input + h1, .ui-range > .ui-button + h1, .b-accordion .ui-range > .b-static-card__deco + h1, .ui-range > .b-static-card__index + h1, .ui-range > .b-alphabet-nav__char + h1, .b-catalog-header .ui-range > .index + h1, .ui-range > .text-data + .text-heading, .ui-range > .ui-info-tag + .text-heading, .ui-range > .ui-range__header + .text-heading, .ui-range > small + .text-heading, .b-navbar__search .ui-range > input + .text-heading, .ui-range > .ui-button + .text-heading, .b-accordion .ui-range > .b-static-card__deco + .text-heading, .ui-range > .b-static-card__index + .text-heading, .ui-range > .b-alphabet-nav__char + .text-heading, .b-catalog-header .ui-range > .index + .text-heading, .ui-range > .text-data + h2, .ui-range > .ui-info-tag + h2, .ui-range > .ui-range__header + h2, .ui-range > small + h2, .b-navbar__search .ui-range > input + h2, .ui-range > .ui-button + h2, .b-accordion .ui-range > .b-static-card__deco + h2, .ui-range > .b-static-card__index + h2, .ui-range > .b-alphabet-nav__char + h2, .b-catalog-header .ui-range > .index + h2, .ui-range > .text-hero + .text-body, .ui-range > h1 + .text-body, .ui-range > .text-hero + p, .ui-range > h1 + p, .ui-range > .text-heading + .text-body, .ui-range > h2 + .text-body, .ui-range > .text-heading + p, .ui-range > h2 + p {
+.ui-range > .text-data + .text-hero, .ui-range > .b-code-box__content + .text-hero, .ui-range > .ui-info-tag + .text-hero, .ui-range > .ui-range__header + .text-hero, .ui-range > small + .text-hero, .b-navbar__search .ui-range > input + .text-hero, .ui-range > .ui-button + .text-hero, .b-accordion .ui-range > .b-static-card__deco + .text-hero, .ui-range > .b-static-card__index + .text-hero, .ui-range > .b-alphabet-nav__char + .text-hero, .b-catalog-header .ui-range > .index + .text-hero, .ui-range > .text-data + h1, .ui-range > .b-code-box__content + h1, .ui-range > .ui-info-tag + h1, .ui-range > .ui-range__header + h1, .ui-range > small + h1, .b-navbar__search .ui-range > input + h1, .ui-range > .ui-button + h1, .b-accordion .ui-range > .b-static-card__deco + h1, .ui-range > .b-static-card__index + h1, .ui-range > .b-alphabet-nav__char + h1, .b-catalog-header .ui-range > .index + h1, .ui-range > .text-data + .text-heading, .ui-range > .b-code-box__content + .text-heading, .ui-range > .ui-info-tag + .text-heading, .ui-range > .ui-range__header + .text-heading, .ui-range > small + .text-heading, .b-navbar__search .ui-range > input + .text-heading, .ui-range > .ui-button + .text-heading, .b-accordion .ui-range > .b-static-card__deco + .text-heading, .ui-range > .b-static-card__index + .text-heading, .ui-range > .b-alphabet-nav__char + .text-heading, .b-catalog-header .ui-range > .index + .text-heading, .ui-range > .text-data + h2, .ui-range > .b-code-box__content + h2, .ui-range > .ui-info-tag + h2, .ui-range > .ui-range__header + h2, .ui-range > small + h2, .b-navbar__search .ui-range > input + h2, .ui-range > .ui-button + h2, .b-accordion .ui-range > .b-static-card__deco + h2, .ui-range > .b-static-card__index + h2, .ui-range > .b-alphabet-nav__char + h2, .b-catalog-header .ui-range > .index + h2, .ui-range > .text-hero + .text-body, .ui-instruction .ui-range > .text-hero + .text-info-hint, .ui-range > h1 + .text-body, .ui-instruction .ui-range > h1 + .text-info-hint, .ui-range > .text-hero + p, .ui-range > h1 + p, .ui-range > .text-heading + .text-body, .ui-instruction .ui-range > .text-heading + .text-info-hint, .ui-range > h2 + .text-body, .ui-instruction .ui-range > h2 + .text-info-hint, .ui-range > .text-heading + p, .ui-range > h2 + p {
   margin-top: var(--space-xs);
 }
-.ui-range > .text-body + .l-flex-group, .ui-range > p + .l-flex-group {
+.ui-range > .text-body + .l-flex-group, .ui-instruction .ui-range > .text-info-hint + .l-flex-group, .ui-range > p + .l-flex-group {
   margin-top: var(--space-lg);
 }
 .ui-range__header {
@@ -2004,10 +2005,11 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
-  touch-action: none;
-  /* --- ТРЕК (Webkit + Firefox) --- */
-  /* --- КРУЖОЧЕК (Базовые стили для обоих браузеров) --- */
-  /* ЛОГИКА СОСТОЯНИЙ ЧЕРЕЗ ПЕРЕМЕННЫЕ */
+  touch-action: none; /* Запрет скролла при перетаскивании */
+  /* --- ТРЕК --- */
+  /* --- КРУЖОЧЕК (THUMB) --- */
+  /* ХОВЕР (ТОЛЬКО ПК) */
+  /* АКТИВНОЕ СОСТОЯНИЕ (ЗАЖАТИЕ) — РАБОТАЕТ И НА ПК, И НА ТЕЛЕФОНЕ */
 }
 .ui-range input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
@@ -2049,11 +2051,10 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   --_bg-op: 1;
   --_stroke-op: 0.3;
   margin-top: -5px;
-  -webkit-transition: transform var(--d-fast) var(--e-out);
-  transition: transform var(--d-fast) var(--e-out);
+  -webkit-transition: transform var(--d-fast) var(--e-out), background var(--d-fast) var(--e-out);
+  transition: transform var(--d-fast) var(--e-out), background var(--d-fast) var(--e-out);
   will-change: transform;
   border: none;
-  transform: scale(var(--_thumb-scale));
 }
 .ui-range input[type=range]::-webkit-slider-thumb::before {
   content: "";
@@ -2068,7 +2069,7 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   transition: opacity var(--d-fast) var(--e-out);
 }
 .ui-range input[type=range]::-moz-range-thumb {
-  box-sizing: border-box;
+  border: none;
   height: 12px;
   width: 12px;
   border-radius: 50%;
@@ -2088,9 +2089,6 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   --_stroke-op: 0.3;
   -moz-transition: transform var(--d-fast) var(--e-out);
   transition: transform var(--d-fast) var(--e-out);
-  will-change: transform;
-  border: none;
-  transform: scale(var(--_thumb-scale));
 }
 .ui-range input[type=range]::-moz-range-thumb::before {
   content: "";
@@ -2105,20 +2103,34 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   transition: opacity var(--d-fast) var(--e-out);
 }
 @media (hover: hover) {
-  .ui-range input[type=range]:hover {
-    --_thumb-scale: 1.15;
+  .ui-range input[type=range]:hover:not(:active)::-webkit-slider-thumb {
+    transform: scale(1.2);
+  }
+  .ui-range input[type=range]:hover:not(:active)::-moz-range-thumb {
+    transform: scale(1.2);
   }
 }
 .ui-range input[type=range]:active {
-  --_thumb-scale: 1.4;
+  /* Пока зажат ползунок, переменные принудительно горят */
 }
-.ui-range:has(input:hover) {
-  --_local-stroke-op: var(--s-stroke-op-hover);
-  --_local-text-op: var(--s-text-op-hover);
+.ui-range input[type=range]:active ~ .ui-range__header {
+  --_local-text-op: 1;
 }
-.ui-range:has(input:active) {
+.ui-range input[type=range]:active::-webkit-slider-thumb {
+  transform: scale(1.4) !important;
+}
+.ui-range input[type=range]:active::-moz-range-thumb {
+  transform: scale(1.4) !important;
+}
+.ui-range:has(input[type=range]:active) {
   --_local-stroke-op: var(--s-stroke-op-active);
   --_local-text-op: 1;
+}
+@media (hover: hover) {
+  .ui-range:hover {
+    --_local-stroke-op: var(--s-stroke-op-hover);
+    --_local-text-op: var(--s-text-op-hover);
+  }
 }
 
 /* 2. UI-INFO: Группа заголовка и морфинг */
@@ -2181,16 +2193,12 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
 }
 
 /* ============================================================
-[UI ADAPTATION BLOCK]
+[UI ADAPTATION BLOCK] - Вынесен отдельно
 ============================================================ */
 @media (max-width: 1100px) {
   .ui-range {
-    /* Если JS вешает класс is-active (для долгого удержания) */
-  }
-  .ui-range.is-active {
-    --_local-stroke-op: var(--s-stroke-op-active);
-    --_local-text-op: 1;
-    --_thumb-scale: 1.4;
+    /* Мобильная высота клика */
+    /* Состояние через JS (если используется класс is-active) */
   }
   .ui-range input[type=range] {
     height: 40px;
@@ -2199,19 +2207,21 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
     height: var(--s-stroke-width);
     background-color: rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
     box-shadow: none;
-  }
-  .ui-range input[type=range]::-moz-range-track {
-    height: var(--s-stroke-width);
-    background-color: rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
+    -webkit-transition: background-color var(--d-fast) var(--e-out);
+    transition: background-color var(--d-fast) var(--e-out);
   }
   .ui-range input[type=range]::-webkit-slider-thumb {
     height: 14px;
     width: 14px;
     margin-top: calc(var(--s-stroke-width) / 2 - 7px);
+    box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), 0.3);
   }
-  .ui-range input[type=range]::-moz-range-thumb {
-    height: 14px;
-    width: 14px;
+  .ui-range.is-active {
+    --_local-stroke-op: var(--s-stroke-op-active);
+    --_local-text-op: 1;
+  }
+  .ui-range.is-active input[type=range]::-webkit-slider-thumb {
+    transform: scale(1.3) !important;
   }
   .ui-info-tag {
     padding: 10px;
@@ -2220,4 +2230,144 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   .ui-info-tag:not(:active) {
     --_local-tag-op: var(--s-text-op-idle);
   }
+}
+/* ============================================================
+   5-COMPONENTS / _UI-EXPRESSION.SCSS
+   Batura Library | Mandatory Engine Symmetry & Top Align
+   ============================================================ */
+/**
+ * 1. ENGINE RHYTHM & ALIGNMENT
+ * Настраиваем ритм правой колонки и убираем лишнее пространство сверху.
+ */
+.l-lab-interface__column--engine .l-flow {
+  --_rhythm: var(--space-md);
+}
+.l-lab-interface__column--engine .l-flow > *:first-child {
+  margin-top: 0;
+}
+.l-lab-interface__column--engine .l-flow .ui-tabs-group + .b-code-box {
+  margin-top: var(--_rhythm);
+}
+.l-lab-interface__column--engine .l-flow .b-code-box + .ui-button {
+  margin-top: var(--_rhythm);
+}
+
+/**
+ * 2. CODE BOX
+ */
+.b-code-box {
+  --_code-radius: calc(var(--radius-master) - (var(--space-md) * 0.5));
+  aspect-ratio: auto;
+  width: 100%;
+  min-height: calc(var(--unit) * 60);
+  padding: var(--space-md);
+  margin: 0;
+  border-radius: var(--_code-radius);
+  position: relative;
+  border-radius: var(--_code-radius);
+  isolation: isolate;
+  background-clip: padding-box;
+  background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
+  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+}
+.b-code-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 0%, rgba(var(--m-glass-base-rgb), 0.4), transparent);
+  opacity: var(--_glare-op, 0);
+  transition: opacity var(--d-fast) var(--e-out);
+}
+.b-code-box__content {
+  text-transform: none;
+  letter-spacing: 0;
+  white-space: pre-wrap;
+  -webkit-user-select: all;
+     -moz-user-select: all;
+          user-select: all;
+}
+
+/**
+ * 3. TABS GROUP
+ */
+.ui-tabs-group {
+  display: flex;
+  width: 100%;
+  gap: var(--space-xs);
+  margin: 0;
+}
+.ui-tabs-group .ui-button {
+  flex: 1;
+  transition-delay: 0s;
+  --_stroke-op: var(--s-stroke-op-idle);
+  --_bg-op: var(--s-glass-op-base);
+}
+.ui-tabs-group .ui-button.is-active {
+  --_stroke-op: var(--s-stroke-op-active);
+  --_text-op: 1;
+  --_bg-op: var(--s-glass-op-active);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
+}
+.ui-tabs-group .ui-button:hover:not(.is-active) {
+  --_stroke-op: var(--s-stroke-op-hover);
+  --_bg-op: var(--s-glass-op-hover);
+}
+
+/**
+ * 4. COPY BUTTON
+ */
+.ui-button.is-full-width {
+  width: 100%;
+  margin: 0;
+  --_bg-op: var(--s-glass-op-hover);
+  --_stroke-op: var(--s-stroke-op-hover);
+}
+.ui-button.is-full-width:hover {
+  --_bg-op: var(--s-glass-op-active);
+  --_stroke-op: var(--s-stroke-op-active);
+  --_text-op: 1;
+  -webkit-backdrop-filter: blur(15px);
+          backdrop-filter: blur(15px);
+}
+
+/**
+ * 5. INSTRUCTION
+ */
+.ui-instruction {
+  width: 100%;
+  /* --- 1. ОТСТУП СВЕРХУ БЛОКА (от предыдущего контента) --- */
+  margin-top: var(--space-md);
+  /* --- 2. ЛИНИЯ + ОТСТУП ДО ЗАГОЛОВКА --- */
+  padding-top: var(--space-md);
+  border-top: var(--s-stroke-width) solid rgba(var(--p-white-rgb), var(--s-stroke-op-idle));
+}
+.ui-instruction__title {
+  display: block;
+  margin: 0;
+  line-height: 1.1;
+  /* --- 3. ЕДИНСТВЕННЫЙ ОТСТУП ДО ОПИСАНИЯ --- */
+  margin-bottom: var(--space-sm);
+}
+.ui-instruction__content {
+  /* ВАЖНО: здесь больше НЕТ margin-top */
+  margin: 0;
+}
+.ui-instruction .text-info-hint {
+  margin: 0;
+  max-width: 60ch;
+  /* --- 4. ОТСТУП МЕЖДУ ПУНКТАМИ --- */
+}
+.ui-instruction .text-info-hint + .text-info-hint {
+  margin-top: var(--space-xs);
 }/*# sourceMappingURL=main.css.map */

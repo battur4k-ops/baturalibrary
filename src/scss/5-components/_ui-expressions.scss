@@ -1,0 +1,150 @@
+/* ============================================================
+   5-COMPONENTS / _UI-EXPRESSION.SCSS
+   Batura Library | Mandatory Engine Symmetry & Top Align
+   ============================================================ */
+
+/**
+ * 1. ENGINE RHYTHM & ALIGNMENT
+ * Настраиваем ритм правой колонки и убираем лишнее пространство сверху.
+ */
+.l-lab-interface__column--engine {
+  
+  // 1. Убираем паддинг сверху у тела колонки, чтобы теги встали в упор к шапке
+
+
+  // 2. Умный ритм через l-flow (Симметрия)
+  .l-flow {
+    --_rhythm: var(--space-md); // 32px
+    
+    // Сбрасываем марджин у первого элемента (тегов)
+    & > *:first-child {
+      margin-top: 0;
+    }
+
+    // Обязательные отступы между элементами
+    .ui-tabs-group + .b-code-box {
+      margin-top: var(--_rhythm);
+    }
+
+    .b-code-box + .ui-button {
+      margin-top: var(--_rhythm);
+    }
+  }
+}
+
+/**
+ * 2. CODE BOX
+ */
+.b-code-box {
+  --_code-radius: calc(var(--radius-master) - (var(--space-md) * 0.5));
+  
+  @extend .b-preview-box;
+  
+  aspect-ratio: auto;
+  width: 100%;
+  min-height: calc(var(--unit) * 60); 
+  padding: var(--space-md);
+  margin: 0; 
+  
+  border-radius: var(--_code-radius);
+  @include glass-surface(var(--_code-radius));
+  
+  &__content {
+    @extend .text-data;
+    text-transform: none; 
+    letter-spacing: 0;    
+    white-space: pre-wrap;
+    user-select: all;
+  }
+}
+
+/**
+ * 3. TABS GROUP
+ */
+.ui-tabs-group {
+  display: flex;
+  width: 100%;
+  gap: var(--space-xs);
+  margin: 0; 
+
+  .ui-button {
+    @extend .ui-button;
+    flex: 1;
+    transition-delay: 0s;
+    --_stroke-op: var(--s-stroke-op-idle); 
+    --_bg-op: var(--s-glass-op-base);
+
+    &.is-active { 
+      --_stroke-op: var(--s-stroke-op-active); 
+      --_text-op: 1; 
+      --_bg-op: var(--s-glass-op-active); 
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
+    }
+
+    &:hover:not(.is-active) {
+      --_stroke-op: var(--s-stroke-op-hover);
+      --_bg-op: var(--s-glass-op-hover);
+    }
+  }
+}
+
+/**
+ * 4. COPY BUTTON
+ */
+.ui-button.is-full-width {
+  @extend .ui-button;
+  width: 100%;
+  margin: 0; 
+  
+  --_bg-op: var(--s-glass-op-hover);
+  --_stroke-op: var(--s-stroke-op-hover);
+  
+  &:hover {
+    --_bg-op: var(--s-glass-op-active);
+    --_stroke-op: var(--s-stroke-op-active);
+    --_text-op: 1;
+    backdrop-filter: blur(15px);
+  }
+}
+
+/**
+ * 5. INSTRUCTION
+ */
+.ui-instruction {
+  width: 100%;
+  /* --- 1. ОТСТУП СВЕРХУ БЛОКА (от предыдущего контента) --- */
+  margin-top: var(--space-md);
+
+  /* --- 2. ЛИНИЯ + ОТСТУП ДО ЗАГОЛОВКА --- */
+  padding-top: var(--space-md);
+  border-top: var(--s-stroke-width) solid
+    rgba(var(--p-white-rgb), var(--s-stroke-op-idle));
+
+  &__title {
+    @extend .text-subheading;
+    display: block;
+    margin: 0;
+    line-height: 1.1;
+
+    /* --- 3. ЕДИНСТВЕННЫЙ ОТСТУП ДО ОПИСАНИЯ --- */
+    margin-bottom: var(--space-sm);
+  }
+
+  &__content {
+    /* ВАЖНО: здесь больше НЕТ margin-top */
+    margin: 0;
+  }
+
+  .text-info-hint {
+    @extend .text-body;
+    margin: 0;
+    max-width: 60ch;
+
+    /* --- 4. ОТСТУП МЕЖДУ ПУНКТАМИ --- */
+    & + .text-info-hint {
+      margin-top: var(--space-xs);
+    }
+  }
+}

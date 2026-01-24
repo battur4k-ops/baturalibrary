@@ -10,10 +10,8 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   @include flow-engine(var(--space-xs));
   margin-bottom: var(--space-md);
 
-  // Локальные переменные состояния
   --_local-stroke-op: var(--s-stroke-op-idle);
   --_local-text-op: var(--s-text-op-idle);
-  --_thumb-scale: 1; // Начальный масштаб кружка
 
   transition: opacity var(--d-fast) var(--e-out);
 
@@ -25,7 +23,7 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
     @extend .text-data;
 
     .value {
-      @extend %text-base; 
+      @extend %text-base;
       color: rgba(var(--p-white-rgb), var(--_local-text-op));
       font-weight: 500;
       transition: color var(--d-fast) var(--e-out);
@@ -37,11 +35,14 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
       @media (hover: hover) {
         &:hover { --_local-text-op: 1; }
       }
-      &:focus { --_local-text-op: 1; color: rgba(var(--p-white-rgb), 1); }
+      &:focus { 
+        --_local-text-op: 1; 
+        color: rgba(var(--p-white-rgb), 1); 
+      }
     }
   }
 
-  // Общая логика инпута
+  /* ЛОГИКА СОСТОЯНИЙ (ПК + Общая) */
   input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
@@ -53,21 +54,22 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
     display: block;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
-    touch-action: none; 
+    touch-action: none; /* Запрет скролла при перетаскивании */
 
-    /* --- ТРЕК (Webkit + Firefox) --- */
+    /* --- ТРЕК --- */
     &::-webkit-slider-runnable-track {
       width: 100%; height: 2px; background: transparent; border: none;
       box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
       transition: box-shadow var(--d-fast) var(--e-out);
     }
+
     &::-moz-range-track {
       width: 100%; height: 2px; background: transparent; border: none;
       box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
       transition: box-shadow var(--d-fast) var(--e-out);
     }
 
-    /* --- КРУЖОЧЕК (Базовые стили для обоих браузеров) --- */
+    /* --- КРУЖОЧЕК (THUMB) --- */
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
       height: 12px; width: 12px; border-radius: 50%;
@@ -75,46 +77,56 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
       @include glass-surface(50%);
       --_bg-op: 1; --_stroke-op: 0.3;
       margin-top: -5px; 
-      transition: transform var(--d-fast) var(--e-out);
+      transition: transform var(--d-fast) var(--e-out), background var(--d-fast) var(--e-out);
       will-change: transform;
       border: none;
-      transform: scale(var(--_thumb-scale)); // Используем переменную
     }
 
     &::-moz-range-thumb {
-      box-sizing: border-box;
+      border: none; 
       height: 12px; width: 12px; border-radius: 50%;
       background: rgb(var(--p-white-rgb));
       @include glass-surface(50%);
       --_bg-op: 1; --_stroke-op: 0.3;
       transition: transform var(--d-fast) var(--e-out);
-      will-change: transform;
-      border: none;
-      transform: scale(var(--_thumb-scale)); // Используем переменную
     }
 
-    /* ЛОГИКА СОСТОЯНИЙ ЧЕРЕЗ ПЕРЕМЕННЫЕ */
+    /* ХОВЕР (ТОЛЬКО ПК) */
     @media (hover: hover) {
-      &:hover {
-        --_thumb-scale: 1.15;
+      &:hover:not(:active) {
+        &::-webkit-slider-thumb { transform: scale(1.2); }
+        &::-moz-range-thumb { transform: scale(1.2); }
       }
     }
 
-    // Когда зажимаем (Active) - работает и на ПК и на Тач
+    /* АКТИВНОЕ СОСТОЯНИЕ (ЗАЖАТИЕ) — РАБОТАЕТ И НА ПК, И НА ТЕЛЕФОНЕ */
     &:active {
-      --_thumb-scale: 1.4;
+      /* Пока зажат ползунок, переменные принудительно горят */
+      & ~ .ui-range__header { // Если заголовок после инпута, или через родителя:
+         --_local-text-op: 1;
+      }
+
+      &::-webkit-slider-thumb { 
+        transform: scale(1.4) !important; 
+      }
+      &::-moz-range-thumb { 
+        transform: scale(1.4) !important; 
+      }
     }
   }
 
-  /* Реакция всей обертки на взаимодействие с инпутом */
-  &:has(input:hover) {
-    --_local-stroke-op: var(--s-stroke-op-hover);
-    --_local-text-op: var(--s-text-op-hover);
-  }
-
-  &:has(input:active) {
+  /* Прокидываем состояния на родительский контейнер для трека и текста */
+  &:has(input[type="range"]:active) {
     --_local-stroke-op: var(--s-stroke-op-active);
     --_local-text-op: 1;
+  }
+  
+  /* Обычный ховер для родителя на ПК */
+  @media (hover: hover) {
+    &:hover {
+      --_local-stroke-op: var(--s-stroke-op-hover);
+      --_local-text-op: var(--s-text-op-hover);
+    }
   }
 }
 
@@ -185,18 +197,12 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
 }
 
 /* ============================================================
-[UI ADAPTATION BLOCK]
+[UI ADAPTATION BLOCK] - Вынесен отдельно
 ============================================================ */
 
 @media (max-width: 1100px) {
   .ui-range {
-    /* Если JS вешает класс is-active (для долгого удержания) */
-    &.is-active {
-      --_local-stroke-op: var(--s-stroke-op-active);
-      --_local-text-op: 1;
-      --_thumb-scale: 1.4;
-    }
-
+    /* Мобильная высота клика */
     input[type="range"] {
       height: 40px; 
 
@@ -204,18 +210,25 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
         height: var(--s-stroke-width); 
         background-color: rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
         box-shadow: none;
-      }
-      &::-moz-range-track {
-        height: var(--s-stroke-width); 
-        background-color: rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
+        transition: background-color var(--d-fast) var(--e-out);
       }
 
       &::-webkit-slider-thumb {
         height: 14px; width: 14px; 
         margin-top: calc((var(--s-stroke-width) / 2) - 7px);
+        box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), 0.3);
       }
-      &::-moz-range-thumb {
-        height: 14px; width: 14px;
+    }
+
+    /* Состояние через JS (если используется класс is-active) */
+    &.is-active {
+      --_local-stroke-op: var(--s-stroke-op-active);
+      --_local-text-op: 1;
+
+      input[type="range"] {
+        &::-webkit-slider-thumb {
+          transform: scale(1.3) !important;
+        }
       }
     }
   }
@@ -226,3 +239,4 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
     &:not(:active) { --_local-tag-op: var(--s-text-op-idle); }
   }
 }
+
