@@ -1,8 +1,3 @@
-/**
- * BATURA LIBRARY | WEB COMPONENTS
- * Unified Navbar v8.0 [Morphing Search-X Controller]
- */
-
 import { EVENTS, dispatch, on } from '../core/events.js';
 import { qs } from '../core/dom.js';
 
@@ -46,14 +41,12 @@ class BaturaNavbar extends HTMLElement {
         const closeIcon = qs('.close-icon', this);
         const searchContainer = qs('.b-navbar__search', this);
 
-        // Обычный поиск
         input.addEventListener('input', (e) => {
             if (!document.body.classList.contains('is-lab-active')) {
                 dispatch(EVENTS.SEARCH, { query: e.target.value });
             }
         });
 
-        // Не даем фокуситься поиску во время активной лабы (мобилка)
         input.addEventListener('pointerdown', (e) => {
             if (document.body.classList.contains('is-lab-active')) {
                 e.preventDefault();
@@ -72,16 +65,10 @@ class BaturaNavbar extends HTMLElement {
             }
         });
 
-        // Логика кнопки закрытия
         input.addEventListener('click', (e) => {
             if (document.body.classList.contains('is-lab-active')) {
                 e.preventDefault();
-                
-                // ХИРУРГИЧЕСКОЕ ВМЕШАТЕЛЬСТВО:
-                // 1. Немедленно убираем фокус, чтобы :focus в CSS не сработал после смены стейта
                 input.blur(); 
-                
-                // 2. Генерируем событие закрытия
                 dispatch(EVENTS.LAB_CLOSED);
             }
         });
@@ -140,7 +127,6 @@ class BaturaNavbar extends HTMLElement {
                 <div class="b-navbar__search is-hidden">
                     <input type="text" id="globalSearch" placeholder="Search_Library..." autocomplete="off">
                     
-                    <!-- Иконка крестика (показывается только в Lab Mode) -->
                     <div class="close-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="18" y1="6" x2="6" y2="18"></line>

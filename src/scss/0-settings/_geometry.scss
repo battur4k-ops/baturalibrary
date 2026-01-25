@@ -1,17 +1,13 @@
 :root {
-  /* --- 1. MASTER RADII --- */
   --radius-master: 45px;
   --p-card: var(--space-md); 
   
-  /* Закон [LAW:GEOMETRIC_COHESION]: Вложенные радиусы */
   --radius-inner: calc(var(--radius-master) - var(--p-card));
 
-  /* --- 2. DYNAMICS --- */
   --card-grow-base: 1;
   --card-grow-active: 9;
   --card-grow-active-hover: 11.4;
   
-  /* --- 3. OPTICAL COMPENSATION --- */
   --logo-balance-x: -10%;
   --text-offset-hero: -0.075em;
   --text-offset-heading: -0.065em;
@@ -22,18 +18,15 @@
   --opt-info-shift: -5px;
   --opt-touch-pad: 10px;
 
-  /* --- 4. VIRTUAL VIEWPORT --- */
   --viewport-overscan: 100px;
   --viewport-overscan-double: 200px;
 
-  /* --- 5. LAB LAYOUT --- */
   --lab-panel-left-w: 380px;
   --lab-panel-right-w: 420px;
   --lab-mobile-preview-vh: 45dvh;
   --lab-mobile-offset: 20px;
   --lab-mobile-panel-pad: 140px;
 
-  /* --- 6. ACCORDION DIMENSIONS --- */
   --accordion-height-min: 500px;
   --accordion-height-max: 750px;
   --accordion-height-min-mobile: 600px;
@@ -43,14 +36,11 @@
   --accordion-tab-radius: 100px;
   --accordion-flex-mobile-active: 7.5;
 
-  /* --- 7. CATALOG GRID --- */
   --catalog-card-min: 320px;
 
-  /* --- 8. CODE BOX --- */
   --codebox-min-h: calc(var(--unit) * 60);
   --codebox-max-h: clamp(220px, 32vh, 360px);
 
-  /* --- 9. ALPHABET NAV --- */
   --alphabet-nav-top: 150px;
   --alphabet-nav-min-w: 40px;
   --alphabet-nav-line-w: 24px;

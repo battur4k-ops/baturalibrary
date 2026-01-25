@@ -1,8 +1,3 @@
-/**
- * BATURA LIBRARY | WEB COMPONENTS
- * Unified Footer v7.0 [Data-Driven Edition]
- */
-
 import { FOOTER_DATA } from '../data/footer-data.js';
 
 class BaturaFooter extends HTMLElement {
@@ -17,7 +12,6 @@ class BaturaFooter extends HTMLElement {
             <footer class="b-footer l-container">
                 <div class="b-footer__grid">
                     
-                    <!-- BRAND COLUMN -->
                     <div class="b-footer__brand l-flow">
                         <span class="text-data">${brand.label}</span>
                         <p class="text-body">${brand.description}</p>
@@ -31,7 +25,6 @@ class BaturaFooter extends HTMLElement {
                         </div>
                     </div>
 
-                    <!-- DYNAMIC GROUPS (Resources, Connect, etc.) -->
                     ${groups.map(group => `
                         <div class="b-footer__group">
                             <span class="text-data">${group.title}</span>
@@ -49,7 +42,6 @@ class BaturaFooter extends HTMLElement {
 
                 </div>
 
-                <!-- BOTTOM TERMINAL -->
                 <div class="b-footer__bottom">
                     <span class="text-data">${bottom.copyright}</span>
                     <span class="text-data">${bottom.version}</span>

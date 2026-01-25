@@ -1,10 +1,4 @@
-/* ============================================================
-   5-COMPONENTS / _NAVBAR.SCSS
-   Batura Library | System Synced v14.6 [Lab-Resonance Fix]
-   ============================================================ */
-
 .b-navbar {
-    /* 1. LOCAL TOKENS & GEOMETRY */
     --nav-radius: var(--radius-master);
     --nav-h: var(--nav-h-start);
     --nav-w-factor: var(--nav-w-start);
@@ -12,7 +6,6 @@
     --nav-pad: calc((var(--nav-h) - var(--nav-content-h)) / 2);
     --nav-inner-radius: calc(var(--nav-radius) - var(--nav-pad));
 
-    /* 2. INTERACTION DNA */
     --_bg-op: var(--s-glass-op-base);
     --_stroke-op: var(--s-stroke-op-idle);
 
@@ -41,23 +34,19 @@
         box-shadow var(--d-fast) var(--e-out),
         backdrop-filter var(--d-morph) var(--e-out);
 
-    /* 3. HOVER OVER NAVBAR (General Active) */
     &:hover {
         --_bg-op: var(--s-glass-op-active);
         --_stroke-op: var(--s-stroke-op-active);
     }
 
-/* 4. MORPH STATE: SCROLL & LAB */
     body.is-scrolled &,
     body.is-lab-active & {
         --nav-h: var(--nav-h-morph);
         --nav-w-factor: var(--nav-w-morph);
         
-        // По умолчанию для ПК (Hover - 0.40)
         --_bg-op: var(--s-glass-op-hover); 
         --_stroke-op: var(--s-stroke-op-hover);
 
-        // Изоляция кнопок
         .ui-button, &__search input {
             &:not(:hover):not(:focus) {
                 --_bg-op: var(--s-glass-op-hover);
@@ -67,22 +56,17 @@
         }
     }
 
-    /* 5. LAB INTERFACE RESONANCE (Desktop Only) */
     @media (min-width: $bp-lg-up) {
         body.is-lab-active:has(.l-lab-interface:hover) & {
             --_bg-op: var(--s-glass-op-active); 
             --_stroke-op: var(--s-stroke-op-active);
         }
     }
-    /* 6. ВНУТРЕННИЕ МОДУЛИ */
     &__brand {
         display: flex; align-items: center; flex-shrink: 0;
         height: var(--nav-content-h); width: var(--nav-content-h);
     }
 
-    /* ============================================================
-       7. ПОИСКОВЫЙ МОДУЛЬ (Search Module) | Contextual Physics
-       ============================================================ */
     &__search {
         --_search-w-idle: var(--nav-search-w-idle);
         --_search-w-focus: var(--nav-search-w-focus);
@@ -167,7 +151,6 @@
             }
         }
 
-        /* MORPH: Кнопка Лаборатории (Состояние Поиска в Лабе) */
         body.is-lab-active & {
             cursor: pointer;
 
@@ -194,7 +177,6 @@
         }
     }
 
-    /* Mobile: match desktop hover/active behavior */
     @media (max-width: $bp-lg) {
         body.is-lab-active & {
             --_bg-op: var(--s-glass-op-active);

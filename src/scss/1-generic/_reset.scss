@@ -1,9 +1,3 @@
-/* ============================================================
-   1-GENERIC / _RESET.SCSS
-   Batura Library | Master System v7.3 [Virtual Viewport Overscan]
-   ============================================================ */
-
-/* [RULE:BOX_MODEL] */
 *,
 *::before,
 *::after {
@@ -13,20 +7,13 @@
 }
 
 html {
-  /* 
-     VIRTUAL BUFFER STRATEGY: 
-     Расширяем логическую область документа вверх на 100px.
-     Это создает "безопасную зону" для расчетов backdrop-filter.
-  */
   padding-top: var(--viewport-overscan);
   margin-top: calc(var(--viewport-overscan) * -1);
   
   width: 100%;
-  /* Высота + компенсация буфера */
   min-height: calc(100% + var(--viewport-overscan)); 
   overflow-x: hidden;
   
-  /* Базовая подложка должна быть темной (под цвет темы) */
   background-color: var(--p-blue-deep); 
   
   scrollbar-gutter: stable;
@@ -43,7 +30,6 @@ body {
   width: 100%;
   min-height: 100vh;
   
-  /* body прозрачный, чтобы сквозь него просвечивал канвас в зоне буфера */
   background-color: transparent !important; 
   
   color: var(--color-text-main);
@@ -54,22 +40,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   
-  /* Важно для работы Lenis в расширенном вьюпорте */
   overflow-y: visible;
   overflow-x: hidden;
   overscroll-behavior-y: none;
 }
 
-/* Верхний "edge-guard" слой против окраски окна */
-
-/* 
-   LAYER: BACKGROUND (Three.js Shader Sync)
-   Канвас теперь физически начинается в начале виртуального буфера (-100px).
-*/
 #liquid-bg-canvas {
   position: fixed;
   
-  /* Отрисовываем шейдер за пределами видимости */
   top: calc(var(--viewport-overscan) * -1); 
   left: calc(var(--viewport-overscan) * -1);
   width: calc(100vw + var(--viewport-overscan-double));
@@ -78,18 +56,12 @@ body {
   z-index: -1; 
   pointer-events: none;
   
-  /* Аппаратная стабилизация */
   transform: translateZ(0); 
   will-change: transform;
 }
 
-/* 
-   BACKDROP FIX: 
-   Дополнительный слой-заглушка под канвасом 
-*/
 #viewport-backdrop {
   position: fixed;
-  /* Тоже расширяем вверх */
   top: calc(var(--viewport-overscan) * -1);
   left: 0;
   right: 0;
@@ -102,15 +74,12 @@ body {
   transform: translateZ(0);
 }
 
-/* Контентная обертка */
 #app-wrapper, 
 main {
   position: relative;
-  /* Благодаря padding-top: 100px у html, контент начнется точно на y: 0 для юзера */
   z-index: 1;
 }
 
-/* СБРОС ИНТЕРАКТИВНЫХ ЭЛЕМЕНТОВ */
 a {
   text-decoration: none;
   color: inherit;
@@ -137,7 +106,6 @@ button {
   user-select: none;
 }
 
-/* IMAGE RESET */
 img, svg {
   display: block;
   max-width: 100%;

@@ -1,12 +1,8 @@
-/* ============================================================
-   DATA / LIBRARY-EXPRESSIONS.JS
-   ============================================================ */
-
 export const EXPRESSIONS_DB = [
     { 
         title: 'Chain Core', 
         category: 'math', 
-        labID: 'chain-core', // Имя файла в папке js/lab/
+        labID: 'chain-core',
         description: 'Цепочка слоев с задержкой и смещением.',
         previewID: 'preview-01'
     },

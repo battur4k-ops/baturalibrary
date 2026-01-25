@@ -19,7 +19,6 @@ export const labConfig = {
         { type: 'data', content: '// КОМПИЛЯТОР' },
         { type: 'hero', content: 'ENGINE' },
 
-        // Вкладки
         { 
             type: 'tabs', 
             id: 'mode', 
@@ -29,13 +28,10 @@ export const labConfig = {
             ] 
         },
 
-        // Окно кода
         { type: 'code-block' },
 
-        // Кнопка копирования
         { type: 'copy-button', label: 'COPY_EXPRESSION' },
  
-        // Инструкция
         { 
             type: 'instruction', 
             content: [
@@ -46,14 +42,13 @@ export const labConfig = {
         }
     ],
 
-    // Формулы для вкладок
     codeTemplates: {
-        position: (v) => `// AE_CHAIN_CORE_PRO\nvar delay = ${v.delay};\nvar mX = ${v.mX};\nvar mY = ${v.mY};\n\nif (index > 1) {\n  var p = thisComp.layer(index-1);\n  var r = sourceRectAtTime();\n  var vW = r.width * (transform.scale[0]/100);\n  var vH = r.height * (transform.scale[1]/100);\n  var pPos = p.transform.position.valueAtTime(time - delay);\n  pPos + [vW * mX, vH * mY];\n} else {\n  value;\n}`,
+        position: (v) => `var delay = ${v.delay};\nvar mX = ${v.mX};\nvar mY = ${v.mY};\n\nif (index > 1) {\n  var p = thisComp.layer(index-1);\n  var r = sourceRectAtTime();\n  var vW = r.width * (transform.scale[0]/100);\n  var vH = r.height * (transform.scale[1]/100);\n  var pPos = p.transform.position.valueAtTime(time - delay);\n  pPos + [vW * mX, vH * mY];\n} else {\n  value;\n}`,
 
         scale: (v) => {
             const source = v.scaleDelay ? 'valueAtTime(time - delay)' : 'value';
             const delayLine = v.scaleDelay ? `var delay = ${v.delay};\n` : 'var delay = 0;\n';
-            return `// AE_CHAIN_CORE_PRO\n${delayLine}var step = ${v.step};\n\nif (index > 1) {\n  var p = thisComp.layer(index-1);\n  var s = p.transform.scale.${source};\n  s * (1 + step/100);\n} else {\n  value;\n}`;
+            return `${delayLine}var step = ${v.step};\n\nif (index > 1) {\n  var p = thisComp.layer(index-1);\n  var s = p.transform.scale.${source};\n  s * (1 + step/100);\n} else {\n  value;\n}`;
         }
     }
 };

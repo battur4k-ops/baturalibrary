@@ -43,8 +43,7 @@ export const labConfig = {
         }
     ],
     codeTemplates: {
-        source: (v) => `// BATURA_TEXT_COUNTER_PRO
-var value = ${v.value};
+        source: (v) => `var value = ${v.value};
 var duration = ${v.duration};
 var smoothness = ${v.smoothness};
 var invert = ${v.invert ? 1 : 0};

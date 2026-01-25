@@ -1,10 +1,4 @@
-/* ============================================================
-   5-COMPONENTS / _FOOTER.SCSS
-   Batura Library | System Synced v7.7 [Geometric Symmetry]
-   ============================================================ */
-
 .b-footer {
-  /* 1. ПАРАМЕТРЫ ЛИНИЙ (Синхронизация) */
   --footer-stroke-color: rgba(var(--p-white-rgb), calc(var(--s-stroke-op-idle) * 0.5));
   --_exit-delay: var(--stagger-step);
 
@@ -20,7 +14,6 @@
     grid-template-columns: 1.5fr 1fr 1fr;
     gap: var(--space-xl);
     
-    /* ФИКС: Якорь для выравнивания заголовков всех колонок в одну линию */
     align-items: start; 
 
     @media (max-width: $bp-footer) {
@@ -56,7 +49,6 @@
   }
 
   &__group {
-    /* Синхронизируем вертикальный зазор заголовков с левой колонкой */
     @include flow-engine(var(--space-md));
 
     .l-flow {
@@ -73,7 +65,6 @@
     --_link-op: var(--s-text-op-idle);
     color: rgba(var(--p-white-rgb), var(--_link-op));
     
-    /* Только цветовая анимация */
     transition: color var(--d-fast) var(--e-out) var(--_exit-delay);
     
     display: block;

@@ -1,26 +1,16 @@
 :root {
-  /* --- 1. UI MASTER DIMENSIONS (Source of Truth) --- */
-  /* Это главная ручка управления всеми кнопками в системе */
   --ui-h-btn-master: clamp(36px, 4.5vh, 48px); 
   
-  /* --- 2. BUTTON DERIVATIVES --- */
-  /* Ссылаемся на мастер-высоту, чтобы не дублировать clamp */
   --ui-h-btn: var(--ui-h-btn-master);
   
-  /* [WARNING: LILITH] Нижний порог 9px — это грань читаемости. 
-     Для JetBrains Mono это терпимо, но следи за контрастом. */
   --ui-fs-btn: clamp(9px, 0.7vw, 11px);
   
-  /* Твои горизонтальные "уши" */
   --ui-p-btn: clamp(20px, 2.5vw, 32px);
   
-  /* Автоматический расчет радиуса таблетки (Pill-shape) */
   --ui-radius-btn: calc(var(--ui-h-btn) / 2);
   
-  /* --- 3. INPUTS & NAVIGATION --- */
   --ui-fs-search: calc(var(--nav-h-start) * 0.28);
 
-  /* --- 4. RANGE CONTROL --- */
   --ui-range-h: 20px;
   --ui-range-track-h: 2px;
   --ui-range-thumb: 12px;
@@ -28,7 +18,6 @@
   --ui-range-h-mobile: 40px;
   --ui-range-thumb-offset: -5px;
 
-  /* --- 5. LAB PREVIEW --- */
   --lab-preview-layer-size: clamp(120px, 18vw, 180px);
   --lab-preview-layer-radius: calc(var(--radius-master) * 0.5);
   --lab-preview-layer-gap: var(--space-xs);

@@ -5,26 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Batura Library | Master System v7.0</title>
     
-    <!-- SYSTEM FONTS: Inter & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;700&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
     
-    <!-- CORE ARCHITECTURE (ITCSS) -->
     <link rel="stylesheet" href="src/scss/main.css?v=7.0.5">
 </head>
 <body class="is-loading" data-page="home">
 
-    <!-- LAYER: BG SHADER (Three.js Sync) -->
     <canvas id="liquid-bg-canvas"></canvas>
 
-    <!-- UNIFIED NAVBAR WEB-COMPONENT -->
     <batura-navbar></batura-navbar>
 
     <div id="app-wrapper">
         <main id="app-root">
             
-            <!-- SECTION: HERO -->
             <section class="l-container">
                 <div class="l-flow">
                     <span class="text-data" data-content-key="hero.kicker">Motion Design // Professional Hub</span>
@@ -36,29 +31,19 @@
                 </div>
             </section>
 
-            <!-- SECTION: ACCORDION (INTERACTIVE CORE) -->
             <section class="l-container">
-                <!-- 
-                    [LEGO_CONSTRUCTOR]: 
-                    Контейнер пуст. AccordionManager.js автоматически 
-                    соберет сюда карточки из атомарных блоков.
-                -->
                 <div class="b-accordion" id="mainAccordion"></div>
             </section>
 
-            <!-- UNIFIED FOOTER WEB-COMPONENT -->
             <batura-footer></batura-footer>
 
         </main>
     </div>
 
-    <!-- EXTERNAL DEPENDENCIES -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     
-    <!-- SYSTEM LOGIC -->
     <script src="src/js/background.js"></script>
     
-    <!-- MASTER ENTRY POINT (Module Architecture) -->
     <script src="src/js/main.js" type="module"></script>
 </body>
 </html>

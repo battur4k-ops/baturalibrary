@@ -1,10 +1,4 @@
-/* ============================================================
-   5-COMPONENTS / _STATIC-CARD.SCSS
-   Batura Library | Bottom Anchor v32.1 [Gravity Sync]
-   ============================================================ */
-
 .b-static-card {
-  /* 1. ГЕОМЕТРИЯ И МАТЕРИАЛ */
   --s-card-radius: var(--radius-master);
   --_preview-radius: calc(var(--s-card-radius) - (var(--p-card) * 0.5));
 
@@ -15,11 +9,8 @@
   flex-direction: column;
   position: relative;
   
-  /* ИЗМЕНЕНИЕ: height: 100% позволяет карточке растягиваться 
-     под высоту самой длинной карточки в ряду. */
   height: 100%; 
 
-  /* 2. СОСТОЯНИЯ (БЕЗ ИЗМЕНЕНИЙ) */
   --_bg-op: var(--s-glass-op-base);
   --_stroke-op: var(--s-stroke-op-idle);
   --_text-op: var(--s-text-op-idle);
@@ -39,7 +30,6 @@
     --_text-op: 1;
   }
 
-  /* 3. ВЬЮПОРТ (Внутренняя гравитация) */
   &__viewport {
     padding: var(--p-card);
     @include flow-engine(var(--space-md)); 
@@ -49,9 +39,6 @@
     border-radius: inherit; 
     position: relative;
     
-    /* ИЗМЕНЕНИЕ: Убираем overflow, если это возможно. 
-       Если внутри есть картинки, которые надо резать — 
-       лучше дать border-radius самим картинкам. */
     overflow: visible; 
   }
 
@@ -68,7 +55,6 @@
     font-weight: 400; 
   }
 
-  /* 4. ТЕКСТОВЫЙ БЛОК (БЕЗ ИЗМЕНЕНИЙ) */
   &__body {
     flex: none; 
     display: flex;
@@ -84,14 +70,11 @@
     }
   }
 
-  /* 5. КНОПКА (Гравитация вкл.) */
   &__actions { 
     display: flex; 
     justify-content: flex-start; 
     width: 100%; 
     
-    /* ИЗМЕНЕНИЕ: margin-top: auto выталкивает блок вниз.
-       var(--space-sm) остается как минимальный отступ, если текста много. */
     margin-top: auto; 
     padding-top: var(--space-sm); 
   }
@@ -102,7 +85,6 @@
     gap: var(--space-sm);
   }
 
-  /* 6. ПРЕВЬЮ И АДАПТИВ (БЕЗ ИЗМЕНЕНИЙ) */
   .b-preview-box {
     --local-preview-radius: var(--_preview-radius);
     width: 100%;

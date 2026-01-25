@@ -1,33 +1,27 @@
 :root {
-  /* --- 1. CORE PHYSICS (Фундамент) --- */
   --s-glass-blur-none: 0px;
-  --s-glass-blur: 3px;       // Чуть добавила для благородства
+  --s-glass-blur: 3px;
   --s-glass-blur-strong: 15px;
   --s-glass-blur-intense: 45px;
-  --s-stroke-width: 0.5px;    // Тот самый hairline, который пропал
+  --s-stroke-width: 0.5px;
 
-  /* --- 2. MATERIAL DENSITY (Прозрачность фона) --- */
   --s-glass-op-base: 0.005;    
   --s-glass-op-hover: 0.02;   
   --s-glass-op-active: 0.02;  
 
-  /* --- 3. STROKE INTENSITY (Прозрачность обводки) --- */
   --s-stroke-op-idle: 0.15;
   --s-stroke-op-hover: 0.40;
   --s-stroke-op-active: 0.98;
 
-  /* --- 4. GLARE (Световой слой) --- */
   --s-glare-op-hover: 0.03;   
   --s-glare-op-active: 0.03;  
 
-  /* --- 5. PATTERN --- */
   --m-dot-size: 1px;
   --m-dot-op: 0.02;
   --m-dot-layer-op: 0.15;
   
 }
 
-/* iOS Safari: стабилизируем hairline, чтобы не было "рваной" обводки */
 @supports (-webkit-touch-callout: none) {
   :root {
     --s-stroke-width: 0.75px;

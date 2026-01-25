@@ -33,8 +33,7 @@ export const labConfig = {
         }
     ],
     codeTemplates: {
-        source: (v) => `// BATURA_TEXT_TIMER_PRO
-var hours = ${v.hours};
+        source: (v) => `var hours = ${v.hours};
 var minutes = ${v.minutes};
 var seconds = ${v.seconds};
 var ms = ${v.ms};

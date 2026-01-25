@@ -15,7 +15,6 @@ export class CardManager {
     init() {
         this.render();
         
-        // ДЕЛЕГИРОВАНИЕ КЛИКА: Слушаем весь контейнер
         this.grid.addEventListener('click', (e) => this.handleActionClick(e));
 
         on(EVENTS.FILTER_CHANGED, (e) => this.filterByTag(e.detail.tag));

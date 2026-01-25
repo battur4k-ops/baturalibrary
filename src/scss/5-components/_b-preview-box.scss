@@ -1,8 +1,3 @@
-/* ============================================================
-   4-COMPONENTS / _B-PREVIEW-BOX.SCSS
-   Batura Library | Preview Engine [Lab Sync Update]
-   ============================================================ */
-
 .b-preview-box {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -11,7 +6,6 @@
   
   border-radius: var(--local-preview-radius, var(--radius-inner));
   
-  // Обводка карточки (box-shadow из миксина)
   @include glass-panel(inherit); 
   --_bg-op: var(--s-glare-op-hover);
 

@@ -15,7 +15,6 @@
     background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op-fallback, var(--s-glass-op-base)));
   }
   
-  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
   transition: 
     background-color var(--d-fast) var(--e-out),
     box-shadow var(--d-fast) var(--e-out),

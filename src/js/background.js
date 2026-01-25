@@ -1,8 +1,3 @@
-/* ============================================================
-   BACKGROUND.JS — HIGH-FIDELITY ENGINE (Persistence Optimized)
-   Batura Library | Shader Sync v11.2 [Overscan & Virtual Viewport]
-   ============================================================ */
-
 (function() {
     const STORAGE_KEY = 'batura_theme_index';
     const canvas = document.getElementById('liquid-bg-canvas');
@@ -10,7 +5,6 @@
     const isIOS = CSS.supports('-webkit-touch-callout', 'none');
     const isTouch = window.matchMedia('(pointer: coarse)').matches;
 
-    // 1. ЧИТАЕМ СОХРАНЕННУЮ ТЕМУ
     const savedTheme = localStorage.getItem(STORAGE_KEY);
     const parsedTheme = savedTheme !== null ? parseInt(savedTheme, 10) : 0;
     const initialIndex = Number.isNaN(parsedTheme) ? 0 : parsedTheme;
@@ -132,9 +126,6 @@
 
     let tMouse = new THREE.Vector2(0.5, 0.5), cMouse = new THREE.Vector2(0.5, 0.5);
 
-    // КОРРЕКТИРОВКА МЫШИ ПОД OVERSCAN
-    // Поскольку канвас сдвинут на -100px, нам нужно добавить 100px к координатам мыши,
-    // чтобы "пятно" шейдера находилось точно под курсором в окне браузера.
     window.addEventListener('mousemove', e => {
         const offset = getOverscan();
         const canvasW = window.innerWidth + (offset * 2);
@@ -170,10 +161,8 @@
         resize.lastW = w;
         resize.lastH = h;
 
-        // renderer.setSize установит размеры холста
         renderer.setSize(w, h);
         
-        // Передаем полное разрешение холста в шейдер для корректного UV-маппинга
         if (uniforms.u_res) {
             uniforms.u_res.value.set(w, h);
         }

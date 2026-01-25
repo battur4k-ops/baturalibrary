@@ -5,27 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Expressions | Batura Library</title>
 
-    <!-- Основной CSS -->
     <link rel="stylesheet" href="../src/scss/main.css?v=7.0.5" />
 </head>
 
-<!-- 
-  ВАЖНО:
-  --page-bg задаётся на уровне body (или через класс страницы)
-  Меняется от страницы к странице
--->
 <body class="page-expressions is-loading" data-page="expressions">
 
-    <!-- 0. VIEWPORT BACKDROP (анти edge-bleeding) -->
     <div id="viewport-backdrop"></div>
 
-    <!-- 1. Слой цифровой физики -->
     <canvas id="liquid-bg-canvas"></canvas>
 
-    <!-- 2. FAKE VIEWPORT / VIEWPORT PROXY -->
     <div id="viewport-proxy">
 
-        <!-- LAB INTERFACE (НЕ ТРОГАЕМ, fixed) -->
         <div class="l-lab-interface">
             <aside class="l-lab-interface__column l-lab-interface__column--setup"></aside>
 
@@ -36,14 +26,11 @@
             <aside class="l-lab-interface__column l-lab-interface__column--engine"></aside>
         </div>
 
-        <!-- NAVBAR -->
         <batura-navbar></batura-navbar>
 
-        <!-- APP -->
         <div id="app-wrapper">
             <main id="app-root">
 
-                <!-- HEADER -->
                 <section class="l-container p-page-v">
                     <div class="l-flow">
                         <span class="text-data" data-content-key="hero.kicker">// AE_LIBRARY</span>
@@ -60,12 +47,10 @@
                     </div>
                 </section>
 
-                <!-- CATALOG -->
                 <section class="l-container">
                     <div id="expressionsGrid"></div>
                 </section>
 
-                <!-- FOOTER -->
                 <batura-footer></batura-footer>
 
             </main>
@@ -73,7 +58,6 @@
 
     </div>
 
-    <!-- ЗАВИСИМОСТИ -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="../src/js/background.js"></script>
     <script src="../src/js/main.js" type="module"></script>

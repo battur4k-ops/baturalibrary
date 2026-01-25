@@ -1,15 +1,9 @@
-/* ============================================================
-   5-COMPONENTS / _BUTTON.SCSS (Fixed Centering & Jitter)
-   Batura Library | Unified Button v24.4 [Clean Center]
-   ============================================================ */
-
 .ui-button {
   text-decoration: none;
   color: inherit;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   
-  /* 1. ГЕОМЕТРИЯ */
   --btn-h: var(--ui-h-btn-master); 
   --btn-radius: calc(var(--radius-master) * 0.4); 
   
@@ -17,38 +11,33 @@
   min-width: 0; 
   padding-inline: var(--ui-p-btn); 
 
-  /* Interaction Proxies */
   --_bg-op: var(--s-glass-op-base);
   --_stroke-op: var(--s-stroke-op-idle);
   --_text-op: var(--s-text-op-idle);
 
   @include glass-interactive(var(--btn-radius));
   
-  /* ПОРЯДОК ВАЖЕН: сначала экстенд, потом переопределение */
   @extend .text-data;
-  line-height: 1; // Сбрасываем line-height от .text-data
+  line-height: 1;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
   height: var(--btn-h);
   
-  /* ЦЕНТРИРОВАНИЕ И АНТИ-ДЕРГАНИЕ */
   padding-block: 0;
-  backface-visibility: hidden; // Убирает микро-дрожание при переходах
+  backface-visibility: hidden;
   
   cursor: pointer;
   z-index: 10;
   color: rgba(var(--p-white-rgb), var(--_text-op));
 
-  /* ВНУТРЕННИЙ ТЕКСТ */
   span {
     display: block;
-    line-height: 1; // Гарантируем чистое межстрочное расстояние
+    line-height: 1;
     pointer-events: none;
   }
 
-  /* Motion DNA */
   transition: 
     background-color var(--d-fast) var(--e-out),
     box-shadow var(--d-fast) var(--e-out),
@@ -58,7 +47,6 @@
   
   transition-delay: var(--stagger-step);
 
-  /* [ЛОГИКА ХОВЕРА] */
   .b-static-card:hover &, .b-card:hover & {
     transition-delay: 0s; 
     --_bg-op: var(--s-glass-op-hover);
@@ -78,9 +66,6 @@
     transition-duration: 0.1s;
   }
 
-  /* ============================================================
-     3. ТЕГИ И ПЕРЕКЛЮЧАТЕЛИ ЛАБЫ
-     ============================================================ */
   #tagsContainer &, .lab-mobile-switch & {
     --btn-h: var(--ui-h-btn-master);
     padding-inline: calc(var(--unit) * 6);
@@ -114,7 +99,6 @@
     }
   }
 
-  /* 2. НАВБАР */
   .b-navbar & {
     --btn-h: var(--nav-content-h); 
     --btn-radius: var(--nav-inner-radius);
@@ -127,13 +111,11 @@
     }
   }
 
-  /* 3. КНОПКА ЗАКРЫТИЯ */
   &--close:not(.b-navbar &) {
     width: var(--btn-h);
     padding: 0;
   }
 
-  /* Вне контекста */
   &:not(.b-static-card &):not(.b-card &):not(.b-navbar &):not(#tagsContainer &):not(.lab-mobile-switch &) {
     --_bg-op: var(--s-glass-op-hover);
     --_stroke-op: var(--s-stroke-op-hover);

@@ -1,4 +1,3 @@
-/* Обновленные переменные в :root для управления навбаром */
 :root {
   --nav-h-start: 56px; 
   --nav-h-morph: 56px; 
@@ -20,5 +19,5 @@
   --nav-top: var(--space-sm);
   --z-nav: 1000;
   
-  --d-morph: var(--d-base); // Убедись, что --d-base есть в _motion.scss
+  --d-morph: var(--d-base);
 }

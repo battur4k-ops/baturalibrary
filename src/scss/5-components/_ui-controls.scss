@@ -1,9 +1,3 @@
-/* ============================================================
-5-COMPONENTS / _UI-CONTROLS.SCSS
-Batura Library | Atomic Controls [Surgical Divider Sync]
-============================================================ */
-
-/* 1. UI-RANGE: Инженерный ползунок */
 .ui-range {
   width: 100%;
   min-width: 0;
@@ -43,7 +37,6 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
     }
   }
 
-  /* ЛОГИКА СОСТОЯНИЙ (ПК + Общая) */
   input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
@@ -55,9 +48,8 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
     display: block;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
-    touch-action: none; /* Запрет скролла при перетаскивании */
+    touch-action: none;
 
-    /* --- ТРЕК --- */
     &::-webkit-slider-runnable-track {
       width: 100%; height: var(--ui-range-track-h); background: transparent; border: none;
       box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
@@ -70,7 +62,6 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
       transition: box-shadow var(--d-fast) var(--e-out);
     }
 
-    /* --- КРУЖОЧЕК (THUMB) --- */
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
       height: var(--ui-range-thumb); width: var(--ui-range-thumb); border-radius: 50%;
@@ -88,7 +79,6 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
       transition: transform var(--d-fast) var(--e-out);
     }
 
-    /* ХОВЕР (ТОЛЬКО ПК) */
     @media (hover: hover) {
       &:hover:not(:active) {
         &::-webkit-slider-thumb { transform: scale(var(--scale-thumb-hover)); }
@@ -96,7 +86,6 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
       }
     }
 
-    /* АКТИВНОЕ СОСТОЯНИЕ (ЗАЖАТИЕ) — РАБОТАЕТ И НА ПК, И НА ТЕЛЕФОНЕ */
     &:active ~ .ui-range__header {
       --_local-text-op: 1;
     }
@@ -109,7 +98,6 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
     }
   }
 
-  /* Прокидываем состояния на родительский контейнер для трека и текста */
   &:has(input[type="range"]:active) {
     --_local-stroke-op: var(--s-stroke-op-active);
     --_local-text-op: 1;
@@ -131,7 +119,6 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
     transform: scale(var(--scale-thumb-active)) !important;
   }
   
-  /* Обычный ховер для родителя на ПК */
   @media (hover: hover) {
     &:hover {
       --_local-stroke-op: var(--s-stroke-op-hover);
@@ -147,7 +134,6 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   }
 }
 
-/* 2. UI-INFO: Группа заголовка и морфинг */
 .l-lab-interface {
   .ui-info-group {
     display: flex;
@@ -213,10 +199,6 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   }
 }
 
-/* ============================================================
-[UI ADAPTATION BLOCK] - Вынесен отдельно
-============================================================ */
-
 @media (max-width: $bp-lg) {
   .ui-range input[type="range"] {
     height: var(--ui-range-h-mobile); 
@@ -251,7 +233,6 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   }
 }
 
-/* iOS: увеличиваем область захвата ползунка */
 @supports (-webkit-touch-callout: none) {
   @media (max-width: $bp-lg) {
     .ui-range input[type="range"] {

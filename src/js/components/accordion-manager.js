@@ -1,8 +1,3 @@
-/* ============================================================
-   JS / COMPONENTS / ACCORDION-MANAGER.JS
-   Batura Library | High-Logic Accordion [Symmetry Edition]
-   ============================================================ */
-
 import { ACCORDION_DATA } from '../data/accordion-data.js';
 import { EVENTS, dispatch } from '../core/events.js';
 import { qs, qsa, setHTML } from '../core/dom.js';

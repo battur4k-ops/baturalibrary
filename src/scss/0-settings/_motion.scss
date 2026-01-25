@@ -1,31 +1,21 @@
-/* ============================================================
-   0-SETTINGS / _MOTION.SCSS
-   Batura Library | Global Rhythm DNA
-   ============================================================ */
-
 :root {
-  /* --- 1. DURATIONS (System Beat) --- */
-  --d-fast: 0.6s;      // Мгновенный отклик (кнопки, чекбоксы)
-  --d-base: 0.8s;      // Стандартное появление (Side-Fly, тултипы)
-  --d-slow: 1.0s;      // Сложные переходы (аккордеон, морфинг навбара)
+  --d-fast: 0.6s;
+  --d-base: 0.8s;
+  --d-slow: 1.0s;
   --d-morph: var(--d-slow);
 
-  /* --- 2. EASING (Apple Bezier) --- */
-  --e-out: cubic-bezier(0.16, 1, 0.3, 1);    // Породистый "вылет"
-  --e-in-out: cubic-bezier(0.65, 0, 0.35, 1); // Органичное перетекание
+  --e-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --e-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
-  /* --- 3. DYNAMICS --- */
   --entrance-offset: -20px;
   --stagger-step: 0.06s;
   --entrance-delay: 0.2s;
 
-  /* --- 4. OPACITY --- */
   --opacity-hidden: 0;
   --opacity-visible: 1;
   --opacity-muted: 0.5;
   --opacity-faint: 0.3;
 
-  /* --- 5. SCALE & ROTATE --- */
   --scale-press: 0.96;
   --scale-press-strong: 0.94;
   --scale-thumb-hover: 1.2;
@@ -37,9 +27,7 @@
   --rotate-icon-hidden: -45deg;
   --rotate-icon-visible: 0deg;
 
-  /* --- 4. MASTER TRANSITIONS (Semantic Shortcuts) --- */
   --t-material: background-color var(--d-fast) ease, box-shadow var(--d-fast) ease;
   --t-text: color var(--d-fast) ease;
-  /* Асимметричный вход */
   --t-entrance: opacity var(--d-base) ease, transform var(--d-base) var(--e-out);
 }

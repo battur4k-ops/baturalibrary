@@ -42,7 +42,6 @@ export class LabManager {
             const module = await import(`../lab/${labID}.js`);
             this.currentLabConfig = module.labConfig;
             
-            // Сброс параметров
             this.currentParams = {};
             this.activeTab = this.currentLabConfig.defaultTab || 'position';
             this.currentParams.previewType = this.currentLabConfig.previewType || 'layers';
@@ -197,7 +196,6 @@ export class LabManager {
         }
         item.options.forEach(opt => {
             const btn = document.createElement('button');
-            // Стандартная кнопка из твоей системы
             const isActive = isModeTabs
                 ? this.activeTab === opt.id
                 : this.currentParams[item.id] === opt.id;
@@ -295,7 +293,6 @@ export class LabManager {
 
     createCopyButton(item) {
         const btn = document.createElement('button');
-        // Добавляем класс is-full-width, чтобы кнопка растянулась
         btn.className = 'ui-button is-full-width'; 
         btn.dataset.feedback = 'COPIED!';
         btn.innerHTML = `<span>${item.label}</span>`;
@@ -307,7 +304,6 @@ export class LabManager {
                 navigator.clipboard.writeText(code);
             }
             
-            // Визуальный фидбек
             btn.classList.add('is-copied');
             if (btn.copyTimeout) clearTimeout(btn.copyTimeout);
             btn.copyTimeout = setTimeout(() => {
@@ -447,7 +443,6 @@ export class LabManager {
         this.preview.setState(this.currentParams, this.activeTab);
     }
 
-    // --- ОСТАЛЬНАЯ ЛОГИКА (БЕЗ ИЗМЕНЕНИЙ) ---
     async initScroll(side) {
         const selector = side === 'left' ? '.l-lab-interface__column--setup' : '.l-lab-interface__column--engine';
         const colEl = qs(selector, this.interface);

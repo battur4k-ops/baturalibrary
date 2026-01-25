@@ -1,16 +1,9 @@
-/* ============================================================
-   DATA / FOOTER-DATA.JS
-   Batura Library | Content Manifest v1.0
-   ============================================================ */
-
 export const FOOTER_DATA = {
-    // Левая колонка
     brand: {
         label: "Batura Library",
         description: "Инструменты для After Effects. <br> Открыл — применил.",
     },
 
-    // Средние колонки (Динамические группы)
     groups: [
         {
             title: "Resources",
@@ -28,7 +21,6 @@ export const FOOTER_DATA = {
         }
     ],
 
-    // Нижняя панель
     bottom: {
         copyright: "© 2026 BATURA SYSTEM",
         version: "V1.0 BETA"

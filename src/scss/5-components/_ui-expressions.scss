@@ -1,27 +1,11 @@
-/* ============================================================
-   5-COMPONENTS / _UI-EXPRESSION.SCSS
-   Batura Library | Mandatory Engine Symmetry & Top Align
-   ============================================================ */
-
-/**
- * 1. ENGINE RHYTHM & ALIGNMENT
- * Настраиваем ритм правой колонки и убираем лишнее пространство сверху.
- */
 .l-lab-interface__column--engine {
-  
-  // 1. Убираем паддинг сверху у тела колонки, чтобы теги встали в упор к шапке
-
-
-  // 2. Умный ритм через l-flow (Симметрия)
   .l-flow {
-    --_rhythm: var(--space-md); // 32px
+    --_rhythm: var(--space-md);
     
-    // Сбрасываем марджин у первого элемента (тегов)
     & > *:first-child {
       margin-top: 0;
     }
 
-    // Обязательные отступы между элементами
     .ui-tabs-group + .b-code-box {
       margin-top: var(--_rhythm);
     }
@@ -32,9 +16,6 @@
   }
 }
 
-/**
- * 2. CODE BOX
- */
 .b-code-box {
   --_code-radius: calc(var(--radius-master) - (var(--space-md) * 0.5));
   
@@ -75,9 +56,6 @@
 
 }
 
-/**
- * 3. TABS GROUP
- */
 .ui-tabs-group {
   display: flex;
   width: 100%;
@@ -115,9 +93,6 @@
   margin-top: var(--space-md);
 }
 
-/**
- * 4. COPY BUTTON
- */
 .ui-button.is-full-width {
   @extend .ui-button;
   width: 100%;
@@ -161,15 +136,10 @@
 }
 
 
-/**
- * 5. INSTRUCTION
- */
 .ui-instruction {
   width: 100%;
-  /* --- 1. ОТСТУП СВЕРХУ БЛОКА (от предыдущего контента) --- */
   margin-top: var(--space-md);
 
-  /* --- 2. ЛИНИЯ + ОТСТУП ДО ЗАГОЛОВКА --- */
   padding-top: var(--space-md);
   border-top: var(--s-stroke-width) solid
     rgba(var(--p-white-rgb), var(--s-stroke-op-idle));
@@ -180,12 +150,10 @@
     margin: 0;
     line-height: var(--lh-tight);
 
-    /* --- 3. ЕДИНСТВЕННЫЙ ОТСТУП ДО ОПИСАНИЯ --- */
     margin-bottom: var(--space-sm);
   }
 
   &__content {
-    /* ВАЖНО: здесь больше НЕТ margin-top */
     margin: 0;
   }
 
@@ -194,7 +162,6 @@
     margin: 0;
     max-width: var(--measure-narrow);
 
-    /* --- 4. ОТСТУП МЕЖДУ ПУНКТАМИ --- */
     & + .text-info-hint {
       margin-top: var(--space-xs);
     }

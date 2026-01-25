@@ -69,9 +69,7 @@ export class CardPreviewManager {
                 this.instanceByBox.set(box, instance);
                 this.handleBoxResize(box);
                 if (this.resizeObserver) this.resizeObserver.observe(box);
-            } catch (err) {
-                // ignore missing preview
-            }
+            } catch (err) {}
         }
         if (this.instances.length) {
             this.startTime = performance.now();
