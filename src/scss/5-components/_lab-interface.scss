@@ -312,6 +312,9 @@ body.is-lab-active {
           overscroll-behavior: contain;
           -webkit-overflow-scrolling: touch;
           touch-action: pan-y;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          &::-webkit-scrollbar { width: 0; height: 0; }
           
           mask-image: linear-gradient(
             to bottom,
@@ -338,5 +341,13 @@ body.is-lab-active {
     &[data-mobile-panel="engine"] .l-lab-interface__column--setup {
       display: none;
     }
+  }
+}
+
+/* iOS Safari: убираем свечение у превью */
+@supports (-webkit-touch-callout: none) {
+  .l-lab-interface .lab-preview-display::before,
+  .l-lab-interface .lab-preview-display::after {
+    opacity: 0;
   }
 }

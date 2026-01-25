@@ -2019,14 +2019,28 @@ body.is-lab-active #app-wrapper {
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     mask-image: linear-gradient(to bottom, black 0%, black 90%, transparent 100%);
     -webkit-mask-image: linear-gradient(to bottom, black 0%, black 90%, transparent 100%);
+  }
+  body .l-lab-interface__column--setup .b-lab-column-body::-webkit-scrollbar, body .l-lab-interface__column--engine .b-lab-column-body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
   }
   body .l-lab-interface__column--setup .b-lab-column-body .l-flow, body .l-lab-interface__column--engine .b-lab-column-body .l-flow {
     padding-top: var(--space-md);
   }
   body .l-lab-interface[data-mobile-panel=setup] .l-lab-interface__column--engine, body .l-lab-interface[data-mobile-panel=engine] .l-lab-interface__column--setup {
     display: none;
+  }
+}
+
+/* iOS Safari: убираем свечение у превью */
+@supports (-webkit-touch-callout: none) {
+  .l-lab-interface .lab-preview-display::before,
+  .l-lab-interface .lab-preview-display::after {
+    opacity: 0;
   }
 }
 @supports (-webkit-touch-callout: none) {
