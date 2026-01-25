@@ -243,3 +243,12 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   }
 }
 
+/* iOS: увеличиваем область захвата ползунка */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: $bp-lg) {
+    .ui-range input[type="range"] {
+      height: calc(var(--ui-range-h-mobile) + 10px);
+    }
+  }
+}
+

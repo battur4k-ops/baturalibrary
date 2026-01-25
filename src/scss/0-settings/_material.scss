@@ -30,6 +30,6 @@
 /* iOS Safari: стабилизируем hairline, чтобы не было "рваной" обводки */
 @supports (-webkit-touch-callout: none) {
   :root {
-    --s-stroke-width: 0.5px;
+    --s-stroke-width: 0.75px;
   }
 }

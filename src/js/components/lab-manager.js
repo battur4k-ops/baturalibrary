@@ -329,6 +329,9 @@ export class LabManager {
     }
 
     close() {
+        if (document.activeElement && typeof document.activeElement.blur === 'function') {
+            document.activeElement.blur();
+        }
         if (this.interface) {
             this.interface.classList.remove('is-lab-ready');
             this.interface.classList.add('is-lab-motion');
