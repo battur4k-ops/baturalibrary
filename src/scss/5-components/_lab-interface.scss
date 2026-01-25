@@ -248,6 +248,8 @@ body.is-lab-active {
     transform: translate3d(-50%, -100%, 0);
     overflow: hidden;
     position: fixed;
+    opacity: 0;
+    transition: transform var(--d-morph) var(--e-out), opacity var(--d-fast) var(--e-out);
     
     --_stroke-op: var(--s-stroke-op-active);
     --_blur: var(--s-glass-blur-none);
@@ -270,9 +272,11 @@ body.is-lab-active {
     
     /* КОЛОНКИ В МОБИЛЬНОЙ ВЕРСИИ */
     &__column {
-      transform: none;
+      transform: translateY(var(--space-sm));
       min-height: 0;
       height: 100%;
+      opacity: 0;
+      transition: transform var(--d-morph) var(--e-out), opacity var(--d-fast) var(--e-out);
       
       &--viewport {
         grid-area: viewport;
@@ -341,6 +345,15 @@ body.is-lab-active {
     &[data-mobile-panel="engine"] .l-lab-interface__column--setup {
       display: none;
     }
+  }
+
+  body.is-lab-active .l-lab-interface {
+    opacity: 1;
+  }
+
+  body.is-lab-active .l-lab-interface__column {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
