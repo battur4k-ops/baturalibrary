@@ -364,6 +364,12 @@ body.is-lab-active {
     opacity: 0;
   }
 
+  .l-lab-interface.is-lab-ready {
+    --_blur: var(--s-glass-blur-none);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   .l-lab-interface.is-lab-ready .lab-preview-display {
     --_blur: var(--s-glass-blur-none);
     backdrop-filter: none;

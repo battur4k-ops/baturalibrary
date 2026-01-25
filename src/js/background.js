@@ -7,6 +7,7 @@
     const STORAGE_KEY = 'batura_theme_index';
     const canvas = document.getElementById('liquid-bg-canvas');
     if (!canvas) return;
+    const isIOS = CSS.supports('-webkit-touch-callout', 'none');
 
     // 1. ЧИТАЕМ СОХРАНЕННУЮ ТЕМУ
     const savedTheme = localStorage.getItem(STORAGE_KEY);
@@ -156,6 +157,17 @@
         const overscan = getOverscan();
         const w = window.innerWidth + (overscan * 2);
         const h = window.innerHeight + (overscan * 2);
+
+        if (isIOS && resize.lastW) {
+            const heightDelta = Math.abs(h - resize.lastH);
+            const widthDelta = Math.abs(w - resize.lastW);
+            if (widthDelta === 0 && heightDelta < 120) {
+                return;
+            }
+        }
+
+        resize.lastW = w;
+        resize.lastH = h;
 
         // renderer.setSize установит размеры холста
         renderer.setSize(w, h);

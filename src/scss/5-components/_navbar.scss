@@ -152,6 +152,12 @@
             }
         }
 
+        @media (max-width: $bp-lg) {
+            input {
+                font-size: 16px;
+            }
+        }
+
         .close-icon {
             position: absolute;
             right: calc((var(--nav-content-h) - var(--_icon-size)) / 2);
