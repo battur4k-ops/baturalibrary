@@ -34,8 +34,7 @@
   height: var(--btn-h);
   
   /* ЦЕНТРИРОВАНИЕ И АНТИ-ДЕРГАНИЕ */
-  /* padding-top: 1px мягко опускает текст, если он кажется слишком высоким */
-  padding-top: var(--opt-text-nudge); 
+  padding-block: 0;
   backface-visibility: hidden; // Убирает микро-дрожание при переходах
   
   cursor: pointer;

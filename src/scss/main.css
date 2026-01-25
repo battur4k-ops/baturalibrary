@@ -971,8 +971,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   justify-content: center;
   height: var(--btn-h);
   /* ЦЕНТРИРОВАНИЕ И АНТИ-ДЕРГАНИЕ */
-  /* padding-top: 1px мягко опускает текст, если он кажется слишком высоким */
-  padding-top: var(--opt-text-nudge);
+  padding-block: 0;
   backface-visibility: hidden;
   cursor: pointer;
   z-index: 10;
@@ -2480,7 +2479,7 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   width: 100%;
   margin: 0;
   position: relative;
-  padding-top: var(--opt-text-nudge);
+  padding-top: 0;
 }
 .ui-button.is-full-width.is-copied,
 .ui-button.is-full-width:hover,
@@ -2505,7 +2504,6 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   letter-spacing: inherit;
   text-transform: inherit;
   pointer-events: none;
-  transform: translateY(var(--opt-text-nudge));
 }
 .ui-button.is-full-width.is-copied::after {
   opacity: 1;

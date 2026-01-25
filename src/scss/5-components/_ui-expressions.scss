@@ -100,7 +100,7 @@
   width: 100%;
   margin: 0; 
   position: relative;
-  padding-top: var(--opt-text-nudge);
+  padding-top: 0;
 }
 
 .ui-button.is-full-width.is-copied,
@@ -127,7 +127,6 @@
   letter-spacing: inherit;
   text-transform: inherit;
   pointer-events: none;
-  transform: translateY(var(--opt-text-nudge));
 }
 
 .ui-button.is-full-width.is-copied::after {

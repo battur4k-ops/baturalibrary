@@ -3,7 +3,7 @@
  * Unified Navbar v8.0 [Morphing Search-X Controller]
  */
 
-import { EVENTS, dispatch } from '../core/events.js';
+import { EVENTS, dispatch, on } from '../core/events.js';
 import { qs } from '../core/dom.js';
 
 class BaturaNavbar extends HTMLElement {
@@ -20,6 +20,11 @@ class BaturaNavbar extends HTMLElement {
         this._checkContext();
         this._setupSearch();
         this._handleScroll(); 
+
+        on(EVENTS.LAB_CLOSED, () => {
+            const input = qs('#globalSearch', this);
+            if (input) input.blur();
+        });
     }
 
     disconnectedCallback() {
