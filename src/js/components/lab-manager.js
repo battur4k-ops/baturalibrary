@@ -349,16 +349,25 @@ export class LabManager {
         }
         this.body.classList.remove('is-lab-active');
         const resetScrollLock = () => {
-            document.documentElement.style.overflow = '';
+            document.documentElement.style.overflow = 'auto';
             document.documentElement.style.height = '';
             document.documentElement.style.position = '';
-            this.body.style.overflow = '';
+            document.documentElement.style.minHeight = '';
+            document.documentElement.style.touchAction = '';
+            document.documentElement.style.overscrollBehavior = '';
+            this.body.style.overflow = 'auto';
             this.body.style.height = '';
             this.body.style.position = '';
+            this.body.style.minHeight = '';
+            this.body.style.touchAction = '';
+            this.body.style.overscrollBehavior = '';
             window.scrollTo({ top: window.scrollY, behavior: 'auto' });
         };
         requestAnimationFrame(resetScrollLock);
-        setTimeout(resetScrollLock, 300);
+        setTimeout(() => {
+            resetScrollLock();
+            window.dispatchEvent(new Event('resize'));
+        }, 300);
         if (this.readyTimeout) { clearTimeout(this.readyTimeout); this.readyTimeout = null; }
         if (this.leftLenis) this.leftLenis.destroy();
         if (this.rightLenis) this.rightLenis.destroy();

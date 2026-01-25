@@ -57,25 +57,12 @@
         --_bg-op: var(--s-glass-op-hover); 
         --_stroke-op: var(--s-stroke-op-hover);
 
-        /* ADAPTATION: Постоянный Active для мобилки */
-        @media (max-width: $bp-lg) {
-            --_bg-op: var(--s-glass-op-active); 
-            --_stroke-op: var(--s-stroke-op-active);
-        }
-
         // Изоляция кнопок
         .ui-button, &__search input {
             &:not(:hover):not(:focus) {
                 --_bg-op: var(--s-glass-op-hover);
                 --_stroke-op: var(--s-stroke-op-hover);
                 --_text-op: var(--s-text-op-hover);
-
-                /* Подсветка кнопок на мобилке тоже в Active */
-                @media (max-width: $bp-lg) {
-                    --_bg-op: var(--s-glass-op-active);
-                    --_stroke-op: var(--s-stroke-op-active);
-                    --_text-op: 1;
-                }
             }
         }
     }
@@ -203,6 +190,21 @@
                 transform: scale(var(--scale-icon-visible)) rotate(var(--rotate-icon-visible));
                 --_text-op: 1;
             }
+        }
+    }
+
+    /* Mobile: match desktop hover/active behavior */
+    @media (max-width: $bp-lg) {
+        body.is-lab-active & {
+            --_bg-op: var(--s-glass-op-active);
+            --_stroke-op: var(--s-stroke-op-active);
+        }
+
+        body.is-lab-active & .ui-button,
+        body.is-lab-active &__search input {
+            --_bg-op: var(--s-glass-op-hover);
+            --_stroke-op: var(--s-stroke-op-hover);
+            --_text-op: var(--s-text-op-hover);
         }
     }
 }

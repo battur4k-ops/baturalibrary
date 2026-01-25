@@ -250,12 +250,6 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
       height: calc(var(--ui-range-h-mobile) + 24px);
       touch-action: pan-x;
     }
-
-    .ui-range input[type="range"]::-webkit-slider-thumb {
-      height: calc(var(--ui-range-thumb-mobile) + 6px);
-      width: calc(var(--ui-range-thumb-mobile) + 6px);
-      margin-top: calc((var(--s-stroke-width) / 2) - ((var(--ui-range-thumb-mobile) + 6px) / 2));
-    }
   }
 }
 
