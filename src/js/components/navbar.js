@@ -42,11 +42,21 @@ class BaturaNavbar extends HTMLElement {
     _setupSearch() {
         const input = qs('#globalSearch', this);
         if (!input) return;
+        const closeIcon = qs('.close-icon', this);
 
         // Обычный поиск
         input.addEventListener('input', (e) => {
             if (!document.body.classList.contains('is-lab-active')) {
                 dispatch(EVENTS.SEARCH, { query: e.target.value });
+            }
+        });
+
+        // Не даем фокуситься поиску во время активной лабы (мобилка)
+        input.addEventListener('pointerdown', (e) => {
+            if (document.body.classList.contains('is-lab-active')) {
+                e.preventDefault();
+                input.blur();
+                dispatch(EVENTS.LAB_CLOSED);
             }
         });
 
@@ -63,6 +73,19 @@ class BaturaNavbar extends HTMLElement {
                 dispatch(EVENTS.LAB_CLOSED);
             }
         });
+
+        if (closeIcon) {
+            closeIcon.addEventListener('pointerdown', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dispatch(EVENTS.LAB_CLOSED);
+            });
+            closeIcon.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dispatch(EVENTS.LAB_CLOSED);
+            });
+        }
     }
 
     _handleScroll() {

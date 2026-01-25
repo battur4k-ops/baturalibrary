@@ -1983,6 +1983,8 @@ body.is-lab-active .b-navbar__search .close-icon {
   inset: 0;
   display: grid;
   place-items: center;
+  z-index: 1;
+  padding-bottom: var(--space-xl);
 }
 .l-lab-interface .lab-preview-layer {
   width: var(--lab-preview-layer-size);
@@ -2117,9 +2119,8 @@ body.is-lab-active #app-wrapper {
 /* 11. МОБИЛЬНАЯ АДАПТАЦИЯ */
 @media (max-width: 1100px) {
   body .l-lab-interface {
-    --lab-preview-layer-size: clamp(64px, 18vw, 110px);
+    --lab-preview-layer-size: clamp(32px, 10vw, 60px);
   }
-
   body.is-lab-active {
     overflow: hidden;
     height: 100dvh;

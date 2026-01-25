@@ -17,6 +17,7 @@ export class LabPreview {
         this.scaleBoost = 1.6;
         this.scaleSpeed = 1;
         this.motionRange = 48;
+        this.onResize = null;
         this.tick = this.tick.bind(this);
     }
 
@@ -56,6 +57,13 @@ export class LabPreview {
         this.scaleBoost = this.readPx(styles.getPropertyValue('--lab-preview-scale-boost'), 1.6);
         this.scaleSpeed = this.readPx(styles.getPropertyValue('--lab-preview-scale-speed'), 1);
         this.motionRange = this.readPx(styles.getPropertyValue('--lab-preview-motion'), 48);
+
+        const isMobile = window.matchMedia('(max-width: 1100px)').matches;
+        if (isMobile) {
+            this.layerSize *= 0.4;
+            this.layerStep *= 0.4;
+            this.layerRadius *= 0.4;
+        }
     }
 
     readPx(value, fallback) {
@@ -95,6 +103,15 @@ export class LabPreview {
         if (this.running) return;
         this.running = true;
         this.startTime = performance.now();
+        if (!this.onResize) {
+            this.onResize = () => {
+                if (this._resizeRAF) cancelAnimationFrame(this._resizeRAF);
+                this._resizeRAF = requestAnimationFrame(() => {
+                    this.readMetrics();
+                });
+            };
+            window.addEventListener('resize', this.onResize, { passive: true });
+        }
         this.rafId = requestAnimationFrame(this.tick);
     }
 
@@ -102,6 +119,12 @@ export class LabPreview {
         this.running = false;
         if (this.rafId) cancelAnimationFrame(this.rafId);
         this.rafId = null;
+        if (this.onResize) {
+            window.removeEventListener('resize', this.onResize);
+            this.onResize = null;
+        }
+        if (this._resizeRAF) cancelAnimationFrame(this._resizeRAF);
+        this._resizeRAF = null;
         if (this.stack) this.stack.innerHTML = '';
         this.layers = [];
     }

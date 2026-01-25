@@ -158,6 +158,8 @@
     inset: 0;
     display: grid;
     place-items: center;
+    z-index: 1;
+    padding-bottom: var(--space-xl);
   }
 
   .lab-preview-layer {
@@ -279,7 +281,7 @@ body.is-lab-active {
 /* 11. МОБИЛЬНАЯ АДАПТАЦИЯ */
 @media (max-width: $bp-lg) {
   body .l-lab-interface {
-    --lab-preview-layer-size: clamp(64px, 18vw, 110px);
+    --lab-preview-layer-size: clamp(32px, 10vw, 60px);
   }
 
   body.is-lab-active {
