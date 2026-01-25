@@ -113,6 +113,22 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
     --_local-stroke-op: var(--s-stroke-op-active);
     --_local-text-op: 1;
   }
+
+  &.is-active {
+    --_local-stroke-op: var(--s-stroke-op-active);
+    --_local-text-op: 1;
+  }
+
+  &.is-active input[type="range"]::-webkit-slider-runnable-track,
+  &.is-active input[type="range"]::-moz-range-track {
+    background-color: rgba(var(--p-white-rgb), 1);
+    box-shadow: none;
+  }
+
+  &.is-active input[type="range"]::-webkit-slider-thumb,
+  &.is-active input[type="range"]::-moz-range-thumb {
+    transform: scale(var(--scale-thumb-active)) !important;
+  }
   
   /* Обычный ховер для родителя на ПК */
   @media (hover: hover) {

@@ -8,6 +8,7 @@
     const canvas = document.getElementById('liquid-bg-canvas');
     if (!canvas) return;
     const isIOS = CSS.supports('-webkit-touch-callout', 'none');
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
 
     // 1. ЧИТАЕМ СОХРАНЕННУЮ ТЕМУ
     const savedTheme = localStorage.getItem(STORAGE_KEY);
@@ -158,7 +159,7 @@
         const w = window.innerWidth + (overscan * 2);
         const h = window.innerHeight + (overscan * 2);
 
-        if (isIOS && resize.lastW) {
+        if ((isIOS || isTouch) && resize.lastW) {
             const heightDelta = Math.abs(h - resize.lastH);
             const widthDelta = Math.abs(w - resize.lastW);
             if (widthDelta === 0 && heightDelta < 120) {

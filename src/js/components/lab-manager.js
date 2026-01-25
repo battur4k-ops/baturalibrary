@@ -260,6 +260,17 @@ export class LabManager {
             display.textContent = val.replace('.', ',');
             this.updateCodeDisplay();
         });
+
+        const activate = () => wrap.classList.add('is-active');
+        const deactivate = () => wrap.classList.remove('is-active');
+        input.addEventListener('pointerdown', activate);
+        input.addEventListener('pointerup', deactivate);
+        input.addEventListener('pointercancel', deactivate);
+        input.addEventListener('blur', deactivate);
+        input.addEventListener('change', deactivate);
+        input.addEventListener('touchstart', activate, { passive: true });
+        input.addEventListener('touchend', deactivate);
+
         return wrap;
     }
 

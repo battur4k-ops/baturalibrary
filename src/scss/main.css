@@ -208,7 +208,7 @@
 /* iOS Safari: стабилизируем hairline, чтобы не было "рваной" обводки */
 @supports (-webkit-touch-callout: none) {
   :root {
-    --s-stroke-width: 0.75px;
+    --s-stroke-width: 0.5px;
   }
 }
 
@@ -881,11 +881,6 @@ body.is-scrolled .b-navbar .ui-button:not(:hover):not(:focus), body.is-scrolled 
 }
 .b-navbar__search input:focus {
   width: var(--_search-w-focus);
-}
-@media (max-width: 1100px) {
-  .b-navbar__search input {
-    font-size: 16px;
-  }
 }
 .b-navbar__search .close-icon {
   position: absolute;
@@ -2263,6 +2258,17 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
 .ui-range:has(input[type=range]:active) {
   --_local-stroke-op: var(--s-stroke-op-active);
   --_local-text-op: 1;
+}
+.ui-range.is-active {
+  --_local-stroke-op: var(--s-stroke-op-active);
+  --_local-text-op: 1;
+}
+.ui-range.is-active input[type=range]::-webkit-slider-runnable-track, .ui-range.is-active input[type=range]::-moz-range-track {
+  background-color: rgba(var(--p-white-rgb), 1);
+  box-shadow: none;
+}
+.ui-range.is-active input[type=range]::-webkit-slider-thumb, .ui-range.is-active input[type=range]::-moz-range-thumb {
+  transform: scale(var(--scale-thumb-active)) !important;
 }
 @media (hover: hover) {
   .ui-range:hover {
