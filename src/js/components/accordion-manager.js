@@ -4,20 +4,45 @@
    ============================================================ */
 
 import { ACCORDION_DATA } from '../data/accordion-data.js';
+import { EVENTS, dispatch } from '../core/events.js';
+import { qs, qsa, setHTML } from '../core/dom.js';
+import { formatCategoryTag, normalizeCategory } from '../core/catalog-utils.js';
+import { setStoredThemeIndex } from '../core/theme-storage.js';
 
 export class AccordionManager {
     constructor() {
-        this.container = document.getElementById('mainAccordion');
-        if (!this.container) return;
+        this.accordionRoot = qs('#mainAccordion');
+        if (!this.accordionRoot) return;
         this.init();
     }
 
-    init() { this.render(); this.bindEvents(); }
+    init() {
+        this.renderCards();
+        this.bindCardEvents();
+    }
 
-    render() {
-        this.container.innerHTML = ACCORDION_DATA.map((item, index) => `
-            <article class="b-static-card ${index === 0 ? 'is-active' : ''}" 
-                     data-category="${item.category || 'math'}" 
+    renderCards() {
+        const html = ACCORDION_DATA.map((item, index) => this.getCardMarkup(item, index)).join('');
+        setHTML(this.accordionRoot, html);
+
+        this.cards = qsa('.b-static-card', this.accordionRoot);
+
+        if (window.updateBgTheme) {
+            window.updateBgTheme(ACCORDION_DATA[0].themeIndex);
+        }
+
+        dispatch(EVENTS.CONTENT_READY);
+    }
+
+    getCardMarkup(item, index) {
+        const isActive = index === 0 ? 'is-active' : '';
+        const category = normalizeCategory(item.category);
+        const ctaLabel = item.cta || 'Initialize';
+        const link = item.link || '#';
+
+        return `
+            <article class="b-static-card ${isActive}" 
+                     data-category="${category}" 
                      data-theme="${item.themeIndex}">
                 
                 <span class="b-static-card__index text-data">${item.index}</span>
@@ -25,58 +50,51 @@ export class AccordionManager {
                 
                 <div class="b-static-card__viewport">
                     <div class="b-static-card__body">
-                        <span class="text-data">// AE_${(item.category || 'math').toUpperCase()}</span>
+                        <span class="text-data">${formatCategoryTag(category)}</span>
                         <h3 class="text-heading">${item.title}</h3>
                         <p class="text-body">${item.description}</p>
                     </div>
 
                     <div class="b-static-card__actions">
-                        <!-- Изменили button на ссылку a, сохранив класс .ui-button -->
-                        <a href="${item.link || '#'}" class="ui-button">
-                            <span>${item.cta || 'Initialize'}</span>
+                        <a href="${link}" class="ui-button">
+                            <span>${ctaLabel}</span>
                         </a>
                     </div>
                 </div>
             </article>
-        `).join('');
-
-        this.cards = Array.from(this.container.querySelectorAll('.b-static-card'));
-        
-        // При первой загрузке активируем тему первой карточки
-        if (window.updateBgTheme) window.updateBgTheme(ACCORDION_DATA[0].themeIndex);
-        
-        window.dispatchEvent(new CustomEvent('batura:contentReady'));
+        `;
     }
 
-    bindEvents() {
+    bindCardEvents() {
         this.cards.forEach(card => {
-            const activate = (e) => {
-                // Если нажали на саму ссылку-кнопку, и карточка уже активна — позволяем переход
-                if (e.target.closest('.ui-button') && card.classList.contains('is-active')) {
-                    return; 
-                }
-
-                if (card.classList.contains('is-active')) return;
-                
-                // Если карточка не активна, активируем её и блокируем мгновенный переход по ссылке
-                e.preventDefault(); 
-                this.cards.forEach(c => c.classList.remove('is-active'));
-    card.classList.add('is-active');
-
-    const themeIndex = card.dataset.theme;
-    if (themeIndex !== undefined && window.updateBgTheme) {
-        const index = parseInt(themeIndex);
-        window.updateBgTheme(index);
-        
-        // СОХРАНЯЕМ ТЕМУ: Чтобы следующая страница её подхватила
-        localStorage.setItem('batura_theme_index', index);
-    }
-
-    window.dispatchEvent(new CustomEvent('batura:contentReady'));
-};
-
+            const activate = (e) => this.activateCard(card, e);
             card.addEventListener('mouseenter', activate);
             card.addEventListener('click', activate);
         });
+    }
+
+    activateCard(card, event) {
+        const isActive = card.classList.contains('is-active');
+        const isActionClick = event.target.closest('.ui-button');
+
+        if (isActionClick && isActive) return;
+        if (isActive) return;
+
+        event.preventDefault();
+        this.cards.forEach((entry) => entry.classList.remove('is-active'));
+        card.classList.add('is-active');
+
+        this.applyThemeFromCard(card);
+        dispatch(EVENTS.CONTENT_READY);
+    }
+
+    applyThemeFromCard(card) {
+        const themeIndex = card.dataset.theme;
+        if (themeIndex === undefined || !window.updateBgTheme) return;
+
+        const parsed = parseInt(themeIndex, 10);
+        if (Number.isNaN(parsed)) return;
+        window.updateBgTheme(parsed);
+        setStoredThemeIndex(parsed);
     }
 }

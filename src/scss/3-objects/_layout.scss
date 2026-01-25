@@ -57,8 +57,8 @@
      Микро-зазор в 1px и обрезка 0.5px. 
      Это разрывает контакт блюра с "серым краем" браузера.
   */
-  margin-top: 1px;
-  clip-path: inset(0.5px 0px 0px 0px);
+  margin-top: var(--opt-edge-gap);
+  clip-path: inset(var(--opt-edge-clip) 0 0 0);
 
   padding-top: calc(var(--nav-h) + var(--nav-top) + var(--hero-offset));
   padding-bottom: var(--p-page-bottom);
@@ -86,12 +86,16 @@ body .l-lab-interface {
   padding: 0;
 
   display: grid;
-  grid-template-columns: 380px 1fr 420px; 
+  grid-template-columns: var(--lab-panel-left-w) 1fr var(--lab-panel-right-w); 
   
   /* contain: paint может скрывать навбар, если он перекрывается. 
      Используем только для лабы */
   contain: paint;
   overflow: hidden;
+
+  @supports (-webkit-touch-callout: none) {
+    contain: none;
+  }
 }
 
 /**
@@ -123,15 +127,15 @@ batura-navbar {
  */
 .l-grid-expressions {
   display: grid;
-  align-items: start; 
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  align-items: stretch; 
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--catalog-card-min)), 1fr));
   gap: var(--space-md);
   width: 100%;
   
   /* Изоляция помогла карточкам не "грязнить" */
   isolation: isolate;
 
-  @media (max-width: 500px) {
+  @media (max-width: $bp-sm) {
     grid-template-columns: 1fr; 
     gap: var(--space-sm);
   }

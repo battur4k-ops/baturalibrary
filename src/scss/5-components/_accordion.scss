@@ -4,15 +4,15 @@
    ============================================================ */
 
 @keyframes cardItemEntrance {
-  0% { opacity: 0; transform: translate3d(var(--entrance-offset), 0, 0.1px); }
-  100% { opacity: 1; transform: translate3d(0, 0, 0.1px); }
+  0% { opacity: var(--opacity-hidden); transform: translate3d(var(--entrance-offset), 0, var(--opt-z-fix)); }
+  100% { opacity: var(--opacity-visible); transform: translate3d(0, 0, var(--opt-z-fix)); }
 }
 
 .b-accordion {
   display: flex;
   width: 100%;
   gap: var(--space-sm);
-  height: clamp(500px, 70vh, 750px);
+  height: clamp(var(--accordion-height-min), 70vh, var(--accordion-height-max));
   flex-direction: row;
 
   .b-static-card {
@@ -20,10 +20,10 @@
     overflow: hidden;
     cursor: pointer;
     flex: var(--card-grow-base) 0 10%;
-    min-width: 60px;
+    min-width: var(--accordion-tab-min);
     
     --s-card-radius: var(--radius-master);
-    @include glass-surface(var(--s-card-radius));
+    @include glass-panel(var(--s-card-radius));
 
     transition: flex var(--d-slow) var(--e-out), 
                 background-color var(--d-fast) var(--e-out), 
@@ -51,7 +51,7 @@
     &:hover, &.is-active {
         .b-static-card__index { color: rgba(var(--p-white-rgb), var(--s-text-op-hover)); }
         .b-static-card__deco {
-            opacity: 0; visibility: hidden;
+            opacity: var(--opacity-hidden); visibility: hidden;
             transition-property: none; transition-duration: 0s;
         }
     }
@@ -59,7 +59,7 @@
     &__viewport {
       height: 100%; padding: var(--p-card);
       display: flex; flex-direction: column; justify-content: flex-end; 
-      opacity: 0; visibility: hidden; z-index: 7;
+      opacity: var(--opacity-hidden); visibility: hidden; z-index: 7;
       flex: none; 
     }
 
@@ -69,7 +69,7 @@
       --_stroke-op: var(--s-stroke-op-hover);
 
       .b-static-card__viewport {
-        opacity: 1; visibility: visible;
+        opacity: var(--opacity-visible); visibility: visible;
         & > * {
           animation: cardItemEntrance var(--d-base) var(--e-out) both;
           &:nth-child(1) { animation-delay: calc(var(--entrance-delay) + 0.1s); }
@@ -114,28 +114,28 @@
 /* ============================================================
      MOBILE ADAPTIVE (Vertical Stack)
      ============================================================ */
-  @media (max-width: 768px) {
+  @media (max-width: $bp-md) {
     flex-direction: column;
-    height: clamp(600px, 80vh, 850px);
+    height: clamp(var(--accordion-height-min-mobile), 80vh, var(--accordion-height-max-mobile));
 
     .b-static-card {
       min-width: 100%;
-      min-height: 55px; 
-      flex: var(--card-grow-base) 0 55px;
-      border-radius: 100px; 
+      min-height: var(--accordion-tab-min-mobile); 
+      flex: var(--card-grow-base) 0 var(--accordion-tab-min-mobile);
+      border-radius: var(--accordion-tab-radius); 
 
       /* Убираем расширение при случайном скролле по закрытым папкам */
-      &:not(.is-active):hover { flex: var(--card-grow-base) 0 55px; }
+      &:not(.is-active):hover { flex: var(--card-grow-base) 0 var(--accordion-tab-min-mobile); }
 
       &__index { top: 50%; transform: translateY(-50%); }
       &__deco {
         writing-mode: horizontal-tb; top: 50%; left: 50%;
-        transform: translate(-50%, -50%); opacity: 1;
+        transform: translate(-50%, -50%); opacity: var(--opacity-visible);
       }
 
       &.is-active {
         /* 1. ФИКС: Убираем вторую степень растяжения (фиксируем на 7.5) */
-        flex: 7.5 0 10%; 
+        flex: var(--accordion-flex-mobile-active) 0 10%; 
         border-radius: var(--s-card-radius);
 
         /* 2. ФИКС: Состояние ACTIVE (Максимальная яркость) сразу при открытии */
@@ -156,11 +156,11 @@
           --_stroke-op: var(--s-stroke-op-active);
           --_text-op: 1;
           transition-delay: 0s;
-          &:active { transform: scale(0.94); }
+          &:active { transform: scale(var(--scale-press-strong)); }
         }
 
         /* Убираем прыжок размера при повторном тапе */
-        &:hover { flex: 7.5 0 10%; }
+        &:hover { flex: var(--accordion-flex-mobile-active) 0 10%; }
       }
     }
   }

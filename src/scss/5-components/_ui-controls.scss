@@ -47,7 +47,7 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
     -webkit-appearance: none;
     appearance: none;
     width: 100%;
-    height: 20px;
+    height: var(--ui-range-h);
     background: transparent;
     cursor: pointer;
     outline: none;
@@ -58,13 +58,13 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
 
     /* --- ТРЕК --- */
     &::-webkit-slider-runnable-track {
-      width: 100%; height: 2px; background: transparent; border: none;
+      width: 100%; height: var(--ui-range-track-h); background: transparent; border: none;
       box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
       transition: box-shadow var(--d-fast) var(--e-out);
     }
 
     &::-moz-range-track {
-      width: 100%; height: 2px; background: transparent; border: none;
+      width: 100%; height: var(--ui-range-track-h); background: transparent; border: none;
       box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
       transition: box-shadow var(--d-fast) var(--e-out);
     }
@@ -72,11 +72,9 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
     /* --- КРУЖОЧЕК (THUMB) --- */
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
-      height: 12px; width: 12px; border-radius: 50%;
-      background: rgb(var(--p-white-rgb));
-      @include glass-surface(50%);
-      --_bg-op: 1; --_stroke-op: 0.3;
-      margin-top: -5px; 
+      height: var(--ui-range-thumb); width: var(--ui-range-thumb); border-radius: 50%;
+      @include glass-thumb;
+      margin-top: var(--ui-range-thumb-offset); 
       transition: transform var(--d-fast) var(--e-out), background var(--d-fast) var(--e-out);
       will-change: transform;
       border: none;
@@ -84,34 +82,29 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
 
     &::-moz-range-thumb {
       border: none; 
-      height: 12px; width: 12px; border-radius: 50%;
-      background: rgb(var(--p-white-rgb));
-      @include glass-surface(50%);
-      --_bg-op: 1; --_stroke-op: 0.3;
+      height: var(--ui-range-thumb); width: var(--ui-range-thumb); border-radius: 50%;
+      @include glass-thumb;
       transition: transform var(--d-fast) var(--e-out);
     }
 
     /* ХОВЕР (ТОЛЬКО ПК) */
     @media (hover: hover) {
       &:hover:not(:active) {
-        &::-webkit-slider-thumb { transform: scale(1.2); }
-        &::-moz-range-thumb { transform: scale(1.2); }
+        &::-webkit-slider-thumb { transform: scale(var(--scale-thumb-hover)); }
+        &::-moz-range-thumb { transform: scale(var(--scale-thumb-hover)); }
       }
     }
 
     /* АКТИВНОЕ СОСТОЯНИЕ (ЗАЖАТИЕ) — РАБОТАЕТ И НА ПК, И НА ТЕЛЕФОНЕ */
-    &:active {
-      /* Пока зажат ползунок, переменные принудительно горят */
-      & ~ .ui-range__header { // Если заголовок после инпута, или через родителя:
-         --_local-text-op: 1;
-      }
+    &:active ~ .ui-range__header {
+      --_local-text-op: 1;
+    }
 
-      &::-webkit-slider-thumb { 
-        transform: scale(1.4) !important; 
-      }
-      &::-moz-range-thumb { 
-        transform: scale(1.4) !important; 
-      }
+    &:active::-webkit-slider-thumb { 
+      transform: scale(var(--scale-thumb-active)) !important; 
+    }
+    &:active::-moz-range-thumb { 
+      transform: scale(var(--scale-thumb-active)) !important; 
     }
   }
 
@@ -156,8 +149,8 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
 
       .description-inner {
         min-height: 0;
-        opacity: 0;
-        transform: translateY(-5px); 
+        opacity: var(--opacity-hidden);
+        transform: translateY(var(--opt-info-shift)); 
         transition: opacity var(--d-fast) var(--e-out), transform var(--d-base) var(--e-out);
       }
     }
@@ -167,7 +160,7 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
         grid-template-rows: 1fr; 
         margin-top: var(--space-sm); 
         .description-inner {
-          opacity: 1;
+          opacity: var(--opacity-visible);
           transform: translateY(0);
           transition-delay: 0.1s; 
         }
@@ -200,42 +193,36 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
 [UI ADAPTATION BLOCK] - Вынесен отдельно
 ============================================================ */
 
-@media (max-width: 1100px) {
-  .ui-range {
-    /* Мобильная высота клика */
-    input[type="range"] {
-      height: 40px; 
+@media (max-width: $bp-lg) {
+  .ui-range input[type="range"] {
+    height: var(--ui-range-h-mobile); 
+  }
 
-      &::-webkit-slider-runnable-track {
-        height: var(--s-stroke-width); 
-        background-color: rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
-        box-shadow: none;
-        transition: background-color var(--d-fast) var(--e-out);
-      }
+  .ui-range input[type="range"]::-webkit-slider-runnable-track {
+    height: var(--s-stroke-width); 
+    background-color: rgba(var(--m-glass-base-rgb), var(--_local-stroke-op));
+    box-shadow: none;
+    transition: background-color var(--d-fast) var(--e-out);
+  }
 
-      &::-webkit-slider-thumb {
-        height: 14px; width: 14px; 
-        margin-top: calc((var(--s-stroke-width) / 2) - 7px);
-        box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), 0.3);
-      }
-    }
+  .ui-range input[type="range"]::-webkit-slider-thumb {
+    height: var(--ui-range-thumb-mobile); width: var(--ui-range-thumb-mobile); 
+    margin-top: calc((var(--s-stroke-width) / 2) - (var(--ui-range-thumb-mobile) / 2));
+    box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), 0.3);
+  }
 
-    /* Состояние через JS (если используется класс is-active) */
-    &.is-active {
-      --_local-stroke-op: var(--s-stroke-op-active);
-      --_local-text-op: 1;
+  .ui-range.is-active {
+    --_local-stroke-op: var(--s-stroke-op-active);
+    --_local-text-op: 1;
+  }
 
-      input[type="range"] {
-        &::-webkit-slider-thumb {
-          transform: scale(1.3) !important;
-        }
-      }
-    }
+  .ui-range.is-active input[type="range"]::-webkit-slider-thumb {
+    transform: scale(var(--scale-thumb-active-mobile)) !important;
   }
 
   .ui-info-tag {
-    padding: 10px;
-    margin: -10px -10px -10px 0;
+    padding: var(--opt-touch-pad);
+    margin: calc(var(--opt-touch-pad) * -1) calc(var(--opt-touch-pad) * -1) calc(var(--opt-touch-pad) * -1) 0;
     &:not(:active) { --_local-tag-op: var(--s-text-op-idle); }
   }
 }

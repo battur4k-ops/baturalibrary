@@ -16,7 +16,7 @@
     --_bg-op: var(--s-glass-op-base);
     --_stroke-op: var(--s-stroke-op-idle);
 
-    @include glass-surface(var(--nav-radius));
+    @include glass-panel(var(--nav-radius));
     
     position: fixed;
     top: var(--nav-top);
@@ -30,7 +30,7 @@
     align-items: center;
     justify-content: space-between;
     
-    transform: translate3d(0, 0, 0.1px); 
+    transform: translate3d(0, 0, var(--opt-z-fix)); 
     backface-visibility: hidden;
 
     transition: 
@@ -58,7 +58,7 @@
         --_stroke-op: var(--s-stroke-op-hover);
 
         /* ADAPTATION: Постоянный Active для мобилки */
-        @media (max-width: 1100px) {
+        @media (max-width: $bp-lg) {
             --_bg-op: var(--s-glass-op-active); 
             --_stroke-op: var(--s-stroke-op-active);
         }
@@ -71,7 +71,7 @@
                 --_text-op: var(--s-text-op-hover);
 
                 /* Подсветка кнопок на мобилке тоже в Active */
-                @media (max-width: 1100px) {
+                @media (max-width: $bp-lg) {
                     --_bg-op: var(--s-glass-op-active);
                     --_stroke-op: var(--s-stroke-op-active);
                     --_text-op: 1;
@@ -81,7 +81,7 @@
     }
 
     /* 5. LAB INTERFACE RESONANCE (Desktop Only) */
-    @media (min-width: 1101px) {
+    @media (min-width: $bp-lg-up) {
         body.is-lab-active:has(.l-lab-interface:hover) & {
             --_bg-op: var(--s-glass-op-active); 
             --_stroke-op: var(--s-stroke-op-active);
@@ -97,8 +97,8 @@
        7. ПОИСКОВЫЙ МОДУЛЬ (Search Module) | Contextual Physics
        ============================================================ */
     &__search {
-        --_search-w-idle: clamp(160px, 18vw, 240px);
-        --_search-w-focus: clamp(220px, 25vw, 360px);
+        --_search-w-idle: var(--nav-search-w-idle);
+        --_search-w-focus: var(--nav-search-w-focus);
         --_icon-size: calc(var(--nav-content-h) * 0.45);
         --_icon-stroke: var(--s-stroke-width);
 
@@ -116,7 +116,7 @@
         input {
             @extend .text-data;
             border: none; 
-            @include glass-surface(var(--nav-inner-radius));
+            @include glass-panel(var(--nav-inner-radius));
             
             height: var(--nav-content-h);
             width: var(--_search-w-idle);
@@ -137,8 +137,8 @@
                 color var(--d-fast) var(--e-out);
 
             &::placeholder { 
-                color: rgba(var(--p-white-rgb), var(--s-text-op-idle)); 
-                opacity: 0.5;
+            color: rgba(var(--p-white-rgb), var(--s-text-op-idle)); 
+            opacity: var(--opacity-muted);
             }
 
             &:hover, &:focus {
@@ -160,8 +160,8 @@
             display: flex; align-items: center; justify-content: center;
             
             pointer-events: none;
-            opacity: 0;
-            transform: scale(0.5) rotate(-45deg);
+            opacity: var(--opacity-hidden);
+            transform: scale(var(--scale-icon-hidden)) rotate(var(--rotate-icon-hidden));
             color: rgba(var(--p-white-rgb), var(--_text-op));
             z-index: 5;
             
@@ -185,7 +185,7 @@
             cursor: pointer;
 
             &:active {
-                transform: scale(0.96);
+                transform: scale(var(--scale-press));
                 transition-duration: 0.1s;
             }
 
@@ -195,12 +195,12 @@
                 cursor: pointer;
                 color: transparent;
                 --_stroke-op: var(--s-stroke-op-active);
-                &::placeholder { opacity: 0; }
+                &::placeholder { opacity: var(--opacity-hidden); }
             }
             
             .close-icon {
-                opacity: 1;
-                transform: scale(1) rotate(0deg);
+                opacity: var(--opacity-visible);
+                transform: scale(var(--scale-icon-visible)) rotate(var(--rotate-icon-visible));
                 --_text-op: 1;
             }
         }

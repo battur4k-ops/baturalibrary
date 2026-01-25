@@ -3,6 +3,9 @@
    Batura Library | Master Logic v7.9 [Lab & Blur Sync Optimized]
    ============================================================ */
 
+import { EVENTS, on } from './core/events.js';
+import { safeImport } from './core/module-loader.js';
+
 /**
  * [LAW: ZERO_G_STABILITY] 
  * Мгновенное снятие лоадера.
@@ -24,7 +27,7 @@ class ViewportPhysics {
         };
         this.init();
         
-        window.addEventListener('batura:contentReady', () => {
+        on(EVENTS.CONTENT_READY, () => {
             requestAnimationFrame(() => this.refresh());
         });
     }
@@ -73,6 +76,7 @@ class ThemeController {
         const deepColor = style.getPropertyValue(`--p-${category}-deep`).trim();
         if (deepColor) {
             this.root.style.backgroundColor = deepColor;
+            this.root.style.setProperty('--color-bg', deepColor);
         }
     }
 
@@ -109,18 +113,7 @@ class NavigationController {
     }
 }
 
-/* --- 2. УНИВЕРСАЛЬНЫЙ ЗАГРУЗЧИК МОДУЛЕЙ --- */
-
-async function safeImport(path) {
-    try {
-        return await import(path);
-    } catch (error) {
-        console.warn(`Batura System: Module [${path}] is missing. Skipping...`);
-        return null;
-    }
-}
-
-/* --- 3. ГЛАВНЫЙ ДИСПЕТЧЕР (Start Engine) --- */
+/* --- 2. ГЛАВНЫЙ ДИСПЕТЧЕР (Start Engine) --- */
 
 const startBatura = async () => {
     // А) Запуск встроенных систем ядра
@@ -129,7 +122,7 @@ const startBatura = async () => {
     new ViewportPhysics();
 
     // Б) Внешние зависимости (Smooth Scroll с поддержкой блокировки)
-    const LenisModule = await safeImport('https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/+esm');
+    const LenisModule = await safeImport('https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/+esm', import.meta.url);
     if (LenisModule) {
         const Lenis = LenisModule.default;
         const lenis = new Lenis({ 
@@ -139,14 +132,14 @@ const startBatura = async () => {
             syncTouch: true 
         });
 
-        window.addEventListener('batura:contentReady', () => {
+        on(EVENTS.CONTENT_READY, () => {
             requestAnimationFrame(() => {
                 lenis.resize();
             });
         });
 
-        window.addEventListener('batura:labOpened', () => lenis.stop());
-        window.addEventListener('batura:labClosed', () => lenis.start());
+        on(EVENTS.LAB_OPENED, () => lenis.stop());
+        on(EVENTS.LAB_CLOSED, () => lenis.start());
 
         const scrollFn = (time) => { 
             lenis.raf(time); 
@@ -155,26 +148,30 @@ const startBatura = async () => {
         requestAnimationFrame(scrollFn);
     }
 
-    // В) Компоненты UI (Web Components)
-    await safeImport('./components/navbar.js');
-    await safeImport('./components/footer.js');
+    // В) Контент
+    const ContentModule = await safeImport('./components/content-manager.js', import.meta.url);
+    if (ContentModule) new ContentModule.ContentManager();
 
-    // Г) Динамический Контент (LEGO Constructor)
-    const LabModule = await safeImport('./components/lab-manager.js');
+    // Г) Компоненты UI (Web Components)
+    await safeImport('./components/navbar.js', import.meta.url);
+    await safeImport('./components/footer.js', import.meta.url);
+
+    // Д) Динамический Контент (LEGO Constructor)
+    const LabModule = await safeImport('./components/lab-manager.js', import.meta.url);
     if (LabModule) new LabModule.LabManager(); 
 
     if (document.getElementById('mainAccordion')) {
-        const AccModule = await safeImport('./components/accordion-manager.js');
+        const AccModule = await safeImport('./components/accordion-manager.js', import.meta.url);
         if (AccModule) new AccModule.AccordionManager();
     }
 
     if (document.getElementById('expressionsGrid')) {
-        const CardManagerModule = await safeImport('./components/card-manager.js');
+        const CardManagerModule = await safeImport('./components/card-manager.js', import.meta.url);
         if (CardManagerModule) new CardManagerModule.CardManager();
     }
 
     if (document.getElementById('tagsContainer')) {
-        const ExManagerModule = await safeImport('./components/expression-manager.js');
+        const ExManagerModule = await safeImport('./components/expression-manager.js', import.meta.url);
         if (ExManagerModule) new ExManagerModule.ExpressionManager();
     }
 

@@ -3,6 +3,9 @@
  * Unified Navbar v8.0 [Morphing Search-X Controller]
  */
 
+import { EVENTS, dispatch } from '../core/events.js';
+import { qs } from '../core/dom.js';
+
 class BaturaNavbar extends HTMLElement {
     constructor() {
         super();
@@ -25,40 +28,37 @@ class BaturaNavbar extends HTMLElement {
 
     _checkContext() {
         const hasCatalog = !!document.getElementById('expressionsGrid') || !!document.querySelector('.l-grid-expressions');
-        const searchContainer = this.querySelector('.b-navbar__search');
+        const searchContainer = qs('.b-navbar__search', this);
         if (hasCatalog && searchContainer) {
             searchContainer.classList.remove('is-hidden');
         }
     }
 
     _setupSearch() {
-        const searchContainer = this.querySelector('.b-navbar__search');
-        const input = this.querySelector('#globalSearch');
+        const input = qs('#globalSearch', this);
         if (!input) return;
 
         // Обычный поиск
         input.addEventListener('input', (e) => {
             if (!document.body.classList.contains('is-lab-active')) {
-                window.dispatchEvent(new CustomEvent('batura:search', {
-                    detail: { query: e.target.value }
-                }));
+                dispatch(EVENTS.SEARCH, { query: e.target.value });
             }
         });
 
-// Логика кнопки закрытия
-    input.addEventListener('click', (e) => {
-        if (document.body.classList.contains('is-lab-active')) {
-            e.preventDefault();
-            
-            // ХИРУРГИЧЕСКОЕ ВМЕШАТЕЛЬСТВО:
-            // 1. Немедленно убираем фокус, чтобы :focus в CSS не сработал после смены стейта
-            input.blur(); 
-            
-            // 2. Генерируем событие закрытия
-            window.dispatchEvent(new CustomEvent('batura:labClosed'));
-        }
-    });
-}
+        // Логика кнопки закрытия
+        input.addEventListener('click', (e) => {
+            if (document.body.classList.contains('is-lab-active')) {
+                e.preventDefault();
+                
+                // ХИРУРГИЧЕСКОЕ ВМЕШАТЕЛЬСТВО:
+                // 1. Немедленно убираем фокус, чтобы :focus в CSS не сработал после смены стейта
+                input.blur(); 
+                
+                // 2. Генерируем событие закрытия
+                dispatch(EVENTS.LAB_CLOSED);
+            }
+        });
+    }
 
     _handleScroll() {
         if (!this._ticking) {

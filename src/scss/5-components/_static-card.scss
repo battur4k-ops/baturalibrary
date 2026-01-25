@@ -8,7 +8,7 @@
   --s-card-radius: var(--radius-master);
   --_preview-radius: calc(var(--s-card-radius) - (var(--p-card) * 0.5));
 
-  @include glass-surface(var(--s-card-radius));
+  @include glass-panel(var(--s-card-radius));
   
   width: 100%;
   display: flex;
@@ -107,11 +107,11 @@
     --local-preview-radius: var(--_preview-radius);
     width: 100%;
     aspect-ratio: 16/9;
-    @include glass-surface(var(--local-preview-radius));
+    @include glass-panel(var(--local-preview-radius));
     overflow: hidden;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: $bp-md) {
     &.is-focused {
       --_bg-op: var(--s-glass-op-hover);
       --_stroke-op: var(--s-stroke-op-active);

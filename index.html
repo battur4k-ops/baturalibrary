@@ -13,7 +13,7 @@
     <!-- CORE ARCHITECTURE (ITCSS) -->
     <link rel="stylesheet" href="src/scss/main.css">
 </head>
-<body class="is-loading">
+<body class="is-loading" data-page="home">
 
     <!-- LAYER: BG SHADER (Three.js Sync) -->
     <canvas id="liquid-bg-canvas"></canvas>
@@ -27,9 +27,9 @@
             <!-- SECTION: HERO -->
             <section class="l-container">
                 <div class="l-flow">
-                    <span class="text-data">Motion Design // Professional Hub</span>
-                    <h1 class="text-hero">Batura <br> Library</h1>
-                    <p class="text-body">
+                    <span class="text-data" data-content-key="hero.kicker">Motion Design // Professional Hub</span>
+                    <h1 class="text-hero" data-content-key="hero.title" data-content-mode="html">Batura <br> Library</h1>
+                    <p class="text-body" data-content-key="hero.description">
                         Профессиональный хаб для автоматизации моушн-дизайна. 
                         Мы создаем инструменты, которые забирают рутину на себя.
                     </p>

@@ -5,11 +5,11 @@
 
 .b-alphabet-nav {
   position: sticky;
-  top: 150px;
+  top: var(--alphabet-nav-top);
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
-  min-width: 40px;
+  min-width: var(--alphabet-nav-min-w);
   z-index: 10;
 
   &__item {
@@ -17,23 +17,23 @@
     align-items: center;
     gap: var(--space-sm);
     cursor: pointer;
-    opacity: 0.3;
+  opacity: var(--opacity-faint);
     transition: opacity var(--d-fast) var(--e-out);
 
     &:hover {
-      opacity: 1;
-      .b-alphabet-nav__line { width: 24px; }
+      opacity: var(--opacity-visible);
+      .b-alphabet-nav__line { width: var(--alphabet-nav-line-w); }
     }
   }
 
   &__char {
     @extend .text-data;
-    font-size: 11px;
+    font-size: var(--fs-caption);
   }
 
   &__line {
-    height: 1px;
-    width: 12px;
+    height: var(--alphabet-nav-line-h);
+    width: var(--alphabet-nav-line-w-short);
     background: var(--color-text-main);
     transition: width var(--d-fast) var(--e-out);
   }

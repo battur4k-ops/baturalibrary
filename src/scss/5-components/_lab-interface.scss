@@ -5,33 +5,27 @@
 
 .l-lab-interface {
   /* 1. ОСНОВНЫЕ СТИЛИ */
-  @include glass-surface(0 0 var(--radius-master) var(--radius-master));
+  @include glass-panel(0 0 var(--radius-master) var(--radius-master));
   
-  --_dynamic-blur: 0px;
-  backdrop-filter: blur(var(--_dynamic-blur));
-  -webkit-backdrop-filter: none;
+  --_dynamic-blur: var(--s-glass-blur-none);
+  --_blur: var(--_dynamic-blur);
+  backdrop-filter: blur(var(--_blur));
+  -webkit-backdrop-filter: blur(var(--_blur));
   
-  opacity: 1;
+  opacity: var(--opacity-visible);
   visibility: hidden;
   pointer-events: none;
   transform: translate3d(-50%, -100%, 0);
   will-change: transform, backdrop-filter;
   
-  /* 2. ОБВОДКА (3 стороны, без верхней) */
-  border-top: none;
-  
-  /* iOS FIX: убираем box-shadow из превью, оставляем для основного контейнера */
-  --_border-shadow: 
-    inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))),
-    inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))),
-    inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
-  
-  box-shadow: var(--_border-shadow);
+  /* 2. ЕДИНАЯ ОБВОДКА (3 стороны, без верхней) */
+  &, .lab-preview-display {
+    @include glass-border-shadow();
+  }
   
   /* 3. ПЕРЕМЕННЫЕ */
   --_bg-op: var(--s-glass-op-hover);
   --_stroke-op: var(--s-stroke-op-hover);
-  --_blur: var(--_dynamic-blur);
   --_glare-op: 0;
   --_nav-bottom: calc(var(--nav-h) + var(--nav-top));
   --_content-top: var(--_nav-bottom);
@@ -55,38 +49,37 @@
         z-index: 10;
         position: relative;
       }
+      
+      .b-lab-column-body {
+        flex: 1 1 auto;
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+        padding: 0 var(--space-md) var(--space-xl);
+        
+        /* МАСКА ДЛЯ КОНТЕНТА (без верхнего блюра) */
+        --_fade-bottom: 90%;
+        mask-image: linear-gradient(
+          to bottom,
+          black 0%,
+          black var(--_fade-bottom),
+          transparent 100%
+        );
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          black 0%,
+          black var(--_fade-bottom),
+          transparent 100%
+        );
+        
+        .l-flow { 
+          padding-top: var(--space-md); 
+        }
+      }
     }
   }
   
-  /* 5. ТЕЛО КОЛОНКИ (ВЫНЕСЕНО НА ОДИН УРОВЕНЬ) */
-  .b-lab-column-body {
-    flex: 1 1 auto;
-    overflow: hidden;
-    position: relative;
-    z-index: 1;
-    padding: 0 var(--space-md) var(--space-xl);
-    
-    /* МАСКА ДЛЯ КОНТЕНТА (без верхнего блюра) */
-    --_fade-bottom: 90%;
-    mask-image: linear-gradient(
-      to bottom,
-      black 0%,
-      black var(--_fade-bottom),
-      transparent 100%
-    );
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      black 0%,
-      black var(--_fade-bottom),
-      transparent 100%
-    );
-    
-    .l-flow { 
-      padding-top: var(--space-md); 
-    }
-  }
-  
-  /* 6. РАЗДЕЛИТЕЛЬ */
+  /* 5. РАЗДЕЛИТЕЛЬ */
   .b-lab-divider {
     width: 100%;
     height: var(--space-xs);
@@ -101,7 +94,7 @@
     will-change: box-shadow;
   }
   
-  /* 7. ТЕКСТОВЫЕ ЭЛЕМЕНТЫ */
+  /* 6. ТЕКСТОВЫЕ ЭЛЕМЕНТЫ */
   .text-heading {
     position: relative;
     width: 100%;
@@ -115,7 +108,7 @@
     padding-bottom: 0;
   }
   
-  /* 8. ПРЕВЬЮ С iOS-ФИКСАМИ */
+  /* 7. ПРЕВЬЮ */
   .lab-preview-display {
     width: 100%;
     height: calc(100% - var(--_content-top));
@@ -123,85 +116,51 @@
     position: relative;
     border-radius: var(--radius-inner) var(--radius-inner) 0 0;
     overflow: hidden;
-    
-    /* ТОЛЬКО СТЕКЛО, БЕЗ ОБВОДКИ */
-    @include glass-surface(inherit);
-    
-    /* iOS FIX: изолируем backdrop-filter от glow */
-    isolation: isolate;
+    @include glass-panel(inherit);
     
     --_bg-op: var(--s-glare-op-hover);
     border-top: none;
-    
-    /* iOS FIX: УБИРАЕМ inset box-shadow из превью */
-    box-shadow: none;
+    /* Убираем верхнюю и нижнюю обводку (дубли с навбаром и рамкой лабы) */
+    box-shadow:
+      inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))),
+      inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
     
     transition: background-color var(--d-fast) var(--e-out), 
+                box-shadow var(--d-fast) var(--e-out), 
                 backdrop-filter var(--d-fast) var(--e-out);
     
-    /* Градиенты превью (обновлено для iOS) */
-    &::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      
-      /* iOS-safe glow с фиксированной позицией */
-      background: radial-gradient(
-        circle at top center,
-        rgba(var(--theme-accent-rgb), 0.15),
-        transparent 70%
-      );
-      transform: translateZ(0);
-      will-change: opacity;
-      z-index: 1;
-    }
-    
-    /* iOS FIX: ОБВОДКА ПРЕВЬЮ ЧЕРЕЗ ПСЕВДОЭЛЕМЕНТ */
+    /* Градиенты превью */
+    &::before,
     &::after {
       content: '';
       position: absolute;
       inset: 0;
       pointer-events: none;
-      z-index: 20;
-      border-radius: inherit;
-      
-      /* ОБВОДКА 3 СТОРОНЫ */
-      border-left: var(--s-stroke-width) solid rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
-      border-right: var(--s-stroke-width) solid rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
-      border-bottom: var(--s-stroke-width) solid rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
-      border-top: none;
-      
-      /* КЛЮЧ ДЛЯ iOS */
-      transform: translateZ(0);
-      transition: border-color var(--d-fast) var(--e-out);
     }
+    
+    &::before {
+      background: radial-gradient(circle at 50% 0%, rgba(var(--theme-accent-rgb), 0.15), transparent 80%);
+      z-index: 1;
+    }
+
+    @include glass-dots;
   }
   
-  /* 9. ХОВЕР ЭФФЕКТЫ */
+  /* 8. ХОВЕР ЭФФЕКТЫ */
   &:hover {
     transition-delay: 0s;
     --_bg-op: var(--s-glass-op-hover);
     --_stroke-op: var(--s-stroke-op-active);
-    --_blur: 45px;
+    --_blur: var(--s-glass-blur-intense);
     --_glare-op: var(--s-glare-op-hover);
-    --_border-shadow: 
-      inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active)),
-      inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active)),
-      inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
+    @include glass-border-shadow(var(--s-stroke-op-active));
     
     .lab-preview-display {
       --_bg-op: var(--s-glass-op-active);
-      
-      &::after {
-        border-left-color: rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
-        border-right-color: rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
-        border-bottom-color: rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
-      }
     }
   }
   
-  /* 10. АНИМАЦИИ */
+  /* 9. АНИМАЦИИ */
   transition: transform var(--d-morph) var(--e-out),
               visibility var(--d-morph) var(--e-out),
               background-color var(--d-fast) var(--e-out),
@@ -209,8 +168,42 @@
               backdrop-filter var(--d-fast) var(--e-out);
 }
 
+.l-lab-interface.is-lab-ready {
+  --_blur: var(--s-glass-blur-intense);
+}
+
+.l-lab-interface.is-lab-motion {
+  --_blur: var(--s-glass-blur-none);
+  --_glare-op: 0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: transform var(--d-morph) var(--e-out),
+              visibility var(--d-morph) var(--e-out);
+}
+
+.l-lab-interface.is-lab-motion:hover {
+  --_blur: var(--s-glass-blur-none);
+}
+
+.l-lab-interface.is-lab-motion .lab-preview-display {
+  --_blur: var(--s-glass-blur-none);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: background-color var(--d-fast) var(--e-out),
+              box-shadow var(--d-fast) var(--e-out);
+}
+
+.l-lab-interface.is-lab-motion::before {
+  opacity: 0;
+}
+
+.l-lab-interface.is-lab-motion .lab-preview-display::before,
+.l-lab-interface.is-lab-motion .lab-preview-display::after {
+  opacity: 0;
+}
+
 /* ============================================================
-   11. АКТИВАЦИЯ И АДАПТАЦИЯ
+   10. АКТИВАЦИЯ И АДАПТАЦИЯ
    ============================================================ */
 
 .lab-mobile-switch {
@@ -224,41 +217,45 @@ body.is-lab-active {
     transform: translate3d(-50%, 0, 0);
     
     .l-lab-interface__column {
-      @media (min-width: 1101px) {
+      @media (min-width: $bp-lg-up) {
         transform: translateY(0);
       }
     }
   }
   
   #app-wrapper {
-    filter: blur(15px);
-    transform: scale(0.98);
-    opacity: 0;
+    filter: blur(var(--s-glass-blur-strong));
+    transform: scale(var(--scale-lab-backdrop));
+    opacity: var(--opacity-hidden);
     transition: all var(--d-morph) var(--e-out);
   }
 }
 
-/* 12. МОБИЛЬНАЯ АДАПТАЦИЯ */
-@media (max-width: 1100px) {
+/* 11. МОБИЛЬНАЯ АДАПТАЦИЯ */
+@media (max-width: $bp-lg) {
   body .l-lab-interface {
     /* ОБЩИЕ МОБИЛЬНЫЕ СТИЛИ */
     top: 0;
     left: 50%;
     width: min(var(--stable-content-width), var(--stable-max-content));
-    height: calc(100dvh - 20px);
+    height: calc(100dvh - var(--lab-mobile-offset));
     border-radius: 0 0 var(--radius-master) var(--radius-master);
     transform: translate3d(-50%, -100%, 0);
     overflow: hidden;
     position: fixed;
     
     --_stroke-op: var(--s-stroke-op-active);
-    --_blur: 45px;
+    --_blur: var(--s-glass-blur-none);
     --_bg-op: var(--s-glass-op-active);
     
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 45dvh 1fr;
+    grid-template-rows: var(--lab-mobile-preview-vh) 1fr;
     grid-template-areas: "viewport" "panels";
+
+    @supports (-webkit-touch-callout: none) {
+      height: calc(100svh - var(--lab-mobile-offset));
+    }
     
     /* МОБИЛЬНАЯ ОБВОДКА */
     box-shadow: 
@@ -281,14 +278,7 @@ body.is-lab-active {
           height: 100%;
           border: none;
           border-radius: 0;
-          
-          /* iOS FIX: на мобилке только нижняя обводка */
-          &::after {
-            border-left: none;
-            border-right: none;
-            border-bottom: var(--s-stroke-width) solid rgba(var(--p-white-rgb), var(--s-stroke-op-active));
-            border-top: none;
-          }
+          box-shadow: inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active));
         }
         
         .lab-mobile-switch {
@@ -308,22 +298,31 @@ body.is-lab-active {
         .b-lab-column-header { 
           display: none; 
         }
-      }
-    }
-    
-    /* МОБИЛЬНЫЕ ОВЕРРАЙДЫ ДЛЯ .b-lab-column-body */
-    .b-lab-column-body {
-      width: 100%;
-      padding: 0 var(--space-md) 140px;
-      overflow: hidden;
-      touch-action: pan-y;
-      
-      /* iOS FIX: убираем mask на mobile чтобы избежать багов WebKit */
-      mask-image: none;
-      -webkit-mask-image: none;
-      
-      .l-flow { 
-        padding-top: var(--space-md); 
+        
+        .b-lab-column-body {
+          flex: 1 1 auto;
+          width: 100%;
+          padding: 0 var(--space-md) var(--lab-mobile-panel-pad);
+          overflow: hidden;
+          touch-action: pan-y;
+          
+          mask-image: linear-gradient(
+            to bottom,
+            black 0%,
+            black 90%,
+            transparent 100%
+          );
+          -webkit-mask-image: linear-gradient(
+            to bottom,
+            black 0%,
+            black 90%,
+            transparent 100%
+          );
+          
+          .l-flow { 
+            padding-top: var(--space-md); 
+          }
+        }
       }
     }
     
@@ -331,57 +330,6 @@ body.is-lab-active {
     &[data-mobile-panel="setup"] .l-lab-interface__column--engine,
     &[data-mobile-panel="engine"] .l-lab-interface__column--setup {
       display: none;
-    }
-  }
-}
-
-/* ============================================================
-   13. iOS-SPECIFIC FIXES (дополнительная страховка)
-   ============================================================ */
-
-/* iOS: добавляем contain только там, где он безопасен */
-@supports (-webkit-touch-callout: none) {
-  /* Для desktop версии (где нет проблемы с backdrop-filter) */
-  .l-lab-interface .lab-preview-display {
-    /* Ослабленный contain для лучшей совместимости */
-    contain: layout paint;
-  }
-  
-  /* Для мобильной версии: отключаем double glare */
-  @media (max-width: 1100px) {
-    body .l-lab-interface .lab-preview-display {
-      /* Мобилка: только paint, чтобы избежать конфликтов с fixed позиционированием */
-      contain: paint;
-      
-      /* Отключаем glare из glass-surface миксина на iOS */
-      --_glare-op: 0;
-    }
-  }
-}
-
-/* Дополнительный downgrade для совсем старых iOS */
-@supports (-webkit-touch-callout: none) and (not (-webkit-backdrop-filter: blur(1px))) {
-  .l-lab-interface .lab-preview-display::before {
-    /* Заменяем radial-gradient на linear для абсолютной стабильности */
-    background: linear-gradient(
-      to bottom,
-      rgba(var(--theme-accent-rgb), 0.18) 0%,
-      rgba(var(--theme-accent-rgb), 0.1) 20%,
-      transparent 65%
-    );
-  }
-}
-
-/* Оптимизация перформанса для iOS */
-@supports (-webkit-touch-callout: none) {
-  @media (max-width: 1100px) {
-    body .l-lab-interface {
-      will-change: auto;
-      
-      .b-lab-divider,
-      .lab-preview-display::before {
-        will-change: auto;
-      }
     }
   }
 }

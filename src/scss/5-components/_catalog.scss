@@ -24,7 +24,7 @@
     --_text-op: var(--s-text-op-hover);      
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: $bp-md) {
     &.is-focused {
       --_stroke-op: var(--s-stroke-op-active);
       --_text-op: 1;
@@ -60,15 +60,4 @@
     color: rgba(var(--p-white-rgb), calc(var(--_text-op) * 0.7));
     transition: color var(--d-fast) var(--e-out) var(--_exit-delay);
   }
-}
-
-.l-grid-expressions {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
-  gap: var(--space-md);
-  width: 100%;
-
-  /* ВОЗВРАТ К ИСТОКАМ: 
-     Карточки в одном ряду снова растягиваются под одну высоту. */
-  align-items: stretch; 
 }

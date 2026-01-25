@@ -10,9 +10,13 @@
     --fs-body: clamp(12px, 1.1vw, 14px);  
     --fs-caption: 11px;                   
     --fs-data: 10px; 
+    --fs-code: var(--fs-data);
 
     /* --- 3. OPTICAL SPACING --- */
     --lh-body: 1.6;
+    --lh-tight: 1.1;
+    --lh-code: 1.4;
     --ls-caption: 0.15em;
     --ls-data: 0.2em; 
+    --measure-narrow: 60ch;
 }

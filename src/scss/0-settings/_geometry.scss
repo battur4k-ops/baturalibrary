@@ -15,5 +15,45 @@
   --logo-balance-x: -10%;
   --text-offset-hero: -0.075em;
   --text-offset-heading: -0.065em;
+  --opt-edge-gap: 1px;
+  --opt-edge-clip: 0.5px;
+  --opt-z-fix: 0.1px;
+  --opt-text-nudge: 1px;
+  --opt-info-shift: -5px;
+  --opt-touch-pad: 10px;
+
+  /* --- 4. VIRTUAL VIEWPORT --- */
+  --viewport-overscan: 100px;
+  --viewport-overscan-double: 200px;
+
+  /* --- 5. LAB LAYOUT --- */
+  --lab-panel-left-w: 380px;
+  --lab-panel-right-w: 420px;
+  --lab-mobile-preview-vh: 45dvh;
+  --lab-mobile-offset: 20px;
+  --lab-mobile-panel-pad: 140px;
+
+  /* --- 6. ACCORDION DIMENSIONS --- */
+  --accordion-height-min: 500px;
+  --accordion-height-max: 750px;
+  --accordion-height-min-mobile: 600px;
+  --accordion-height-max-mobile: 850px;
+  --accordion-tab-min: 60px;
+  --accordion-tab-min-mobile: 55px;
+  --accordion-tab-radius: 100px;
+  --accordion-flex-mobile-active: 7.5;
+
+  /* --- 7. CATALOG GRID --- */
+  --catalog-card-min: 320px;
+
+  /* --- 8. CODE BOX --- */
+  --codebox-min-h: calc(var(--unit) * 60);
+
+  /* --- 9. ALPHABET NAV --- */
+  --alphabet-nav-top: 150px;
+  --alphabet-nav-min-w: 40px;
+  --alphabet-nav-line-w: 24px;
+  --alphabet-nav-line-h: 1px;
+  --alphabet-nav-line-w-short: 12px;
 
 }

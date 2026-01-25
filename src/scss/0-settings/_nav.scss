@@ -14,7 +14,8 @@
   --nav-w-factor: var(--nav-w-start);
 
   --nav-blur-start: var(--s-glass-blur);
-  --nav-blur-morph: 3px; // Усиливаем глубину при скролле
+  --nav-search-w-idle: clamp(160px, 18vw, 240px);
+  --nav-search-w-focus: clamp(220px, 25vw, 360px);
 
   --nav-top: var(--space-sm);
   --z-nav: 1000;

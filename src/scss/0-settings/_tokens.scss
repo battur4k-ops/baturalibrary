@@ -26,6 +26,7 @@
 @import 'colors';     // Палитра и цветовые триплеты
 @import 'spacing';    // Сетка, юниты и отступы
 @import 'layers';     // Z-index иерархия
+@import 'breakpoints'; // SCSS-only breakpoints
 
 // 2. GLOBAL LOGIC (Ритм и голос системы)
 @import 'motion';     // Тайминги и кривые Безье

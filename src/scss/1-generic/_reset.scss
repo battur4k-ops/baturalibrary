@@ -18,12 +18,12 @@ html {
      Расширяем логическую область документа вверх на 100px.
      Это создает "безопасную зону" для расчетов backdrop-filter.
   */
-  padding-top: 100px;
-  margin-top: -100px;
+  padding-top: var(--viewport-overscan);
+  margin-top: calc(var(--viewport-overscan) * -1);
   
   width: 100%;
   /* Высота + компенсация буфера */
-  min-height: calc(100% + 100px); 
+  min-height: calc(100% + var(--viewport-overscan)); 
   overflow-x: hidden;
   
   /* Базовая подложка должна быть темной (под цвет темы) */
@@ -60,6 +60,8 @@ body {
   overscroll-behavior-y: none;
 }
 
+/* Верхний "edge-guard" слой против окраски окна */
+
 /* 
    LAYER: BACKGROUND (Three.js Shader Sync)
    Канвас теперь физически начинается в начале виртуального буфера (-100px).
@@ -68,10 +70,10 @@ body {
   position: fixed;
   
   /* Отрисовываем шейдер за пределами видимости */
-  top: -100px; 
-  left: -100px;
-  width: calc(100vw + 200px);
-  height: calc(100vh + 200px);
+  top: calc(var(--viewport-overscan) * -1); 
+  left: calc(var(--viewport-overscan) * -1);
+  width: calc(100vw + var(--viewport-overscan-double));
+  height: calc(100vh + var(--viewport-overscan-double));
   
   z-index: -1; 
   pointer-events: none;
@@ -88,11 +90,11 @@ body {
 #viewport-backdrop {
   position: fixed;
   /* Тоже расширяем вверх */
-  top: -100px;
+  top: calc(var(--viewport-overscan) * -1);
   left: 0;
   right: 0;
   bottom: 0;
-  height: calc(100vh + 100px);
+  height: calc(100vh + var(--viewport-overscan));
   
   z-index: -2;
   background: var(--color-bg, #000);

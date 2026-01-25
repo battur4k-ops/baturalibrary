@@ -23,7 +23,7 @@
     /* ФИКС: Якорь для выравнивания заголовков всех колонок в одну линию */
     align-items: start; 
 
-    @media (max-width: 850px) {
+    @media (max-width: $bp-footer) {
       grid-template-columns: 1fr;
       gap: var(--space-lg);
     }
@@ -94,7 +94,7 @@
     align-items: center;
     
     .text-data {
-      font-size: 10px;
+      font-size: var(--fs-data);
       opacity: calc(var(--s-text-op-idle) * 0.6);
       letter-spacing: var(--ls-caption);
     }

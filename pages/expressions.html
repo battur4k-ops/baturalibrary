@@ -14,7 +14,7 @@
   --page-bg задаётся на уровне body (или через класс страницы)
   Меняется от страницы к странице
 -->
-<body class="page-expressions is-loading">
+<body class="page-expressions is-loading" data-page="expressions">
 
     <!-- 0. VIEWPORT BACKDROP (анти edge-bleeding) -->
     <div id="viewport-backdrop"></div>
@@ -46,11 +46,11 @@
                 <!-- HEADER -->
                 <section class="l-container p-page-v">
                     <div class="l-flow">
-                        <span class="text-data">// AE_LIBRARY</span>
+                        <span class="text-data" data-content-key="hero.kicker">// AE_LIBRARY</span>
 
-                        <h1 class="text-hero">Expressions</h1>
+                        <h1 class="text-hero" data-content-key="hero.title">Expressions</h1>
 
-                        <p class="text-body">
+                        <p class="text-body" data-content-key="hero.description">
                             Библиотека математических решений для After Effects.
                             Автоматизируй движение, сохраняя полный контроль
                             над физикой кадра.

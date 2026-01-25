@@ -22,7 +22,7 @@
   --_stroke-op: var(--s-stroke-op-idle);
   --_text-op: var(--s-text-op-idle);
 
-  @include glass-surface(var(--btn-radius));
+  @include glass-interactive(var(--btn-radius));
   
   /* ПОРЯДОК ВАЖЕН: сначала экстенд, потом переопределение */
   @extend .text-data;
@@ -35,7 +35,7 @@
   
   /* ЦЕНТРИРОВАНИЕ И АНТИ-ДЕРГАНИЕ */
   /* padding-top: 1px мягко опускает текст, если он кажется слишком высоким */
-  padding-top: 1px; 
+  padding-top: var(--opt-text-nudge); 
   backface-visibility: hidden; // Убирает микро-дрожание при переходах
   
   cursor: pointer;
@@ -75,7 +75,7 @@
   }
 
   &:active {
-    transform: scale(0.96);
+    transform: scale(var(--scale-press));
     transition-duration: 0.1s;
   }
 
@@ -94,7 +94,7 @@
       --_bg-op: var(--s-glass-op-active); 
       --_stroke-op: var(--s-stroke-op-active); 
       --_text-op: 1; 
-      backdrop-filter: blur(15px);
+      backdrop-filter: blur(var(--s-glass-blur-strong));
     }
   }
 

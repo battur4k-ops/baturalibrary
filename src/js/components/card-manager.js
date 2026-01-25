@@ -1,11 +1,14 @@
 import { CatalogEngine } from '../core/catalog-engine.js';
 import { EXPRESSIONS_DB } from '../data/library-expressions.js';
+import { EVENTS, dispatch, on } from '../core/events.js';
+import { qs } from '../core/dom.js';
+import { formatCategoryTag, normalizeCategory } from '../core/catalog-utils.js';
 
 export class CardManager {
     constructor() {
-        this.container = document.getElementById('expressionsGrid');
-        this.currentData = [...EXPRESSIONS_DB];
-        if (!this.container) return;
+        this.grid = qs('#expressionsGrid');
+        this.visibleItems = [...EXPRESSIONS_DB];
+        if (!this.grid) return;
         this.init();
     }
 
@@ -13,30 +16,30 @@ export class CardManager {
         this.render();
         
         // ДЕЛЕГИРОВАНИЕ КЛИКА: Слушаем весь контейнер
-        this.container.addEventListener('click', (e) => {
-            const btn = e.target.closest('[data-action="open-lab"]');
-            if (btn) {
-                const labID = btn.dataset.labId;
-                // Сигнал Лилит: Открыть интерфейс
-                window.dispatchEvent(new CustomEvent('batura:openLab', {
-                    detail: { labID: labID }
-                }));
-            }
-        });
+        this.grid.addEventListener('click', (e) => this.handleActionClick(e));
 
-        window.addEventListener('batura:filterChanged', (e) => this.filter(e.detail.tag));
-        window.addEventListener('batura:search', (e) => this.search(e.detail.query));
+        on(EVENTS.FILTER_CHANGED, (e) => this.filterByTag(e.detail.tag));
+        on(EVENTS.SEARCH, (e) => this.searchByQuery(e.detail.query));
+    }
+
+    handleActionClick(event) {
+        const button = event.target.closest('[data-action="open-lab"]');
+        if (!button) return;
+
+        const labID = button.dataset.labId;
+        dispatch(EVENTS.OPEN_LAB, { labID });
     }
 
     cardTemplate(item, index) {
         const displayIndex = (index + 1).toString().padStart(2, '0');
+        const category = normalizeCategory(item.category);
         
         return `
-            <article class="b-static-card" data-category="${item.category || 'math'}">
+            <article class="b-static-card" data-category="${category}">
                 <div class="b-static-card__viewport">
                     <div class="b-static-card__top">
                         <span class="b-static-card__index">${displayIndex}</span>
-                        <span class="text-data">// AE_${(item.category || 'math').toUpperCase()}</span>
+                        <span class="text-data">${formatCategoryTag(category)}</span>
                     </div>
                     
                     ${item.previewID ? `<div class="b-preview-box" data-preview="${item.previewID}"></div>` : ''}
@@ -59,20 +62,22 @@ export class CardManager {
     }
 
     render() {
-        if (!this.container) return;
-        CatalogEngine.render(this.currentData, this.container, this.cardTemplate.bind(this));
-        window.dispatchEvent(new CustomEvent('batura:contentReady'));
+        if (!this.grid) return;
+        CatalogEngine.render(this.visibleItems, this.grid, this.cardTemplate.bind(this));
+        dispatch(EVENTS.CONTENT_READY);
     }
 
-    filter(tag) {
-        this.currentData = tag === 'all' ? [...EXPRESSIONS_DB] : EXPRESSIONS_DB.filter(i => i.category === tag);
+    filterByTag(tag) {
+        this.visibleItems = tag === 'all'
+            ? [...EXPRESSIONS_DB]
+            : EXPRESSIONS_DB.filter((item) => item.category === tag);
         this.render();
     }
 
-    search(query) {
+    searchByQuery(query) {
         const q = query.toLowerCase();
-        this.currentData = EXPRESSIONS_DB.filter(i => 
-            i.title.toLowerCase().includes(q) || i.description.toLowerCase().includes(q)
+        this.visibleItems = EXPRESSIONS_DB.filter((item) => 
+            item.title.toLowerCase().includes(q) || item.description.toLowerCase().includes(q)
         );
         this.render();
     }

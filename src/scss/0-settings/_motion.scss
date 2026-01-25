@@ -19,6 +19,24 @@
   --stagger-step: 0.06s;
   --entrance-delay: 0.2s;
 
+  /* --- 4. OPACITY --- */
+  --opacity-hidden: 0;
+  --opacity-visible: 1;
+  --opacity-muted: 0.5;
+  --opacity-faint: 0.3;
+
+  /* --- 5. SCALE & ROTATE --- */
+  --scale-press: 0.96;
+  --scale-press-strong: 0.94;
+  --scale-thumb-hover: 1.2;
+  --scale-thumb-active: 1.4;
+  --scale-thumb-active-mobile: 1.3;
+  --scale-icon-hidden: 0.5;
+  --scale-icon-visible: 1;
+  --scale-lab-backdrop: 0.98;
+  --rotate-icon-hidden: -45deg;
+  --rotate-icon-visible: 0deg;
+
   /* --- 4. MASTER TRANSITIONS (Semantic Shortcuts) --- */
   --t-material: background-color var(--d-fast) ease, box-shadow var(--d-fast) ease;
   --t-text: color var(--d-fast) ease;

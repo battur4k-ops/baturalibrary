@@ -4,16 +4,24 @@
    ============================================================ */
 
 (function() {
+    const STORAGE_KEY = 'batura_theme_index';
     const canvas = document.getElementById('liquid-bg-canvas');
     if (!canvas) return;
 
     // 1. ЧИТАЕМ СОХРАНЕННУЮ ТЕМУ
-    const savedTheme = localStorage.getItem('batura_theme_index');
-    const initialIndex = savedTheme !== null ? parseInt(savedTheme) : 0;
+    const savedTheme = localStorage.getItem(STORAGE_KEY);
+    const parsedTheme = savedTheme !== null ? parseInt(savedTheme, 10) : 0;
+    const initialIndex = Number.isNaN(parsedTheme) ? 0 : parsedTheme;
 
     const getToken = (name) => {
         const val = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
         return val || "#000000";
+    };
+
+    const getOverscan = () => {
+        const raw = getToken('--viewport-overscan');
+        const value = parseFloat(raw);
+        return Number.isFinite(value) ? value : 100;
     };
 
     const themeColors = [
@@ -126,9 +134,9 @@
     // Поскольку канвас сдвинут на -100px, нам нужно добавить 100px к координатам мыши,
     // чтобы "пятно" шейдера находилось точно под курсором в окне браузера.
     window.addEventListener('mousemove', e => {
-        const offset = 100; // Тот самый сдвиг из CSS
-        const canvasW = window.innerWidth + 200; // Полная ширина холста
-        const canvasH = window.innerHeight + 200; // Полная высота холста
+        const offset = getOverscan();
+        const canvasW = window.innerWidth + (offset * 2);
+        const canvasH = window.innerHeight + (offset * 2);
         
         tMouse.set(
             (e.clientX + offset) / canvasW, 
@@ -140,15 +148,14 @@
         if (themeColors[index]) {
             targetC1.copy(themeColors[index][0]);
             targetC2.copy(themeColors[index][1]);
-            localStorage.setItem('batura_theme_index', index);
+            localStorage.setItem(STORAGE_KEY, index);
         }
     };
 
     function resize() {
-        // Синхронизируем с calc(100vw + 200px) и calc(100vh + 200px) из _reset.scss
-        const totalPadding = 200; 
-        const w = window.innerWidth + totalPadding;
-        const h = window.innerHeight + totalPadding;
+        const overscan = getOverscan();
+        const w = window.innerWidth + (overscan * 2);
+        const h = window.innerHeight + (overscan * 2);
 
         // renderer.setSize установит размеры холста
         renderer.setSize(w, h);
