@@ -45,6 +45,7 @@ export class LabManager {
             // Сброс параметров
             this.currentParams = {};
             this.activeTab = this.currentLabConfig.defaultTab || 'position';
+            this.currentParams.previewType = this.currentLabConfig.previewType || 'layers';
 
             this.renderLayout(this.currentLabConfig);
             this.preview.mount(this.interface);
@@ -147,6 +148,13 @@ export class LabManager {
                     ctx.header.appendChild(data); 
                     break;
 
+                case 'code-label':
+                    const label = document.createElement('span');
+                    label.className = 'text-data';
+                    label.textContent = item.content;
+                    ctx.body.appendChild(label);
+                    break;
+
                 case 'spacer': 
                     const spacer = document.createElement('div'); spacer.className = 'b-spacer'; 
                     ctx.header.appendChild(spacer); 
@@ -180,15 +188,29 @@ export class LabManager {
     createTabs(item) {
         const wrap = document.createElement('div');
         wrap.className = 'ui-tabs-group';
+        const isModeTabs = item.id === 'mode' || item.id === 'target';
+        if (!isModeTabs) {
+            const defaultOption = item.options?.[0];
+            if (defaultOption) {
+                this.currentParams[item.id] = defaultOption.id;
+            }
+        }
         item.options.forEach(opt => {
             const btn = document.createElement('button');
             // Стандартная кнопка из твоей системы
-            btn.className = `ui-button ${this.activeTab === opt.id ? 'is-active' : ''}`;
+            const isActive = isModeTabs
+                ? this.activeTab === opt.id
+                : this.currentParams[item.id] === opt.id;
+            btn.className = `ui-button ${isActive ? 'is-active' : ''}`;
             btn.innerHTML = `<span>${opt.label}</span>`;
             btn.onclick = () => {
                 wrap.querySelectorAll('.ui-button').forEach(b => b.classList.remove('is-active'));
                 btn.classList.add('is-active');
-                this.activeTab = opt.id;
+                if (isModeTabs) {
+                    this.activeTab = opt.id;
+                } else {
+                    this.currentParams[item.id] = opt.id;
+                }
                 this.updateCodeDisplay();
             };
             wrap.appendChild(btn);
@@ -198,16 +220,21 @@ export class LabManager {
 
     createToggle(item) {
         const btn = document.createElement('button');
-        btn.className = `ui-button ui-toggle-tag is-full-width ${item.default ? 'is-active' : ''}`;
+        const isActive = !!item.default;
+        const labelOn = item.labelOn || item.label;
+        const labelOff = item.labelOff || item.label;
+        btn.className = `ui-button ui-toggle-tag is-full-width ${isActive ? 'is-active' : ''}`;
         btn.type = 'button';
-        btn.setAttribute('aria-pressed', item.default ? 'true' : 'false');
-        btn.innerHTML = `<span>${item.label}</span>`;
-        this.currentParams[item.id] = !!item.default;
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        btn.innerHTML = `<span>${isActive ? labelOn : labelOff}</span>`;
+        this.currentParams[item.id] = isActive;
         btn.addEventListener('click', () => {
             const next = !this.currentParams[item.id];
             this.currentParams[item.id] = next;
             btn.classList.toggle('is-active', next);
             btn.setAttribute('aria-pressed', next ? 'true' : 'false');
+            const label = next ? labelOn : labelOff;
+            btn.querySelector('span').textContent = label;
             this.updateCodeDisplay();
         });
         return btn;
@@ -217,6 +244,29 @@ export class LabManager {
         const wrap = document.createElement('div');
         wrap.className = 'b-code-box';
         wrap.innerHTML = `<div class="b-code-box__content"></div>`;
+        const content = wrap.querySelector('.b-code-box__content');
+        const onWheel = (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            content.scrollTop += event.deltaY;
+        };
+        let touchStartY = 0;
+        let touchStartScroll = 0;
+        const onTouchStart = (event) => {
+            if (!event.touches?.length) return;
+            touchStartY = event.touches[0].clientY;
+            touchStartScroll = content.scrollTop;
+        };
+        const onTouchMove = (event) => {
+            if (!event.touches?.length) return;
+            const delta = touchStartY - event.touches[0].clientY;
+            content.scrollTop = touchStartScroll + delta;
+            event.preventDefault();
+            event.stopPropagation();
+        };
+        content.addEventListener('wheel', onWheel, { passive: false });
+        content.addEventListener('touchstart', onTouchStart, { passive: true });
+        content.addEventListener('touchmove', onTouchMove, { passive: false });
         return wrap;
     }
 
@@ -272,15 +322,19 @@ export class LabManager {
         this.currentParams[p.id] = p.default;
         const wrap = document.createElement('div');
         wrap.className = 'ui-range';
+        const sliderMin = (p.min < -100) ? -100 : p.min;
+        const sliderMax = (p.max > 100) ? 100 : p.max;
+        const isCapped = sliderMin !== p.min || sliderMax !== p.max;
         wrap.innerHTML = `
             <div class="ui-range__header"><span class="text-data">${p.label}</span>
             <span class="text-data value" contenteditable="true">${p.default.toString().replace('.', ',')}</span></div>
-            <input type="range" min="${p.min}" max="${p.max}" step="${p.step}" value="${p.default}" data-lenis-prevent="true">
+            <input type="range" min="${sliderMin}" max="${sliderMax}" step="${p.step}" value="${p.default}" data-lenis-prevent="true">
         `;
         const input = wrap.querySelector('input');
         const display = wrap.querySelector('.value');
 
-        const clamp = (val) => Math.min(p.max, Math.max(p.min, val));
+        const clampValue = (val) => Math.min(p.max, Math.max(p.min, val));
+        const clampSlider = (val) => Math.min(sliderMax, Math.max(sliderMin, val));
         const formatValue = (val) => val.toString().replace('.', ',');
         const applyValue = (raw) => {
             const normalized = raw.toString().replace(',', '.').trim();
@@ -289,19 +343,74 @@ export class LabManager {
                 display.textContent = formatValue(this.currentParams[p.id]);
                 return;
             }
-            const clamped = clamp(parsed);
+            const clamped = p.freeInput ? parsed : clampValue(parsed);
             const stepped = Math.round(clamped / p.step) * p.step;
             const value = Number(stepped.toFixed(4));
             this.currentParams[p.id] = value;
-            input.value = value;
+            input.value = clampSlider(value);
+            display.textContent = formatValue(value);
+            this.updateCodeDisplay();
+        };
+        const applySlider = (raw) => {
+            const parsed = parseFloat(raw);
+            if (Number.isNaN(parsed)) return;
+            const stepped = Math.round(parsed / p.step) * p.step;
+            const value = Number(stepped.toFixed(4));
+            this.currentParams[p.id] = value;
             display.textContent = formatValue(value);
             this.updateCodeDisplay();
         };
 
         input.addEventListener('input', (e) => {
             const val = e.target.value;
-            applyValue(val);
+            applySlider(val);
         });
+
+        const canDrag = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        if (canDrag) {
+            let startX = 0;
+            let startValue = 0;
+            let isDragging = false;
+            let activePointerId = null;
+            const onMove = (event) => {
+                const delta = event.clientX - startX;
+                if (!isDragging && Math.abs(delta) < 4) return;
+                if (!isDragging) {
+                    isDragging = true;
+                    display.classList.add('is-dragging');
+                    display.style.userSelect = 'none';
+                }
+                event.preventDefault();
+                const selection = window.getSelection ? window.getSelection() : null;
+                if (selection && selection.removeAllRanges) selection.removeAllRanges();
+                const next = startValue + delta * p.step;
+                applyValue(next);
+            };
+            const onUp = () => {
+                document.removeEventListener('pointermove', onMove);
+                document.removeEventListener('pointerup', onUp);
+                if (activePointerId !== null) {
+                    display.releasePointerCapture(activePointerId);
+                    activePointerId = null;
+                }
+                if (!isDragging) {
+                    display.focus();
+                }
+                isDragging = false;
+                display.classList.remove('is-dragging');
+                display.style.userSelect = '';
+            };
+            display.addEventListener('pointerdown', (event) => {
+                if (event.button !== 0) return;
+                event.preventDefault();
+                startX = event.clientX;
+                startValue = Number(this.currentParams[p.id]) || 0;
+                activePointerId = event.pointerId;
+                display.setPointerCapture(activePointerId);
+                document.addEventListener('pointermove', onMove);
+                document.addEventListener('pointerup', onUp);
+            });
+        }
 
         display.addEventListener('blur', () => applyValue(display.textContent));
         display.addEventListener('keydown', (e) => {

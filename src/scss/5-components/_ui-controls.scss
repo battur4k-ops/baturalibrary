@@ -31,6 +31,7 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
       min-width: 3ch;
       text-align: right;
       outline: none;
+      position: relative;
 
       @media (hover: hover) {
         &:hover { --_local-text-op: 1; }
@@ -136,6 +137,13 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
       --_local-stroke-op: var(--s-stroke-op-hover);
       --_local-text-op: var(--s-text-op-hover);
     }
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ui-range__header .value.is-dragging {
+    cursor: ew-resize;
+    user-select: none;
   }
 }
 

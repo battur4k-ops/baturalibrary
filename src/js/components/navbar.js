@@ -12,6 +12,7 @@ class BaturaNavbar extends HTMLElement {
         this._handleScroll = this._handleScroll.bind(this);
         this._ticking = false;
         this._isScrolled = false;
+        this._closeRequested = false;
     }
 
     connectedCallback() {
@@ -43,6 +44,7 @@ class BaturaNavbar extends HTMLElement {
         const input = qs('#globalSearch', this);
         if (!input) return;
         const closeIcon = qs('.close-icon', this);
+        const searchContainer = qs('.b-navbar__search', this);
 
         // Обычный поиск
         input.addEventListener('input', (e) => {
@@ -56,7 +58,17 @@ class BaturaNavbar extends HTMLElement {
             if (document.body.classList.contains('is-lab-active')) {
                 e.preventDefault();
                 input.blur();
-                dispatch(EVENTS.LAB_CLOSED);
+                if (searchContainer) {
+                    searchContainer.classList.add('is-pressed');
+                }
+                this._closeRequested = true;
+                setTimeout(() => {
+                    dispatch(EVENTS.LAB_CLOSED);
+                    this._closeRequested = false;
+                    if (searchContainer) {
+                        searchContainer.classList.remove('is-pressed');
+                    }
+                }, 120);
             }
         });
 
@@ -74,13 +86,17 @@ class BaturaNavbar extends HTMLElement {
             }
         });
 
-        if (closeIcon) {
-            closeIcon.addEventListener('pointerdown', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                dispatch(EVENTS.LAB_CLOSED);
-            });
+        if (closeIcon && searchContainer) {
+            const clearPressed = () => searchContainer.classList.remove('is-pressed');
+            searchContainer.addEventListener('pointerup', clearPressed);
+            searchContainer.addEventListener('pointercancel', clearPressed);
+            searchContainer.addEventListener('mouseleave', clearPressed);
             closeIcon.addEventListener('click', (e) => {
+                if (this._closeRequested) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                }
                 e.preventDefault();
                 e.stopPropagation();
                 dispatch(EVENTS.LAB_CLOSED);

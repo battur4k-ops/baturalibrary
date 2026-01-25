@@ -11,10 +11,17 @@ export const EXPRESSIONS_DB = [
         previewID: 'preview-01'
     },
     { 
-        title: 'Elastic Scale', 
-        category: 'bounce', 
-        labID: 'elastic-scale-config',
-        description: 'Резиновое сжатие и расширение объектов.',
+        title: 'Text Timer', 
+        category: 'text', 
+        labID: 'text-timer',
+        description: 'Гибкий таймер, счётчик и форматирование текста.',
         previewID: 'preview-02' 
+    },
+    { 
+        title: 'Text Counter', 
+        category: 'text', 
+        labID: 'text-counter',
+        description: 'Гибкий числовой счётчик с инверсией и плавностью.',
+        previewID: 'preview-03' 
     }
 ];

@@ -48,6 +48,7 @@
 
   /* --- 8. CODE BOX --- */
   --codebox-min-h: calc(var(--unit) * 60);
+  --codebox-max-h: clamp(220px, 32vh, 360px);
 
   /* --- 9. ALPHABET NAV --- */
   --alphabet-nav-top: 150px;

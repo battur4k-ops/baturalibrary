@@ -168,6 +168,9 @@ const startBatura = async () => {
     if (document.getElementById('expressionsGrid')) {
         const CardManagerModule = await safeImport('./components/card-manager.js', import.meta.url);
         if (CardManagerModule) new CardManagerModule.CardManager();
+
+        const PreviewModule = await safeImport('./components/card-preview.js', import.meta.url);
+        if (PreviewModule) new PreviewModule.CardPreviewManager();
     }
 
     if (document.getElementById('tagsContainer')) {

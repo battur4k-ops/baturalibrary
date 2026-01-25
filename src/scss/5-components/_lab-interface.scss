@@ -56,6 +56,10 @@
         position: relative;
         z-index: 1;
         padding: 0 var(--space-md) var(--space-xl);
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        &::-webkit-scrollbar { width: 0; height: 0; }
+        &::-webkit-scrollbar { display: none; }
         
         /* МАСКА ДЛЯ КОНТЕНТА (без верхнего блюра) */
         --_fade-bottom: 90%;
@@ -160,6 +164,8 @@
     place-items: center;
     z-index: 1;
     padding-bottom: var(--space-xl);
+    transform: translate3d(0, 0, 0) scale(var(--lab-preview-viewport-scale, 1));
+    transform-origin: center;
   }
 
   .lab-preview-layer {
@@ -185,6 +191,21 @@
 
   .lab-preview-layer::before {
     opacity: 0;
+  }
+
+  .lab-preview-text {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-mono);
+    font-size: clamp(18px, 3vw, 32px);
+    letter-spacing: var(--ls-data);
+    color: rgba(var(--p-white-rgb), 0.9);
+    text-align: center;
+    z-index: 2;
+    pointer-events: none;
+    text-transform: none;
   }
 
   .ui-info-group + .ui-toggle-tag,
@@ -222,6 +243,8 @@
 .l-lab-interface.is-lab-motion {
   --_blur: var(--s-glass-blur-none);
   --_glare-op: 0;
+  visibility: visible;
+  opacity: 1;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   transition: transform var(--d-morph) var(--e-out),
@@ -281,7 +304,7 @@ body.is-lab-active {
 /* 11. МОБИЛЬНАЯ АДАПТАЦИЯ */
 @media (max-width: $bp-lg) {
   body .l-lab-interface {
-    --lab-preview-layer-size: clamp(32px, 10vw, 60px);
+    --lab-preview-viewport-scale: 0.7;
   }
 
   body.is-lab-active {
@@ -370,6 +393,7 @@ body.is-lab-active {
           scrollbar-width: none;
           -ms-overflow-style: none;
           &::-webkit-scrollbar { width: 0; height: 0; }
+          &::-webkit-scrollbar { display: none; }
           
           mask-image: linear-gradient(
             to bottom,
@@ -400,6 +424,7 @@ body.is-lab-active {
 
   body.is-lab-active .l-lab-interface {
     opacity: 1;
+    transform: translate3d(-50%, 0, 0);
   }
 
   body.is-lab-active .l-lab-interface__column {

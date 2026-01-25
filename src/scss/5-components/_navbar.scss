@@ -186,6 +186,7 @@
             }
             
             .close-icon {
+                pointer-events: none;
                 opacity: var(--opacity-visible);
                 transform: scale(var(--scale-icon-visible)) rotate(var(--rotate-icon-visible));
                 --_text-op: 1;
@@ -206,5 +207,10 @@
             --_stroke-op: var(--s-stroke-op-hover);
             --_text-op: var(--s-text-op-hover);
         }
+    }
+
+    body.is-lab-active &__search.is-pressed .close-icon {
+        transform: scale(calc(var(--scale-icon-visible) * var(--scale-press))) rotate(var(--rotate-icon-visible));
+        transition-duration: 0.1s;
     }
 }

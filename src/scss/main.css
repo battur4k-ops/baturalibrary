@@ -253,6 +253,7 @@
   --catalog-card-min: 320px;
   /* --- 8. CODE BOX --- */
   --codebox-min-h: calc(var(--unit) * 60);
+  --codebox-max-h: clamp(220px, 32vh, 360px);
   /* --- 9. ALPHABET NAV --- */
   --alphabet-nav-top: 150px;
   --alphabet-nav-min-w: 40px;
@@ -941,9 +942,14 @@ body.is-lab-active .b-navbar__search input::placeholder {
   opacity: var(--opacity-hidden);
 }
 body.is-lab-active .b-navbar__search .close-icon {
+  pointer-events: none;
   opacity: var(--opacity-visible);
   transform: scale(var(--scale-icon-visible)) rotate(var(--rotate-icon-visible));
   --_text-op: 1;
+}
+body.is-lab-active .b-navbar__search.is-pressed .close-icon {
+  transform: scale(calc(var(--scale-icon-visible) * var(--scale-press))) rotate(var(--rotate-icon-visible));
+  transition-duration: 0.1s;
 }
 @media (max-width: 1100px) {
   body.is-lab-active .b-navbar {
@@ -1733,6 +1739,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   width: 100%;
   aspect-ratio: 16/9;
   position: relative;
+  container-type: inline-size;
   border-radius: var(--local-preview-radius, var(--radius-inner));
   position: relative;
   border-radius: inherit;
@@ -1749,6 +1756,10 @@ body.is-lab-active .b-navbar__search .close-icon {
   --_bg-op: var(--s-glare-op-hover);
   overflow: hidden;
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-base) var(--e-out);
+  --lab-preview-viewport-scale: 1;
+  --lab-preview-layer-size: clamp(64px, 20cqw, 128px);
+  --lab-preview-step: var(--lab-preview-layer-size);
+  --lab-preview-motion: clamp(18px, 7cqw, 44px);
 }
 @supports not (((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) or (-webkit-backdrop-filter: blur(1px))) {
   .b-preview-box, .b-code-box {
@@ -1786,6 +1797,86 @@ body.is-lab-active .b-navbar__search .close-icon {
   mix-blend-mode: overlay;
   pointer-events: none;
   z-index: 2;
+}
+
+.b-preview-box .lab-preview-stack, .b-code-box .lab-preview-stack {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+  pointer-events: none;
+  transform: translate3d(0, 0, 0) scale(var(--lab-preview-viewport-scale, 1));
+  transform-origin: center;
+}
+
+.b-preview-box .lab-preview-layer, .b-code-box .lab-preview-layer {
+  width: var(--lab-preview-layer-size);
+  height: var(--lab-preview-layer-size);
+  border-radius: var(--lab-preview-layer-radius);
+  position: relative;
+  border-radius: var(--lab-preview-layer-radius);
+  isolation: isolate;
+  background-clip: padding-box;
+  background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
+  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  position: absolute;
+  --_bg-op: var(--s-glass-op-hover);
+  --_stroke-op: var(--s-stroke-op-active);
+  --_glare-op: 0;
+  --_blur: var(--s-glass-blur-none);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: inset 0 0 0 var(--preview-stroke-width, var(--s-stroke-width)) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  opacity: calc(1 - var(--layer-index) * 0.12);
+  transform: translate3d(0, 0, 0);
+  transform-origin: center;
+  backface-visibility: hidden;
+  transition: opacity var(--d-fast) var(--e-out);
+  will-change: transform;
+}
+@supports not (((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) or (-webkit-backdrop-filter: blur(1px))) {
+  .b-preview-box .lab-preview-layer, .b-code-box .lab-preview-layer {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op-fallback, var(--s-glass-op-base)));
+  }
+}
+.b-preview-box .lab-preview-layer::before, .b-code-box .lab-preview-layer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 0%, rgba(var(--m-glass-base-rgb), 0.4), transparent);
+  opacity: var(--_glare-op, 0);
+  transition: opacity var(--d-fast) var(--e-out);
+}
+
+.b-preview-box .lab-preview-layer::before, .b-code-box .lab-preview-layer::before {
+  opacity: 0;
+}
+
+.b-preview-box .lab-preview-text, .b-code-box .lab-preview-text {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: clamp(12px, 3cqw, 20px);
+  letter-spacing: var(--ls-data);
+  color: rgba(var(--p-white-rgb), 0.9);
+  text-align: center;
+  z-index: 2;
+  pointer-events: none;
+  text-transform: none;
 }
 
 /* ============================================================
@@ -1882,10 +1973,17 @@ body.is-lab-active .b-navbar__search .close-icon {
   position: relative;
   z-index: 1;
   padding: 0 var(--space-md) var(--space-xl);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   /* МАСКА ДЛЯ КОНТЕНТА (без верхнего блюра) */
   --_fade-bottom: 90%;
   mask-image: linear-gradient(to bottom, black 0%, black var(--_fade-bottom), transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, black 0%, black var(--_fade-bottom), transparent 100%);
+}
+.l-lab-interface__column--setup .b-lab-column-body::-webkit-scrollbar, .l-lab-interface__column--engine .b-lab-column-body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
 }
 .l-lab-interface__column--setup .b-lab-column-body .l-flow, .l-lab-interface__column--engine .b-lab-column-body .l-flow {
   padding-top: var(--space-md);
@@ -1985,6 +2083,8 @@ body.is-lab-active .b-navbar__search .close-icon {
   place-items: center;
   z-index: 1;
   padding-bottom: var(--space-xl);
+  transform: translate3d(0, 0, 0) scale(var(--lab-preview-viewport-scale, 1));
+  transform-origin: center;
 }
 .l-lab-interface .lab-preview-layer {
   width: var(--lab-preview-layer-size);
@@ -2038,6 +2138,21 @@ body.is-lab-active .b-navbar__search .close-icon {
 .l-lab-interface .lab-preview-layer::before {
   opacity: 0;
 }
+
+.l-lab-interface .lab-preview-text {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: clamp(18px, 3vw, 32px);
+  letter-spacing: var(--ls-data);
+  color: rgba(var(--p-white-rgb), 0.9);
+  text-align: center;
+  z-index: 2;
+  pointer-events: none;
+  text-transform: none;
+}
 .l-lab-interface .ui-info-group + .ui-toggle-tag,
 .l-lab-interface .text-subheading + .ui-toggle-tag,
 .l-lab-interface .ui-instruction__title + .ui-toggle-tag {
@@ -2067,6 +2182,8 @@ body.is-lab-active .b-navbar__search .close-icon {
 .l-lab-interface.is-lab-motion {
   --_blur: var(--s-glass-blur-none);
   --_glare-op: 0;
+  visibility: visible;
+  opacity: 1;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   transition: transform var(--d-morph) var(--e-out), visibility var(--d-morph) var(--e-out);
@@ -2119,7 +2236,7 @@ body.is-lab-active #app-wrapper {
 /* 11. МОБИЛЬНАЯ АДАПТАЦИЯ */
 @media (max-width: 1100px) {
   body .l-lab-interface {
-    --lab-preview-layer-size: clamp(32px, 10vw, 60px);
+    --lab-preview-viewport-scale: 0.7;
   }
   body.is-lab-active {
     overflow: hidden;
@@ -2204,6 +2321,9 @@ body.is-lab-active #app-wrapper {
     width: 0;
     height: 0;
   }
+  body .l-lab-interface__column--setup .b-lab-column-body::-webkit-scrollbar, body .l-lab-interface__column--engine .b-lab-column-body::-webkit-scrollbar {
+    display: none;
+  }
   body .l-lab-interface__column--setup .b-lab-column-body .l-flow, body .l-lab-interface__column--engine .b-lab-column-body .l-flow {
     padding-top: var(--space-md);
   }
@@ -2212,6 +2332,7 @@ body.is-lab-active #app-wrapper {
   }
   body.is-lab-active .l-lab-interface {
     opacity: 1;
+    transform: translate3d(-50%, 0, 0);
   }
   body.is-lab-active .l-lab-interface__column {
     opacity: 1;
@@ -2277,10 +2398,23 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   min-width: 3ch;
   text-align: right;
   outline: none;
+  position: relative;
 }
 @media (hover: hover) {
   .ui-range__header .value:hover {
     --_local-text-op: 1;
+  }
+}
+.ui-range__header .value:focus {
+  --_local-text-op: 1;
+  color: rgba(var(--p-white-rgb), 1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .ui-range__header .value.is-dragging {
+    cursor: ew-resize;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
   }
 }
 .ui-range__header .value:focus {
@@ -2580,9 +2714,15 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   --_code-radius: calc(var(--radius-master) - (var(--space-md) * 0.5));
   aspect-ratio: auto;
   width: 100%;
-  min-height: var(--codebox-min-h);
+  min-height: var(--codebox-max-h);
+  max-height: var(--codebox-max-h);
+  height: var(--codebox-max-h);
   padding: var(--space-md);
   margin: 0;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
   border-radius: var(--_code-radius);
   position: relative;
   border-radius: var(--_code-radius);
@@ -2621,9 +2761,20 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   text-transform: none;
   letter-spacing: var(--ls-data);
   white-space: pre-wrap;
+  max-height: calc(var(--codebox-max-h) - (var(--space-md) * 2));
+  overflow: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
   -webkit-user-select: all;
      -moz-user-select: all;
           user-select: all;
+}
+.b-code-box__content::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 /**
@@ -2652,6 +2803,12 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
 .ui-tabs-group .ui-button:hover:not(.is-active) {
   --_stroke-op: var(--s-stroke-op-hover);
   --_bg-op: var(--s-glass-op-hover);
+}
+.text-subheading + .ui-tabs-group {
+  margin-top: var(--space-md);
+}
+.ui-info-group + .ui-tabs-group {
+  margin-top: var(--space-md);
 }
 
 /**
