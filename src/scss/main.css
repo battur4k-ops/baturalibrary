@@ -153,7 +153,7 @@
   --scale-lab-backdrop: 0.98;
   --rotate-icon-hidden: -45deg;
   --rotate-icon-visible: 0deg;
-  /* --- 6. MASTER TRANSITIONS (Semantic Shortcuts) --- */
+  /* --- 4. MASTER TRANSITIONS (Semantic Shortcuts) --- */
   --t-material: background-color var(--d-fast) ease, box-shadow var(--d-fast) ease;
   --t-text: color var(--d-fast) ease;
   /* Асимметричный вход */
@@ -211,7 +211,6 @@
     --s-stroke-width: 0.75px;
   }
 }
-
 :root {
   /* --- 1. MASTER RADII --- */
   --radius-master: 45px;
@@ -305,6 +304,15 @@
   --ui-range-thumb-mobile: 14px;
   --ui-range-h-mobile: 40px;
   --ui-range-thumb-offset: -5px;
+  /* --- 5. LAB PREVIEW --- */
+  --lab-preview-layer-size: clamp(120px, 18vw, 180px);
+  --lab-preview-layer-radius: calc(var(--radius-master) * 0.5);
+  --lab-preview-layer-gap: var(--space-xs);
+  --lab-preview-step: var(--lab-preview-layer-size);
+  --lab-preview-mult: 1;
+  --lab-preview-scale-boost: 1;
+  --lab-preview-scale-speed: 3;
+  --lab-preview-motion: clamp(24px, 4vw, 60px);
 }
 
 /* 
@@ -368,7 +376,6 @@ body {
 }
 
 /* Верхний "edge-guard" слой против окраски окна */
-
 /* 
    LAYER: BACKGROUND (Three.js Shader Sync)
    Канвас теперь физически начинается в начале виртуального буфера (-100px).
@@ -518,7 +525,7 @@ section {
   font-family: var(--font-main);
   font-size: var(--fs-h2);
   font-weight: 200;
-  line-height: var(--lh-tight);
+  line-height: 1.1;
   letter-spacing: -0.03em;
   text-transform: uppercase;
   margin-left: var(--text-offset-heading);
@@ -616,6 +623,11 @@ section {
   flex-direction: column;
   width: 100%;
   min-height: 100vh;
+  /* 
+     ЭТО ПОФИКСИЛО БЛЮР:
+     Микро-зазор в 1px и обрезка 0.5px. 
+     Это разрывает контакт блюра с "серым краем" браузера.
+  */
   margin-top: var(--opt-edge-gap);
   -webkit-clip-path: inset(var(--opt-edge-clip) 0 0 0);
           clip-path: inset(var(--opt-edge-clip) 0 0 0);
@@ -756,6 +768,14 @@ batura-navbar {
   /* ============================================================
      7. ПОИСКОВЫЙ МОДУЛЬ (Search Module) | Contextual Physics
      ============================================================ */
+  /* Mobile: match desktop hover/active behavior */
+}
+@supports not (((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) or (-webkit-backdrop-filter: blur(1px))) {
+  .b-navbar {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op-fallback, var(--s-glass-op-base)));
+  }
 }
 .b-navbar::before {
   content: "";
@@ -787,18 +807,6 @@ body.is-scrolled .b-navbar .ui-button:not(:hover):not(:focus), body.is-scrolled 
   body.is-lab-active:has(.l-lab-interface:hover) .b-navbar {
     --_bg-op: var(--s-glass-op-active);
     --_stroke-op: var(--s-stroke-op-active);
-  }
-}
-@media (max-width: 1100px) {
-  body.is-lab-active .b-navbar {
-    --_bg-op: var(--s-glass-op-active);
-    --_stroke-op: var(--s-stroke-op-active);
-  }
-  body.is-lab-active .b-navbar .ui-button,
-  body.is-lab-active .b-navbar__search input {
-    --_bg-op: var(--s-glass-op-hover);
-    --_stroke-op: var(--s-stroke-op-hover);
-    --_text-op: var(--s-text-op-hover);
   }
 }
 .b-navbar__brand {
@@ -851,6 +859,13 @@ body.is-scrolled .b-navbar .ui-button:not(:hover):not(:focus), body.is-scrolled 
   --_text-op: var(--s-text-op-idle);
   color: rgba(var(--p-white-rgb), var(--_text-op));
   transition: width var(--d-slow) var(--e-out), background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), color var(--d-fast) var(--e-out);
+}
+@supports not (((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) or (-webkit-backdrop-filter: blur(1px))) {
+  .b-navbar__search input {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op-fallback, var(--s-glass-op-base)));
+  }
 }
 .b-navbar__search input::before {
   content: "";
@@ -930,6 +945,17 @@ body.is-lab-active .b-navbar__search .close-icon {
   transform: scale(var(--scale-icon-visible)) rotate(var(--rotate-icon-visible));
   --_text-op: 1;
 }
+@media (max-width: 1100px) {
+  body.is-lab-active .b-navbar {
+    --_bg-op: var(--s-glass-op-active);
+    --_stroke-op: var(--s-stroke-op-active);
+  }
+  body.is-lab-active .b-navbar .ui-button, body.is-lab-active .b-navbar__search input {
+    --_bg-op: var(--s-glass-op-hover);
+    --_stroke-op: var(--s-stroke-op-hover);
+    --_text-op: var(--s-text-op-hover);
+  }
+}
 
 /* ============================================================
    5-COMPONENTS / _BUTTON.SCSS (Fixed Centering & Jitter)
@@ -990,6 +1016,13 @@ body.is-lab-active .b-navbar__search .close-icon {
   /* 3. КНОПКА ЗАКРЫТИЯ */
   /* Вне контекста */
 }
+@supports not (((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) or (-webkit-backdrop-filter: blur(1px))) {
+  .ui-button, .ui-button.is-full-width, .ui-tabs-group .ui-button {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op-fallback, var(--s-glass-op-base)));
+  }
+}
 .ui-button::before, .ui-button.is-full-width::before, .ui-tabs-group .ui-button::before {
   content: "";
   position: absolute;
@@ -1035,6 +1068,22 @@ body.is-lab-active .b-navbar__search .close-icon {
   --_text-op: 1;
   -webkit-backdrop-filter: blur(var(--s-glass-blur-strong));
           backdrop-filter: blur(var(--s-glass-blur-strong));
+}
+.ui-button.ui-toggle-tag {
+  --btn-h: var(--ui-h-btn-master);
+  padding-inline: calc(var(--unit) * 6);
+  transition-delay: 0s;
+  --_bg-op: var(--s-glass-op-hover);
+  --_stroke-op: var(--s-stroke-op-hover);
+  width: 100%;
+}
+.ui-button.ui-toggle-tag:hover, .ui-button.ui-toggle-tag.is-active {
+  --_bg-op: var(--s-glass-op-active);
+  --_stroke-op: var(--s-stroke-op-active);
+  --_text-op: 1;
+  -webkit-backdrop-filter: blur(var(--s-glass-blur-strong));
+          backdrop-filter: blur(var(--s-glass-blur-strong));
+  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
 }
 .b-navbar .ui-button {
   --btn-h: var(--nav-content-h);
@@ -1100,6 +1149,13 @@ body.is-lab-active .b-navbar__search .close-icon {
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
   transition: flex var(--d-slow) var(--e-out), background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out);
   /* Логика декора и индекса при наведении на карту */
+}
+@supports not (((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) or (-webkit-backdrop-filter: blur(1px))) {
+  .b-accordion .b-static-card {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op-fallback, var(--s-glass-op-base)));
+  }
 }
 .b-accordion .b-static-card::before {
   content: "";
@@ -1437,6 +1493,13 @@ body.is-lab-active .b-navbar__search .close-icon {
   /* 5. КНОПКА (Гравитация вкл.) */
   /* 6. ПРЕВЬЮ И АДАПТИВ (БЕЗ ИЗМЕНЕНИЙ) */
 }
+@supports not (((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) or (-webkit-backdrop-filter: blur(1px))) {
+  .b-static-card {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op-fallback, var(--s-glass-op-base)));
+  }
+}
 .b-static-card::before {
   content: "";
   position: absolute;
@@ -1538,6 +1601,13 @@ body.is-lab-active .b-navbar__search .close-icon {
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
   overflow: hidden;
+}
+@supports not (((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) or (-webkit-backdrop-filter: blur(1px))) {
+  .b-static-card .b-preview-box, .b-static-card .b-code-box {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op-fallback, var(--s-glass-op-base)));
+  }
 }
 .b-static-card .b-preview-box::before, .b-static-card .b-code-box::before {
   content: "";
@@ -1680,6 +1750,13 @@ body.is-lab-active .b-navbar__search .close-icon {
   overflow: hidden;
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-base) var(--e-out);
 }
+@supports not (((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) or (-webkit-backdrop-filter: blur(1px))) {
+  .b-preview-box, .b-code-box {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op-fallback, var(--s-glass-op-base)));
+  }
+}
 .b-preview-box::before, .b-code-box::before {
   content: "";
   position: absolute;
@@ -1707,6 +1784,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   background-size: var(--space-sm) var(--space-sm);
   opacity: var(--m-dot-layer-op);
   mix-blend-mode: overlay;
+  pointer-events: none;
   z-index: 2;
 }
 
@@ -1754,31 +1832,12 @@ body.is-lab-active .b-navbar__search .close-icon {
   transition: transform var(--d-morph) var(--e-out), visibility var(--d-morph) var(--e-out), background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-fast) var(--e-out);
   transition: transform var(--d-morph) var(--e-out), visibility var(--d-morph) var(--e-out), background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-fast) var(--e-out), -webkit-backdrop-filter var(--d-fast) var(--e-out);
 }
-.l-lab-interface.is-lab-ready {
-  --_blur: var(--s-glass-blur-intense);
-}
-.l-lab-interface.is-lab-motion {
-  --_blur: var(--s-glass-blur-none);
-  --_glare-op: 0;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  transition: transform var(--d-morph) var(--e-out), visibility var(--d-morph) var(--e-out);
-}
-.l-lab-interface.is-lab-motion:hover {
-  --_blur: var(--s-glass-blur-none);
-}
-.l-lab-interface.is-lab-motion .lab-preview-display {
-  --_blur: var(--s-glass-blur-none);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out);
-}
-.l-lab-interface.is-lab-motion::before {
-  opacity: 0;
-}
-.l-lab-interface.is-lab-motion .lab-preview-display::before,
-.l-lab-interface.is-lab-motion .lab-preview-display::after {
-  opacity: 0;
+@supports not (((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) or (-webkit-backdrop-filter: blur(1px))) {
+  .l-lab-interface {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op-fallback, var(--s-glass-op-base)));
+  }
 }
 .l-lab-interface::before {
   content: "";
@@ -1875,6 +1934,7 @@ body.is-lab-active .b-navbar__search .close-icon {
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
   --_bg-op: var(--s-glare-op-hover);
+  --_glare-op: 0;
   border-top: none;
   /* Убираем верхнюю и нижнюю обводку (дубли с навбаром и рамкой лабы) */
   box-shadow: inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle))), inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
@@ -1882,6 +1942,13 @@ body.is-lab-active .b-navbar__search .close-icon {
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-fast) var(--e-out);
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-fast) var(--e-out), -webkit-backdrop-filter var(--d-fast) var(--e-out);
   /* Градиенты превью */
+}
+@supports not (((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) or (-webkit-backdrop-filter: blur(1px))) {
+  .l-lab-interface .lab-preview-display {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op-fallback, var(--s-glass-op-base)));
+  }
 }
 .l-lab-interface .lab-preview-display::before {
   content: "";
@@ -1899,16 +1966,80 @@ body.is-lab-active .b-navbar__search .close-icon {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  opacity: 0;
 }
 .l-lab-interface .lab-preview-display::before {
   background: radial-gradient(circle at 50% 0%, rgba(var(--theme-accent-rgb), 0.15), transparent 80%);
   z-index: 1;
 }
-.l-lab-interface .lab-preview-display::after {
-  background-image: radial-gradient(rgba(var(--p-white-rgb), var(--m-dot-op)) var(--m-dot-size), transparent var(--m-dot-size));
-  background-size: var(--space-sm) var(--space-sm);
-  opacity: var(--m-dot-layer-op);
-  z-index: 2;
+.l-lab-interface #previewCanvasContainer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+.l-lab-interface .lab-preview-stack {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+.l-lab-interface .lab-preview-layer {
+  width: var(--lab-preview-layer-size);
+  height: var(--lab-preview-layer-size);
+  border-radius: var(--lab-preview-layer-radius);
+  position: relative;
+  border-radius: var(--lab-preview-layer-radius);
+  isolation: isolate;
+  background-clip: padding-box;
+  background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op, var(--s-glass-op-base)));
+  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  -webkit-backdrop-filter: blur(var(--_blur, var(--s-glass-blur)));
+  /* УДАЛИЛИ transition-delay отсюда, чтобы не было конфликтов */
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+  position: absolute;
+  --_bg-op: var(--s-glass-op-hover);
+  --_stroke-op: var(--s-stroke-op-active);
+  --_glare-op: 0;
+  --_blur: var(--s-glass-blur-none);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+  opacity: calc(1 - var(--layer-index) * 0.05);
+  transform: translate3d(0, 0, 0) scale(1);
+  transform-origin: center;
+  backface-visibility: hidden;
+  transition: opacity var(--d-fast) var(--e-out);
+  will-change: transform;
+}
+@supports not (((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) or (-webkit-backdrop-filter: blur(1px))) {
+  .l-lab-interface .lab-preview-layer {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op-fallback, var(--s-glass-op-base)));
+  }
+}
+.l-lab-interface .lab-preview-layer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 0%, rgba(var(--m-glass-base-rgb), 0.4), transparent);
+  opacity: var(--_glare-op, 0);
+  transition: opacity var(--d-fast) var(--e-out);
+}
+.l-lab-interface .lab-preview-layer::before {
+  opacity: 0;
+}
+.l-lab-interface .ui-info-group + .ui-toggle-tag,
+.l-lab-interface .text-subheading + .ui-toggle-tag,
+.l-lab-interface .ui-instruction__title + .ui-toggle-tag {
+  margin-top: var(--space-md);
 }
 .l-lab-interface:hover {
   transition-delay: 0s;
@@ -1920,9 +2051,43 @@ body.is-lab-active .b-navbar__search .close-icon {
     inset var(--s-stroke-width) 0 0 0 rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active)),
     inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active)),
     inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
+  border-top: none;
+  box-shadow: var(--_border-shadow);
 }
 .l-lab-interface:hover .lab-preview-display {
   --_bg-op: var(--s-glass-op-active);
+}
+
+.l-lab-interface.is-lab-ready {
+  --_blur: var(--s-glass-blur-intense);
+}
+
+.l-lab-interface.is-lab-motion {
+  --_blur: var(--s-glass-blur-none);
+  --_glare-op: 0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: transform var(--d-morph) var(--e-out), visibility var(--d-morph) var(--e-out);
+}
+
+.l-lab-interface.is-lab-motion:hover {
+  --_blur: var(--s-glass-blur-none);
+}
+
+.l-lab-interface.is-lab-motion .lab-preview-display {
+  --_blur: var(--s-glass-blur-none);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out);
+}
+
+.l-lab-interface.is-lab-motion::before {
+  opacity: 0;
+}
+
+.l-lab-interface.is-lab-motion .lab-preview-display::before,
+.l-lab-interface.is-lab-motion .lab-preview-display::after {
+  opacity: 0;
 }
 
 /* ============================================================
@@ -1951,11 +2116,14 @@ body.is-lab-active #app-wrapper {
 
 /* 11. МОБИЛЬНАЯ АДАПТАЦИЯ */
 @media (max-width: 1100px) {
+  body .l-lab-interface {
+    --lab-preview-layer-size: clamp(64px, 18vw, 110px);
+  }
+
   body.is-lab-active {
     overflow: hidden;
     height: 100dvh;
   }
-
   body .l-lab-interface {
     /* ОБЩИЕ МОБИЛЬНЫЕ СТИЛИ */
     top: 0;
@@ -1977,6 +2145,13 @@ body.is-lab-active #app-wrapper {
     grid-template-areas: "viewport" "panels";
     /* МОБИЛЬНАЯ ОБВОДКА */
     box-shadow: inset var(--s-stroke-width) 0 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active)), inset calc(var(--s-stroke-width) * -1) 0 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active)), inset 0 calc(var(--s-stroke-width) * -1) 0 0 rgba(var(--p-white-rgb), var(--s-stroke-op-active));
+    /* КОЛОНКИ В МОБИЛЬНОЙ ВЕРСИИ */
+    /* ПЕРЕКЛЮЧЕНИЕ ПАНЕЛЕЙ */
+  }
+  @supports (-webkit-touch-callout: none) {
+    body .l-lab-interface {
+      height: calc(100svh - var(--lab-mobile-offset));
+    }
   }
   body .l-lab-interface__column {
     transform: translateY(var(--space-sm));
@@ -2034,41 +2209,29 @@ body.is-lab-active #app-wrapper {
   body .l-lab-interface[data-mobile-panel=setup] .l-lab-interface__column--engine, body .l-lab-interface[data-mobile-panel=engine] .l-lab-interface__column--setup {
     display: none;
   }
-
   body.is-lab-active .l-lab-interface {
     opacity: 1;
   }
-
   body.is-lab-active .l-lab-interface__column {
     opacity: 1;
     transform: translateY(0);
   }
 }
-
 /* iOS Safari: убираем свечение у превью */
 @supports (-webkit-touch-callout: none) {
   .l-lab-interface .lab-preview-display::before,
   .l-lab-interface .lab-preview-display::after {
     opacity: 0;
   }
-
   .l-lab-interface.is-lab-ready {
     --_blur: var(--s-glass-blur-none);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
-
   .l-lab-interface.is-lab-ready .lab-preview-display {
     --_blur: var(--s-glass-blur-none);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-  }
-}
-@supports (-webkit-touch-callout: none) {
-  @media (max-width: 1100px) {
-    body .l-lab-interface {
-      height: calc(100svh - var(--lab-mobile-offset));
-    }
   }
 }
 /* ============================================================
@@ -2166,7 +2329,6 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   height: var(--ui-range-thumb);
   width: var(--ui-range-thumb);
   border-radius: 50%;
-  background: rgb(var(--p-white-rgb));
   position: relative;
   border-radius: 50%;
   isolation: isolate;
@@ -2188,6 +2350,13 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   will-change: transform;
   border: none;
 }
+@supports not (((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) or (-webkit-backdrop-filter: blur(1px))) {
+  .ui-range input[type=range]::-webkit-slider-thumb {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op-fallback, var(--s-glass-op-base)));
+  }
+}
 .ui-range input[type=range]::-webkit-slider-thumb::before {
   content: "";
   position: absolute;
@@ -2205,7 +2374,6 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   height: var(--ui-range-thumb);
   width: var(--ui-range-thumb);
   border-radius: 50%;
-  background: rgb(var(--p-white-rgb));
   position: relative;
   border-radius: 50%;
   isolation: isolate;
@@ -2221,6 +2389,13 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   --_stroke-op: 0.3;
   -moz-transition: transform var(--d-fast) var(--e-out);
   transition: transform var(--d-fast) var(--e-out);
+}
+@supports not (((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) or (-webkit-backdrop-filter: blur(1px))) {
+  .ui-range input[type=range]::-moz-range-thumb {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op-fallback, var(--s-glass-op-base)));
+  }
 }
 .ui-range input[type=range]::-moz-range-thumb::before {
   content: "";
@@ -2367,7 +2542,6 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
     --_local-tag-op: var(--s-text-op-idle);
   }
 }
-
 /* iOS: увеличиваем область захвата ползунка */
 @supports (-webkit-touch-callout: none) {
   @media (max-width: 1100px) {
@@ -2421,6 +2595,13 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out);
   transition: background-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out), backdrop-filter var(--d-morph) var(--e-out), border-radius var(--d-morph) var(--e-out), -webkit-backdrop-filter var(--d-morph) var(--e-out);
+}
+@supports not (((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) or (-webkit-backdrop-filter: blur(1px))) {
+  .b-code-box {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(var(--m-glass-base-rgb), var(--_bg-op-fallback, var(--s-glass-op-base)));
+  }
 }
 .b-code-box::before {
   content: "";
@@ -2481,6 +2662,7 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   position: relative;
   padding-top: 0;
 }
+
 .ui-button.is-full-width.is-copied,
 .ui-button.is-full-width:hover,
 .ui-button.is-full-width:focus-visible {
@@ -2488,9 +2670,10 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   --_stroke-op: var(--s-stroke-op-active);
   --_text-op: 1;
   box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
+  backdrop-filter: blur(var(--s-glass-blur-strong));
   -webkit-backdrop-filter: blur(var(--s-glass-blur-strong));
-          backdrop-filter: blur(var(--s-glass-blur-strong));
 }
+
 .ui-button.is-full-width::after {
   content: attr(data-feedback);
   position: absolute;
@@ -2505,9 +2688,11 @@ Batura Library | Atomic Controls [Surgical Divider Sync]
   text-transform: inherit;
   pointer-events: none;
 }
+
 .ui-button.is-full-width.is-copied::after {
   opacity: 1;
 }
+
 .ui-button.is-full-width.is-copied span {
   visibility: hidden;
 }

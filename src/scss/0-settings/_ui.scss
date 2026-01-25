@@ -27,4 +27,14 @@
   --ui-range-thumb-mobile: 14px;
   --ui-range-h-mobile: 40px;
   --ui-range-thumb-offset: -5px;
+
+  /* --- 5. LAB PREVIEW --- */
+  --lab-preview-layer-size: clamp(120px, 18vw, 180px);
+  --lab-preview-layer-radius: calc(var(--radius-master) * 0.5);
+  --lab-preview-layer-gap: var(--space-xs);
+  --lab-preview-step: var(--lab-preview-layer-size);
+  --lab-preview-mult: 1;
+  --lab-preview-scale-boost: 1;
+  --lab-preview-scale-speed: 3;
+  --lab-preview-motion: clamp(24px, 4vw, 60px);
 }

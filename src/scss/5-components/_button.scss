@@ -97,6 +97,23 @@
     }
   }
 
+  &.ui-toggle-tag {
+    --btn-h: var(--ui-h-btn-master);
+    padding-inline: calc(var(--unit) * 6);
+    transition-delay: 0s;
+    --_bg-op: var(--s-glass-op-hover);
+    --_stroke-op: var(--s-stroke-op-hover);
+    width: 100%;
+
+    &:hover, &.is-active { 
+      --_bg-op: var(--s-glass-op-active); 
+      --_stroke-op: var(--s-stroke-op-active); 
+      --_text-op: 1; 
+      backdrop-filter: blur(var(--s-glass-blur-strong));
+      box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--s-stroke-op-active));
+    }
+  }
+
   /* 2. НАВБАР */
   .b-navbar & {
     --btn-h: var(--nav-content-h); 

@@ -1,6 +1,7 @@
 import { EXPRESSIONS_DB } from '../data/library-expressions.js';
 import { EVENTS, dispatch, on } from '../core/events.js';
 import { qs, qsa } from '../core/dom.js';
+import { LabPreview } from './lab-preview.js';
 
 export class LabManager {
     constructor() {
@@ -14,6 +15,7 @@ export class LabManager {
         this.rightLenis = null;
         this.readyTimeout = null;
         this.onLabTransitionEnd = null;
+        this.preview = new LabPreview();
         
         this.init();
     }
@@ -45,6 +47,9 @@ export class LabManager {
             this.activeTab = this.currentLabConfig.defaultTab || 'position';
 
             this.renderLayout(this.currentLabConfig);
+            this.preview.mount(this.interface);
+            this.preview.setState(this.currentParams, this.activeTab);
+            this.preview.start();
             
             await this.initScroll('left');
             await this.initScroll('right');
@@ -120,6 +125,10 @@ export class LabManager {
                     ctx.body.appendChild(this.createTabs(item));
                     break;
 
+                case 'toggle':
+                    ctx.body.appendChild(this.createToggle(item));
+                    break;
+
                 case 'code-block':
                     ctx.body.appendChild(this.createCodeBlock(item));
                     break;
@@ -185,6 +194,23 @@ export class LabManager {
             wrap.appendChild(btn);
         });
         return wrap;
+    }
+
+    createToggle(item) {
+        const btn = document.createElement('button');
+        btn.className = `ui-button ui-toggle-tag is-full-width ${item.default ? 'is-active' : ''}`;
+        btn.type = 'button';
+        btn.setAttribute('aria-pressed', item.default ? 'true' : 'false');
+        btn.innerHTML = `<span>${item.label}</span>`;
+        this.currentParams[item.id] = !!item.default;
+        btn.addEventListener('click', () => {
+            const next = !this.currentParams[item.id];
+            this.currentParams[item.id] = next;
+            btn.classList.toggle('is-active', next);
+            btn.setAttribute('aria-pressed', next ? 'true' : 'false');
+            this.updateCodeDisplay();
+        });
+        return btn;
     }
 
     createCodeBlock() {
@@ -254,11 +280,35 @@ export class LabManager {
         const input = wrap.querySelector('input');
         const display = wrap.querySelector('.value');
 
+        const clamp = (val) => Math.min(p.max, Math.max(p.min, val));
+        const formatValue = (val) => val.toString().replace('.', ',');
+        const applyValue = (raw) => {
+            const normalized = raw.toString().replace(',', '.').trim();
+            const parsed = parseFloat(normalized);
+            if (Number.isNaN(parsed)) {
+                display.textContent = formatValue(this.currentParams[p.id]);
+                return;
+            }
+            const clamped = clamp(parsed);
+            const stepped = Math.round(clamped / p.step) * p.step;
+            const value = Number(stepped.toFixed(4));
+            this.currentParams[p.id] = value;
+            input.value = value;
+            display.textContent = formatValue(value);
+            this.updateCodeDisplay();
+        };
+
         input.addEventListener('input', (e) => {
             const val = e.target.value;
-            this.currentParams[p.id] = parseFloat(val);
-            display.textContent = val.replace('.', ',');
-            this.updateCodeDisplay();
+            applyValue(val);
+        });
+
+        display.addEventListener('blur', () => applyValue(display.textContent));
+        display.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                display.blur();
+            }
         });
 
         const activate = () => wrap.classList.add('is-active');
@@ -285,6 +335,7 @@ export class LabManager {
         if (!codeEl) return;
         const code = this.getCodeContent();
         if (code) codeEl.innerText = code;
+        this.preview.setState(this.currentParams, this.activeTab);
     }
 
     // --- ОСТАЛЬНАЯ ЛОГИКА (БЕЗ ИЗМЕНЕНИЙ) ---
@@ -348,6 +399,7 @@ export class LabManager {
             this.interface.addEventListener('transitionend', this.onLabTransitionEnd);
         }
         this.body.classList.remove('is-lab-active');
+        this.preview.stop();
         const resetScrollLock = () => {
             document.documentElement.style.overflow = 'auto';
             document.documentElement.style.height = '';

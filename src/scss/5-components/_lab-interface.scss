@@ -119,6 +119,7 @@
     @include glass-panel(inherit);
     
     --_bg-op: var(--s-glare-op-hover);
+    --_glare-op: 0;
     border-top: none;
     /* Убираем верхнюю и нижнюю обводку (дубли с навбаром и рамкой лабы) */
     box-shadow:
@@ -136,15 +137,59 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
+      opacity: 0;
     }
     
     &::before {
       background: radial-gradient(circle at 50% 0%, rgba(var(--theme-accent-rgb), 0.15), transparent 80%);
       z-index: 1;
     }
-
-    @include glass-dots;
   }
+
+  #previewCanvasContainer {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .lab-preview-stack {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  .lab-preview-layer {
+    width: var(--lab-preview-layer-size);
+    height: var(--lab-preview-layer-size);
+    border-radius: var(--lab-preview-layer-radius);
+    @include glass-panel(var(--lab-preview-layer-radius));
+    position: absolute;
+    --_bg-op: var(--s-glass-op-hover);
+    --_stroke-op: var(--s-stroke-op-active);
+    --_glare-op: 0;
+    --_blur: var(--s-glass-blur-none);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: inset 0 0 0 var(--s-stroke-width) rgba(var(--m-glass-base-rgb), var(--_stroke-op, var(--s-stroke-op-idle)));
+    opacity: calc(1 - (var(--layer-index) * 0.05));
+    transform: translate3d(0, 0, 0) scale(1);
+    transform-origin: center;
+    backface-visibility: hidden;
+    transition: opacity var(--d-fast) var(--e-out);
+    will-change: transform;
+  }
+
+  .lab-preview-layer::before {
+    opacity: 0;
+  }
+
+  .ui-info-group + .ui-toggle-tag,
+  .text-subheading + .ui-toggle-tag {
+    margin-top: var(--space-md);
+  }
+
   
   /* 8. ХОВЕР ЭФФЕКТЫ */
   &:hover {
@@ -233,6 +278,10 @@ body.is-lab-active {
 
 /* 11. МОБИЛЬНАЯ АДАПТАЦИЯ */
 @media (max-width: $bp-lg) {
+  body .l-lab-interface {
+    --lab-preview-layer-size: clamp(64px, 18vw, 110px);
+  }
+
   body.is-lab-active {
     overflow: hidden;
     height: 100dvh;
