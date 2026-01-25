@@ -533,6 +533,7 @@ export class LabManager {
         if (this.leftLenis) this.leftLenis.destroy();
         if (this.rightLenis) this.rightLenis.destroy();
         this.cleanupTimeout = setTimeout(() => {
+            if (this.body.classList.contains('is-lab-active')) return;
             if (this.interface) qsa('.l-lab-interface__column', this.interface).forEach(col => col.innerHTML = '');
         }, 1000); 
     }

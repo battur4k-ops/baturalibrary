@@ -3,14 +3,14 @@ export const PAGE_CONTENT = {
         hero: {
             kicker: 'Motion Design // Professional Hub',
             title: 'Batura <br> Library',
-            description: 'Профессиональный хаб для автоматизации моушн-дизайна. Мы создаем инструменты, которые забирают рутину на себя.'
+            description: 'Библиотека инструментов для моушн-дизайна. Готовые решения без лишней рутины.'
         }
     },
     expressions: {
         hero: {
             kicker: '// AE_LIBRARY',
             title: 'Expressions',
-            description: 'Библиотека математических решений для After Effects. Автоматизируй движение, сохраняя полный контроль над физикой кадра.'
+            description: 'Умный редактор в реальном времени.'
         }
     }
 };

@@ -5,13 +5,13 @@ export const labConfig = {
         { type: 'data', content: '// ПАРАМЕТРЫ' },
         { type: 'hero', content: 'SETUP' },
         
-        { type: 'heading', content: 'POSITION SETTINGS', info: 'Смещение слоев относительно предыдущего.' },
+        { type: 'heading', content: 'POSITION SETTINGS', info: 'Смещение каждого слоя от предыдущего.' },
         { type: 'range', id: 'delay', label: 'DELAY (SEC)', min: 0, max: 2, step: 0.1, default: 1 },
         { type: 'range', id: 'mX', label: 'MULTIPLIER X', min: -2, max: 2, step: 0.01, default: 1 },
         { type: 'range', id: 'mY', label: 'MULTIPLIER Y', min: -2, max: 2, step: 0.01, default: 1 },
 
-        { type: 'heading', content: 'SCALE SETTINGS', info: 'Каждый следующий слой меньше или больше.' },
-        { type: 'toggle', id: 'scaleDelay', label: 'SCALE DELAY', default: false },
+        { type: 'heading', content: 'SCALE SETTINGS', info: 'Шаг масштаба для каждого следующего слоя.' },
+        { type: 'toggle', id: 'scaleDelay', label: 'SCALE_DELAY', default: false },
         { type: 'range', id: 'step', label: 'STEP (%)', min: -90, max: 90, step: 1, default: 0 },
         
         { side: 'right' }, 
@@ -33,15 +33,15 @@ export const labConfig = {
         { type: 'code-block' },
 
         // Кнопка копирования
-        { type: 'copy-button', label: 'COPY EXPRESSION' },
+        { type: 'copy-button', label: 'COPY_EXPRESSION' },
  
         // Инструкция
         { 
             type: 'instruction', 
             content: [
-                'Самым верхним должен стоять слой, который вы уже анимировали ключами.',
-                'На все слои ниже примените этот код к параметру Position или Scale.',
-                'Рекомендуется использовать одинаковое значение Scale на всех слоях (например, 100).'
+                'Верхний слой — тот, который анимирован ключами.',
+                'На слои ниже примените expression к Position или Scale.',
+                'Если не используете Scale, задайте одинаковый масштаб (например 100) для корректного отображения.'
             ] 
         }
     ],

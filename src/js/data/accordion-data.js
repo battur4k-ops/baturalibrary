@@ -5,8 +5,8 @@ export const ACCORDION_DATA = [
         themeIndex: 0,
         label: 'Automation',
         title: 'Expressions',
-        description: 'Оптимизированный код для умной анимации. Математика движения.',
-        cta: 'Initialize',
+        description: 'Умный редактор в реальном времени.',
+        cta: 'OPEN_FOLDER',
         link: './pages/expressions.html'
     },
     {
@@ -15,8 +15,8 @@ export const ACCORDION_DATA = [
         themeIndex: 1,
         label: 'Workflow',
         title: 'Scripts',
-        description: 'Инструменты для ускорения ежедневного пайплайна разработки.',
-        cta: 'View Scripts'
+        description: 'Скрипты для быстрых задач и рутинных операций.',
+        cta: 'СКОРО'
     },
     {
         index: '03',
@@ -24,8 +24,8 @@ export const ACCORDION_DATA = [
         themeIndex: 3,
         label: 'System_Core',
         title: 'Plugins',
-        description: 'Расширение возможностей софта. Глубокая интеграция.',
-        cta: 'Check Plugins'
+        description: 'Плагины для улучшения After Effects.',
+        cta: 'СКОРО'
     },
     {
         index: '04',
@@ -33,7 +33,7 @@ export const ACCORDION_DATA = [
         themeIndex: 2,
         label: 'Education',
         title: 'Guides',
-        description: 'Глубокие разборы техник и методологий моушн-дизайна.',
-        cta: 'Watch Data'
+        description: 'Короткие гайды по приемам и настройке.',
+        cta: 'СКОРО'
     }
 ];

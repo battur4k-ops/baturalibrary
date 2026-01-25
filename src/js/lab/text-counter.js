@@ -6,13 +6,13 @@ export const labConfig = {
         { type: 'data', content: '// ПАРАМЕТРЫ' },
         { type: 'hero', content: 'SETUP' },
 
-        { type: 'toggle', id: 'run', label: 'START COUNTER', labelOn: 'STOP COUNTER', labelOff: 'START COUNTER', default: true },
-        { type: 'heading', content: 'COUNTER SETTINGS', info: 'Значение и инверсия счётчика.' },
+        { type: 'toggle', id: 'run', label: 'START_COUNTER', labelOn: 'STOP_COUNTER', labelOff: 'START_COUNTER', default: true },
+        { type: 'heading', content: 'COUNTER SETTINGS', info: 'Стартовое значение и инверсия.' },
         { type: 'range', id: 'value', label: 'VALUE', min: 0, max: 1000000, step: 1, default: 100 },
         { type: 'range', id: 'duration', label: 'DURATION (SEC)', min: 0, max: 1000, step: 0.1, default: 5 },
         { type: 'toggle', id: 'invert', label: 'INVERSION', default: false },
 
-        { type: 'heading', content: 'ANIMATION', info: 'LINEAR — ровно. EASE IN — быстро в начале, медленно в конце. EASE — медленно/быстро/медленно. EASE OUT — медленно в начале, быстро в конце.' },
+        { type: 'heading', content: 'ANIMATION', info: 'Тип плавности анимации.' },
         {
             type: 'tabs',
             id: 'smoothness',
@@ -24,7 +24,7 @@ export const labConfig = {
             ]
         },
 
-        { type: 'heading', content: 'VISUAL', info: 'Формат вывода счётчика.' },
+        { type: 'heading', content: 'VISUAL', info: 'Формат вывода числа.' },
         { type: 'range', id: 'format', label: 'FORMAT', min: 1, max: 4, step: 1, default: 2 },
 
         { side: 'right' },
@@ -32,9 +32,9 @@ export const labConfig = {
         { type: 'data', content: '// КОМПИЛЯТОР' },
         { type: 'hero', content: 'OUTPUT' },
 
-        { type: 'tabs', id: 'target', options: [{ id: 'source', label: 'SOURCE TEXT' }] },
+        { type: 'tabs', id: 'target', options: [{ id: 'source', label: 'SOURCE_TEXT' }] },
         { type: 'code-block' },
-        { type: 'copy-button', label: 'COPY EXPRESSION' },
+        { type: 'copy-button', label: 'COPY_EXPRESSION' },
         { 
             type: 'instruction', 
             content: [

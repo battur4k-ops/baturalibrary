@@ -7,7 +7,7 @@ export const FOOTER_DATA = {
     // Левая колонка
     brand: {
         label: "Batura Library",
-        description: "Архитектура стабильна. Кнопки статичны. <br> Разрабатываем инструменты будущего для тех, кто создает движение сегодня.",
+        description: "Инструменты для After Effects. <br> Открыл — применил.",
     },
 
     // Средние колонки (Динамические группы)
@@ -15,17 +15,15 @@ export const FOOTER_DATA = {
         {
             title: "Resources",
             links: [
-                { label: "Main Site", url: "#", target: "_blank" },
-                { label: "Telegram", url: "https://t.me/batur4k0", target: "_blank" },
-                { label: "Donation", url: "#", target: "_blank"}
+                { label: "Telegram", url: "https://t.me/baturbo", target: "_blank" },
+                { label: "Donation", url: "https://dalink.to/batur4k0", target: "_blank"}
             ]
         },
         {
             title: "Connect",
             links: [
-                { label: "Email Me", url: "mailto:hello@batura.me", target: "_blank" },
-                { label: "Support", url: "#", target: "_blank" },
-                { label: "System Status", url: "#", target: "_blank" } // Вот так легко добавить новую строку
+                { label: "Email Me", url: "https://mail.google.com/mail/?view=cm&fs=1&to=battur4k@gmail.com", target: "_blank" },
+                { label: "Support", url: "https://t.me/batur4k0", target: "_blank" }
             ]
         }
     ],
@@ -33,6 +31,6 @@ export const FOOTER_DATA = {
     // Нижняя панель
     bottom: {
         copyright: "© 2026 BATURA SYSTEM",
-        version: "V1.0 GRAVITY_CORE"
+        version: "V1.0 BETA"
     }
 };

@@ -44,7 +44,7 @@ export class ExpressionManager {
      * Форматирование названий (math -> MATHEMATICS)
      */
     formatLabel(cat) {
-        if (cat === 'all') return 'All Projects';
+        if (cat === 'all') return 'ALL_PROJECT';
         if (cat === 'math') return 'Mathematics';
         return cat.replace('_', ' ').toUpperCase();
     }

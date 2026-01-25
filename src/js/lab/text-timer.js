@@ -6,14 +6,14 @@ export const labConfig = {
         { type: 'data', content: '// ПАРАМЕТРЫ' },
         { type: 'hero', content: 'SETUP' },
 
-        { type: 'toggle', id: 'run', label: 'START TIMER', labelOn: 'STOP TIMER', labelOff: 'START TIMER', default: true },
-        { type: 'heading', content: 'TIMER SETTINGS', info: 'Базовое время и направление таймера.' },
+        { type: 'toggle', id: 'run', label: 'START_TIMER', labelOn: 'STOP_TIMER', labelOff: 'START_TIMER', default: true },
+        { type: 'heading', content: 'TIMER SETTINGS', info: 'Стартовое время таймера.' },
         { type: 'range', id: 'hours', label: 'TIME (HOUR)', min: 0, max: 1000, step: 1, default: 2 },
         { type: 'range', id: 'minutes', label: 'TIME (MIN)', min: 0, max: 59, step: 1, default: 0 },
         { type: 'range', id: 'seconds', label: 'TIME (SEC)', min: 0, max: 59, step: 1, default: 0 },
         { type: 'range', id: 'ms', label: 'TIME (MS)', min: 0, max: 99, step: 1, default: 0 },
         { type: 'toggle', id: 'invert', label: 'INVERSION', default: false },
-        { type: 'heading', content: 'VISUAL', info: 'Отображение и скорость таймера. -100 медленно, 100 быстро.' },
+        { type: 'heading', content: 'VISUAL', info: 'Формат и скорость отображения.' },
         { type: 'range', id: 'speed', label: 'SPEED', min: -100, max: 100, step: 1, default: 0, freeInput: true },
         { type: 'range', id: 'format', label: 'FORMAT', min: 1, max: 4, step: 1, default: 2 },
 
@@ -22,9 +22,9 @@ export const labConfig = {
         { type: 'data', content: '// КОМПИЛЯТОР' },
         { type: 'hero', content: 'OUTPUT' },
 
-        { type: 'tabs', id: 'target', options: [{ id: 'source', label: 'SOURCE TEXT' }] },
+        { type: 'tabs', id: 'target', options: [{ id: 'source', label: 'SOURCE_TEXT' }] },
         { type: 'code-block' },
-        { type: 'copy-button', label: 'COPY EXPRESSION' },
+        { type: 'copy-button', label: 'COPY_EXPRESSION' },
         { 
             type: 'instruction', 
             content: [
