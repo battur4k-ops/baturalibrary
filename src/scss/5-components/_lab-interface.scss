@@ -233,6 +233,11 @@ body.is-lab-active {
 
 /* 11. МОБИЛЬНАЯ АДАПТАЦИЯ */
 @media (max-width: $bp-lg) {
+  body.is-lab-active {
+    overflow: hidden;
+    height: 100dvh;
+  }
+
   body .l-lab-interface {
     /* ОБЩИЕ МОБИЛЬНЫЕ СТИЛИ */
     top: 0;
@@ -303,7 +308,9 @@ body.is-lab-active {
           flex: 1 1 auto;
           width: 100%;
           padding: 0 var(--space-md) var(--lab-mobile-panel-pad);
-          overflow: hidden;
+          overflow-y: auto;
+          overscroll-behavior: contain;
+          -webkit-overflow-scrolling: touch;
           touch-action: pan-y;
           
           mask-image: linear-gradient(

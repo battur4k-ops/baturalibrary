@@ -26,3 +26,10 @@
   --m-dot-layer-op: 0.15;
   
 }
+
+/* iOS Safari: стабилизируем hairline, чтобы не было "рваной" обводки */
+@supports (-webkit-touch-callout: none) {
+  :root {
+    --s-stroke-width: 1px;
+  }
+}

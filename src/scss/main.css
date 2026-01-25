@@ -205,6 +205,13 @@
   --m-dot-layer-op: 0.15;
 }
 
+/* iOS Safari: стабилизируем hairline, чтобы не было "рваной" обводки */
+@supports (-webkit-touch-callout: none) {
+  :root {
+    --s-stroke-width: 1px;
+  }
+}
+
 :root {
   /* --- 1. MASTER RADII --- */
   --radius-master: 45px;
@@ -1385,6 +1392,11 @@ body.is-lab-active .b-navbar__search .close-icon {
   justify-content: center;
 }
 .ui-button--logo .b-logo svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  color: inherit;
+  fill: currentColor;
   transform: translate3d(var(--logo-balance-x), 0, 0);
 }
 .b-navbar .ui-button--logo {
@@ -1943,6 +1955,11 @@ body.is-lab-active #app-wrapper {
 
 /* 11. МОБИЛЬНАЯ АДАПТАЦИЯ */
 @media (max-width: 1100px) {
+  body.is-lab-active {
+    overflow: hidden;
+    height: 100dvh;
+  }
+
   body .l-lab-interface {
     /* ОБЩИЕ МОБИЛЬНЫЕ СТИЛИ */
     top: 0;
@@ -1998,7 +2015,9 @@ body.is-lab-active #app-wrapper {
     flex: 1 1 auto;
     width: 100%;
     padding: 0 var(--space-md) var(--lab-mobile-panel-pad);
-    overflow: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
     mask-image: linear-gradient(to bottom, black 0%, black 90%, transparent 100%);
     -webkit-mask-image: linear-gradient(to bottom, black 0%, black 90%, transparent 100%);

@@ -283,6 +283,11 @@ export class LabManager {
         const wrapper = qs('.b-lab-column-body', colEl);
         const content = qs('.l-flow', wrapper);
         if (!wrapper || !content) return;
+        const isTouch = window.matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints > 0;
+        const isMobile = window.matchMedia('(max-width: 1100px)').matches;
+        if (isTouch || isMobile) {
+            return;
+        }
         const LenisModule = await import('https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/+esm');
         const Lenis = LenisModule.default;
         const lenisInstance = new Lenis({ wrapper, content, duration: 1.4, smoothWheel: true });
