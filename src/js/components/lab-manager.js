@@ -348,6 +348,17 @@ export class LabManager {
             this.interface.addEventListener('transitionend', this.onLabTransitionEnd);
         }
         this.body.classList.remove('is-lab-active');
+        const resetScrollLock = () => {
+            document.documentElement.style.overflow = '';
+            document.documentElement.style.height = '';
+            document.documentElement.style.position = '';
+            this.body.style.overflow = '';
+            this.body.style.height = '';
+            this.body.style.position = '';
+            window.scrollTo({ top: window.scrollY, behavior: 'auto' });
+        };
+        requestAnimationFrame(resetScrollLock);
+        setTimeout(resetScrollLock, 300);
         if (this.readyTimeout) { clearTimeout(this.readyTimeout); this.readyTimeout = null; }
         if (this.leftLenis) this.leftLenis.destroy();
         if (this.rightLenis) this.rightLenis.destroy();
